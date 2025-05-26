@@ -3,8 +3,13 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import NavItem from '@/components/NavItem';
+import { User } from '@/prisma/client';
 
-const Navbar = () => {
+interface NavbarProps {
+  currentUser?: User | null;
+}
+
+const Navbar = ({ currentUser }: NavbarProps) => {
   const [mobileMenu, setMobileMenu] = useState(false);
 
   const handleMobileMenu = () => {
@@ -23,12 +28,12 @@ const Navbar = () => {
         </div>
 
         <div className="hidden sm:block">
-          <NavItem />
+          <NavItem currentUser={currentUser} />
         </div>
       </div>
 
       <div className="block sm:hidden">
-        {!mobileMenu ? null : <NavItem mobile />}
+        {!mobileMenu ? null : <NavItem mobile currentUser={currentUser} />}
       </div>
     </nav>
   );
