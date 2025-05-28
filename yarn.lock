@@ -38,6 +38,73 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.22.15":
+  version: 7.27.3
+  resolution: "@babel/runtime@npm:7.27.3"
+  checksum: 10c0/b860fe374a36fddbeeb238e52e59443abcacc046eebda1bf278bffbc67b5c8f713b939e09c126b086ca5f97cba1987ea17fd1737568bc50fedb1f6ef1cf46f69
+  languageName: node
+  linkType: hard
+
+"@cloudinary-util/types@npm:1.5.10":
+  version: 1.5.10
+  resolution: "@cloudinary-util/types@npm:1.5.10"
+  checksum: 10c0/febb220aa78532b4d31a729938276b1256044970503cc123eca17b3ab602d9b1e00841bea69aaa9fc23c7cb1cf7e16bb4c42754f3f35e4d98af73852227cc130
+  languageName: node
+  linkType: hard
+
+"@cloudinary-util/url-loader@npm:5.10.4":
+  version: 5.10.4
+  resolution: "@cloudinary-util/url-loader@npm:5.10.4"
+  dependencies:
+    "@cloudinary-util/types": "npm:1.5.10"
+    "@cloudinary-util/util": "npm:3.3.2"
+    "@cloudinary/url-gen": "npm:1.15.0"
+    zod: "npm:^3.22.4"
+  checksum: 10c0/303eb949d9011df821ef54bfc2195219da92f71f319c9963302e169d70b0661bce0d4ee814267726a93967533d777d39e23bce93fca07565370281426902e18b
+  languageName: node
+  linkType: hard
+
+"@cloudinary-util/util@npm:3.3.2":
+  version: 3.3.2
+  resolution: "@cloudinary-util/util@npm:3.3.2"
+  checksum: 10c0/65f58ea8914c3255343ca5ae119b54c723405aa30c65851c8bbed586a474b09f23041cd60cb4358e479cb31f23b6540c8af70303b40710878dc63be91e014c3b
+  languageName: node
+  linkType: hard
+
+"@cloudinary-util/util@npm:4.0.0":
+  version: 4.0.0
+  resolution: "@cloudinary-util/util@npm:4.0.0"
+  checksum: 10c0/0ae1aaeec9ba26513d1ba742b3c7db7fd3aacf0c6a4efc289a14ad2a69fdfaf2bc7ac9992b7463718a758c1f68ed5d22780ea697e98c6e4107e8b1deeecd404a
+  languageName: node
+  linkType: hard
+
+"@cloudinary/transformation-builder-sdk@npm:^1.10.0, @cloudinary/transformation-builder-sdk@npm:^1.15.1":
+  version: 1.17.0
+  resolution: "@cloudinary/transformation-builder-sdk@npm:1.17.0"
+  dependencies:
+    "@cloudinary/url-gen": "npm:^1.7.0"
+  checksum: 10c0/f7626a44aeb08fadc1b674d1c1841d3f08379f7bdf2589aa73f2d79e2c8a54f31a51904b626fa4b738ed790e2eff3913b7e906440834f45cd754060f96bb2b9f
+  languageName: node
+  linkType: hard
+
+"@cloudinary/url-gen@npm:1.15.0":
+  version: 1.15.0
+  resolution: "@cloudinary/url-gen@npm:1.15.0"
+  dependencies:
+    "@cloudinary/transformation-builder-sdk": "npm:^1.10.0"
+  checksum: 10c0/4b50b690f40b117068d7396906e9bbda36bd4b8e6143bbc8ad57709cf18f7b3953611a414f56f6551680277e683c3e82f581b01d67e6d06ff88125f8c8f447d6
+  languageName: node
+  linkType: hard
+
+"@cloudinary/url-gen@npm:^1.7.0":
+  version: 1.21.0
+  resolution: "@cloudinary/url-gen@npm:1.21.0"
+  dependencies:
+    "@cloudinary/transformation-builder-sdk": "npm:^1.15.1"
+  checksum: 10c0/e8b776c0f116a53830b55322f2c23475d7da633bd11b9863dfb4cca1ef82ebc25b1a201f40bf70ecf955d111f295eebae1774d44743d09fc8dbe429334313044
+  languageName: node
+  linkType: hard
+
 "@emnapi/core@npm:^1.4.3":
   version: 1.4.3
   resolution: "@emnapi/core@npm:1.4.3"
@@ -3292,6 +3359,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"kakao.maps.d.ts@npm:^0.1.39":
+  version: 0.1.40
+  resolution: "kakao.maps.d.ts@npm:0.1.40"
+  checksum: 10c0/16eef0d9846311921ae3c5c020a8769ab8d1f894b2a6f1aef869a83648462982c2891bc8ea174665345290483bf73feb6ae264273cee38a40a1adbb17aa6862f
+  languageName: node
+  linkType: hard
+
 "keyv@npm:^4.0.0, keyv@npm:^4.5.4":
   version: 4.5.4
   resolution: "keyv@npm:4.5.4"
@@ -3692,6 +3766,20 @@ __metadata:
     nodemailer:
       optional: true
   checksum: 10c0/56142678cfb8e751ae24f1396b3659aac7b1831f4f2283bcb2035224ebfd7ae82b62839383cf4029835d511cec339aad9665afcd1e711a631359fe123d970c0d
+  languageName: node
+  linkType: hard
+
+"next-cloudinary@npm:^6.16.0":
+  version: 6.16.0
+  resolution: "next-cloudinary@npm:6.16.0"
+  dependencies:
+    "@cloudinary-util/types": "npm:1.5.10"
+    "@cloudinary-util/url-loader": "npm:5.10.4"
+    "@cloudinary-util/util": "npm:4.0.0"
+  peerDependencies:
+    next: ^12 || ^13 || ^14 || >=15.0.0-rc || ^15
+    react: ^17 || ^18 || >=19.0.0-beta || ^19
+  checksum: 10c0/9fa48324d0b88e9e7ad9330b7bda48a00ac38f859e8966caf073692e46ce7540a5dc3448f1f852ce4beb9eef85c157629ca05bc1bc3d619778120215a05174f1
   languageName: node
   linkType: hard
 
@@ -4185,6 +4273,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-kakao-maps-sdk@npm:^1.1.27":
+  version: 1.1.27
+  resolution: "react-kakao-maps-sdk@npm:1.1.27"
+  dependencies:
+    "@babel/runtime": "npm:^7.22.15"
+    kakao.maps.d.ts: "npm:^0.1.39"
+  peerDependencies:
+    react: ^16.8 || ^17 || ^18
+    react-dom: ^16.8 || ^17 || ^18
+  checksum: 10c0/1cc0dd855f1b8c0ba3d089ada352ecab8569d5a6cd9344baebc3161cf64d0670ff633a422636289e549b42da6b38997ddb7a4d3ddf6b616f93f9b2e96e04eae1
+  languageName: node
+  linkType: hard
+
 "react@npm:^19.0.0":
   version: 19.1.0
   resolution: "react@npm:19.1.0"
@@ -4382,12 +4483,14 @@ __metadata:
     eslint-plugin-prettier: "npm:^5.4.0"
     next: "npm:15.3.2"
     next-auth: "npm:^4.24.11"
+    next-cloudinary: "npm:^6.16.0"
     prettier: "npm:^3.5.3"
     prisma: "npm:^6.8.2"
     react: "npm:^19.0.0"
     react-dom: "npm:^19.0.0"
     react-hook-form: "npm:^7.56.4"
     react-icons: "npm:^5.5.0"
+    react-kakao-maps-sdk: "npm:^1.1.27"
     tailwindcss: "npm:^4"
     typescript: "npm:^5"
   languageName: unknown
@@ -5180,5 +5283,12 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: 10c0/dceb44c28578b31641e13695d200d34ec4ab3966a5729814d5445b194933c096b7ced71494ce53a0e8820685d1d010df8b2422e5bf2cdea7e469d97ffbea306f
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.22.4":
+  version: 3.25.30
+  resolution: "zod@npm:3.25.30"
+  checksum: 10c0/53cc090b949ed1776e241fb882d5de0f66096727aabbfb53ff9c64c875b575c9d3cbd75556bc816bcdd09aff0a26608e1c40d79dd863ab5c31a96331f1e7a4b9
   languageName: node
   linkType: hard
