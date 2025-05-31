@@ -1,3 +1,5 @@
+'use client';
+
 import {
   TbDeviceImacBolt,
   TbWashMachine,
@@ -10,9 +12,26 @@ import {
   MdOutlineSportsSoccer,
   MdDirectionsCar,
 } from 'react-icons/md';
+import { useSearchParams } from 'next/navigation';
+import CategoryBox from '@/components/categories/CategoryBox';
 
 const Categories = () => {
-  return <div>Categories</div>;
+  const params = useSearchParams();
+  const categoryParam = params?.get('category');
+
+  return (
+    <div className="flex flex-row justify-between items-center pt-4 overflow-x-auto">
+      {categories.map((category) => (
+        <CategoryBox
+          key={category.label}
+          label={category.label}
+          path={category.path}
+          icon={category.icon}
+          selected={categoryParam === category.path}
+        />
+      ))}
+    </div>
+  );
 };
 
 export default Categories;
