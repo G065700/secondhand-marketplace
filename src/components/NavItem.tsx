@@ -18,6 +18,9 @@ const NavItem = ({ mobile, currentUser }: NavItemProps) => {
       <li className="py-2 text-center">
         <Link href="/user">User</Link>
       </li>
+      <li className="py-2 text-center">
+        <Link href="/chat">Chat</Link>
+      </li>
 
       <li className="py-2 text-center">
         {currentUser ? (
