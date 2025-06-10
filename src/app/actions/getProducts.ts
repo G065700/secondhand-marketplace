@@ -4,19 +4,19 @@ import { PRODUCTS_PER_PAGE } from '@/constants';
 export interface ProductsParams {
   latitude?: number;
   longitude?: number;
-  category?: string;
+  categoryId?: string;
   page?: number;
   skip?: number;
 }
 
 export default async function getProducts(params: ProductsParams) {
   try {
-    const { latitude, longitude, category, skip } = params;
+    const { latitude, longitude, categoryId, skip } = params;
 
     let query: any = {};
 
-    if (category) {
-      query.category = category;
+    if (categoryId) {
+      query.categoryId = categoryId;
     }
 
     if (latitude) {

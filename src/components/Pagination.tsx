@@ -25,7 +25,6 @@ const Pagination = ({ page, totalItems }: PaginationProps) => {
 
   return (
     <div className="flex items-center justify-center gap-2 mt-4">
-      {/*Item {fromItem}-{toItem}&nbsp;*/}
       {[...arr].map((_, i) => {
         const { page, disabled, current } = getPageItem(i);
 

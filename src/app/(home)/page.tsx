@@ -6,6 +6,7 @@ import getCurrentUser from '@/app/actions/getCurrentUser';
 import FloatingButton from '@/components/FloatingButton';
 import Categories from '@/components/categories/Categories';
 import Pagination from '@/components/Pagination';
+import getCategories from '@/app/actions/getCategories';
 
 interface HomeProps {
   searchParams: ProductsParams;
@@ -16,11 +17,16 @@ export default async function Home({ searchParams }: HomeProps) {
   const pageNum = page ? Number(page) : 1;
 
   const currentUser = await getCurrentUser();
+  const categories = await getCategories();
   const products = await getProducts(await searchParams);
+
+  const getCategory = (categoryId: string) => {
+    return categories.find((category) => category.id === categoryId);
+  };
 
   return (
     <Container>
-      <Categories />
+      <Categories categories={categories} />
       {products.data.length === 0 ? (
         <EmptyState showReset />
       ) : (
@@ -30,16 +36,16 @@ export default async function Home({ searchParams }: HomeProps) {
               <ProductCard
                 key={product.id}
                 currentUser={currentUser}
-                data={product}
+                product={product}
+                category={getCategory(product.categoryId)}
               />
             ))}
           </div>
 
           <Pagination page={pageNum} totalItems={products.totalItems} />
-
-          <FloatingButton href="/products/upload">+</FloatingButton>
         </>
       )}
+      <FloatingButton href="/products/upload">+</FloatingButton>
     </Container>
   );
 }

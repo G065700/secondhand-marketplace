@@ -1,27 +1,29 @@
 'use client';
 
-import { Product, User } from '@/prisma/client';
+import { Category, Product, User } from '@/prisma/client';
 import Container from '@/components/Container';
 import ProductHead from '@/components/products/ProductHead';
 import ProductInfo from '@/components/products/ProductInfo';
 import dynamic from 'next/dynamic';
 import Button from '@/components/Button';
 import { useRouter } from 'next/navigation';
-import { categories } from '@/components/categories/Categories';
 
 interface ProductClientProps {
   product: Product & { user: User };
+  category: Category;
   currentUser?: User | null;
 }
 
-const ProductClient = ({ product, currentUser }: ProductClientProps) => {
+const ProductClient = ({
+  product,
+  category,
+  currentUser,
+}: ProductClientProps) => {
   const router = useRouter();
 
   const KakaoMap = dynamic(() => import('@/components/KakaoMap'), {
     ssr: false,
   });
-
-  const category = categories.find((c) => c.path === product.category);
 
   return (
     <Container>
