@@ -26,12 +26,9 @@ const SignUpPage = () => {
     },
   });
 
-  console.log(errors);
-
   const onSubmit: SubmitHandler<FieldValues> = async (body) => {
     setIsLoading(true);
     try {
-      console.log(body);
       await axios.post('/api/sign-up', body);
       router.push('/auth/sign-in');
     } catch (error) {

@@ -1,23 +1,19 @@
-import { IconType } from 'react-icons';
-
 interface CategoryInputProps {
-  icon: IconType;
   label: string;
   selected?: boolean;
-  path: string;
+  id: string;
   onClick: (value: string) => void;
 }
 
 const CategoryInput = ({
-  icon: Icon,
   label,
   selected,
-  path,
+  id,
   onClick,
 }: CategoryInputProps) => {
   return (
     <div
-      onClick={() => onClick(path)}
+      onClick={() => onClick(id)}
       className={`
         rounded-xl
         border-2
@@ -31,7 +27,6 @@ const CategoryInput = ({
         ${selected ? 'border-teal-500' : 'border-neutral-200'}
       `}
     >
-      <Icon size={30} />
       <div className="font-semibold">{label}</div>
     </div>
   );

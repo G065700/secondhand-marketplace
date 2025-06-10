@@ -11,8 +11,15 @@ export async function POST(request: Request) {
 
   const body = await request.json();
 
-  const { title, description, imageSrc, category, latitude, longitude, price } =
-    body;
+  const {
+    title,
+    description,
+    imageSrc,
+    categoryId,
+    latitude,
+    longitude,
+    price,
+  } = body;
 
   Object.keys(body).forEach((value) => {
     if (!body[value]) {
@@ -25,7 +32,7 @@ export async function POST(request: Request) {
       title,
       description,
       imageSrc,
-      category,
+      categoryId,
       latitude,
       longitude,
       price: Number(price),

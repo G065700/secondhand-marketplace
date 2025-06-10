@@ -1,5 +1,7 @@
+import { ReactNode } from 'react';
+
 interface HeadingProps {
-  title: string;
+  title: ReactNode;
   subtitle?: string;
   center?: boolean;
 }

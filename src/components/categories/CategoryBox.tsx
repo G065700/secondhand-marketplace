@@ -1,22 +1,21 @@
-import { IconType } from 'react-icons';
 import Link from 'next/link';
 
 interface CategoryBoxProps {
   label: string;
-  path: string;
-  icon: IconType;
+  id: string;
+  // icon: IconType;
   selected?: boolean;
 }
 
 const CategoryBox = ({
   label,
-  path,
-  icon: Icon,
+  id,
+  // icon: Icon,
   selected,
 }: CategoryBoxProps) => {
   return (
     <Link
-      href={`?category=${path}`}
+      href={`?categoryId=${id}`}
       className={`
         flex 
         flex-col 
@@ -31,7 +30,7 @@ const CategoryBox = ({
         ${selected ? 'text-neutral-800' : 'text-neutral-500'}
       `}
     >
-      <Icon size={26} />
+      {/*<Icon size={26} />*/}
       <div>{label}</div>
     </Link>
   );
