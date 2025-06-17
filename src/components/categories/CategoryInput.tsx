@@ -21,10 +21,10 @@ const CategoryInput = ({
         flex
         flex-col
         gap-3
-        hover:border-teal-500
+        hover:border-cyan-500
         transition
         cursor-pointer
-        ${selected ? 'border-teal-500' : 'border-neutral-200'}
+        ${selected ? 'border-cyan-500' : 'border-neutral-300'}
       `}
     >
       <div className="font-semibold">{label}</div>

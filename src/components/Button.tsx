@@ -29,11 +29,12 @@ const Button: FC<ButtonProps> = ({
         disabled:opacity-70
         disabled:cursor-not-allowed
         rounded-lg
-        hover:opacity-80
-        transition
+        hover:bg-cyan-600 hover:border-cyan-600
+        hover:text-white
+        transition 
         w-full
-        ${outline ? 'bg-white' : 'bg-teal-500'}
-        ${outline ? 'border-black' : 'border-teal-500'}
+        ${outline ? 'bg-white' : 'bg-cyan-500'}
+        ${outline ? 'border-black' : 'border-cyan-500'}
         ${outline ? 'text-black' : 'text-white'}
         ${small ? 'text-sm' : 'text-md'}
         ${small ? 'py-1' : 'py-3'}

@@ -2,7 +2,7 @@
 
 import usePagination from '@lucasmogari/react-pagination';
 import { PRODUCTS_PER_PAGE } from '@/constants';
-import PaginationLink from '@/components/PaginationLink';
+import PaginationLink from '@/components/pagination/PaginationLink';
 
 interface PaginationProps {
   page: number;

@@ -2,55 +2,32 @@ import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 import { FC } from 'react';
 import { ErrorMessage } from '@hookform/error-message';
 
-interface InputProps {
+interface TextareaProps {
   id: string;
   label: string;
-  type?: string;
   disabled?: boolean;
-  formatPrice?: boolean;
   required?: boolean;
   register: UseFormRegister<FieldValues>;
   errors: FieldErrors;
 }
 
-const regExps: { [p: string]: RegExp } = {
-  email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-};
-
-const Input: FC<InputProps> = ({
+const Textarea: FC<TextareaProps> = ({
   id,
   label,
-  type = 'text',
   disabled,
-  formatPrice,
   register,
   required,
   errors,
 }) => {
   return (
     <div className="relative w-full">
-      {formatPrice && (
-        <span className="absolute text-neutral-700 top-7.5 left-2">
-          &#8361;
-        </span>
-      )}
-      <input
+      <textarea
         id={id}
         disabled={disabled}
         {...register(id, {
           required: required && `${label}은 필수 입력 항목입니다.`,
-          pattern: {
-            value: regExps[id],
-            message: `${label} 형식으로 입력해 주세요.`,
-          },
-          validate: (value, formValues) => {
-            if (id === 'passwordConfirm' && formValues.password !== value) {
-              return 'Password 와 Password Confirm 이 일치하지 않습니다.';
-            }
-          },
         })}
         placeholder=""
-        type={type}
         className={`
           w-full
           p-3
@@ -63,7 +40,6 @@ const Input: FC<InputProps> = ({
           transition
           disabled:opacity-70
           disabled:cursor-not-allowed
-          ${formatPrice ? 'pl-9' : 'pl-4'}
           ${errors[id] ? 'border-orange-400' : 'border-neutral-400'}
           ${errors[id] ? 'focus:border-orange-500' : 'focus:border-black'}
         `}
@@ -83,9 +59,9 @@ const Input: FC<InputProps> = ({
           transform 
           -translate-y-3 
           top-5 
+          left-4
           z-10 
           origin-[0]
-          ${formatPrice ? 'left-9' : 'left-4'}
           peer-placeholder-shown:scale-100
           peer-placeholder-shown:translate-y-0
           peer-focus:scale-75
@@ -100,4 +76,4 @@ const Input: FC<InputProps> = ({
   );
 };
 
-export default Input;
+export default Textarea;

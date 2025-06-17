@@ -13,11 +13,21 @@ const Categories = ({ categories }: CategoriesProps) => {
   const categoryIdParam = params?.get('categoryId');
 
   return (
-    <div className="flex flex-row justify-between items-center pt-4 overflow-x-auto">
+    <div
+      className="
+        grid
+        grid-cols-3 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7
+        border border-neutral-300
+        rounded-lg overflow-hidden
+        text-sm
+      "
+    >
       {categories.map((category) => (
         <CategoryBox
           key={category.id}
           label={category.name}
+          order={category.order}
+          len={categories.length}
           id={category.id}
           selected={categoryIdParam === category.id}
         />

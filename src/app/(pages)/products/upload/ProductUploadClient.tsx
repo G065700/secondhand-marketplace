@@ -11,6 +11,7 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
 import { Category } from '@/prisma/client';
+import Textarea from '@/components/Textarea';
 
 interface ProductUploadClientProps {
   categories: Category[];
@@ -70,7 +71,10 @@ const ProductUploadClient = ({ categories }: ProductUploadClientProps) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">
-      <Heading title="Product Upload" subtitle="upload your product" />
+      <Heading
+        title="상품 등록"
+        subtitle="판매하고 싶은 상품을 등록해보세요!"
+      />
 
       <ImageUpload
         value={imageSrc}
@@ -78,16 +82,16 @@ const ProductUploadClient = ({ categories }: ProductUploadClientProps) => {
       />
       <Input
         id="title"
-        label="TItle"
+        label="상품명"
         required
         disabled={isLoading}
         register={register}
         errors={errors}
       />
       <hr />
-      <Input
+      <Textarea
         id="description"
-        label="Description"
+        label="설명"
         required
         disabled={isLoading}
         register={register}
@@ -96,7 +100,7 @@ const ProductUploadClient = ({ categories }: ProductUploadClientProps) => {
       <hr />
       <Input
         id="price"
-        label="Price"
+        label="가격"
         formatPrice
         required
         disabled={isLoading}
