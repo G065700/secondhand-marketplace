@@ -33,12 +33,15 @@ const SignInPage = () => {
   };
 
   return (
-    <section className="grid h-[calc(100vh_-_56px)] place-items-center">
+    <section className="grid h-dvh place-items-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col justify-center gap-4 min-w-[350px]"
       >
-        <h1 className="text-2xl text-center">Sign in</h1>
+        <h1 className="text-2xl text-center">
+          <span className="font-semibold">2nd</span>
+          <span className="text-cyan-500 font-bold">HAND</span>
+        </h1>
         <Input
           id="email"
           label="Email"
@@ -57,12 +60,12 @@ const SignInPage = () => {
           errors={errors}
           required
         />
-        <Button label="Sign in" />
-        <div className="text-center">
+        <Button label="로그인" />
+        <div className="text-center text-sm">
           <p className="text-gray-400">
-            Not a member?&nbsp;
+            계정이 없으신가요??&nbsp;
             <Link href="/auth/sign-up" className="text-black hover:underline">
-              Sign up
+              회원가입
             </Link>
           </p>
         </div>

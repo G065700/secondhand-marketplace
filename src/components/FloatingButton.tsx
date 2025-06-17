@@ -20,13 +20,13 @@ export default function FloatingButton({
         justify-center
         text-white
         transition-colors
-        bg-teal-400
+        bg-cyan-500
         border-0
         border-transparent
         rounded-full
         shadow-xl
         cursor-pointer
-        hover:bg-teal-500
+        hover:bg-cyan-600
         aspect-square
         bottom-5
         right-5

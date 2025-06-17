@@ -9,6 +9,6 @@ export function fromNow(time: string | Date) {
   return dayjs(time).fromNow();
 }
 
-export function formatTime(time: string | Date, format = 'YYYY.MM.DD h:mm A') {
+export function formatTime(time: string | Date, format = 'YYYY.MM.DD HH:mm') {
   return dayjs(time).format(format);
 }

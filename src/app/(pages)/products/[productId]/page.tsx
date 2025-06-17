@@ -1,7 +1,7 @@
 import getProductById from '@/app/actions/getProductById';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 import EmptyState from '@/components/EmptyState';
-import ProductClient from '@/app/products/[productId]/ProductClient';
+import ProductClient from '@/app/(pages)/products/[productId]/ProductClient';
 import getCategories from '@/app/actions/getCategories';
 
 interface Params {

@@ -1,5 +1,5 @@
 import getCurrentUser from '@/app/actions/getCurrentUser';
-import ChatClient from '@/app/chat/ChatClient';
+import ChatClient from '@/app/(pages)/chat/ChatClient';
 
 const ChatPage = async () => {
   const currentUser = await getCurrentUser();

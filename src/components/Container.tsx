@@ -10,11 +10,11 @@ const Container = ({ children }: ContainerProps) => {
       className="
         max-w-[2520px]
         mx-auto
-        xl:px-20
-        md:px-10
-        sm:px-2
-        px-4
-        py-6
+        lg:px-20
+        sm:px-10
+        px-5
+        pt-[80px]
+        pb-6
       "
     >
       {children}

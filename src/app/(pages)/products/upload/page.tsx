@@ -1,5 +1,5 @@
 import Container from '@/components/Container';
-import ProductUploadClient from '@/app/products/upload/ProductUploadClient';
+import ProductUploadClient from '@/app/(pages)/products/upload/ProductUploadClient';
 import getCategories from '@/app/actions/getCategories';
 
 const ProductUploadPage = async () => {
