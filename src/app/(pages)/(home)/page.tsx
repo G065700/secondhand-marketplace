@@ -8,6 +8,7 @@ import Categories from '@/components/categories/Categories';
 import Pagination from '@/components/pagination/Pagination';
 import getCategories from '@/app/actions/getCategories';
 import Heading from '@/components/Heading';
+import { PRODUCTS_PER_PAGE } from '@/constants';
 
 interface HomeProps {
   searchParams: ProductsParams;
@@ -51,7 +52,11 @@ export default async function Home({ searchParams }: HomeProps) {
             ))}
           </div>
 
-          <Pagination page={pageNum} totalItems={products.totalItems} />
+          <Pagination
+            page={pageNum}
+            itemsPerPage={PRODUCTS_PER_PAGE}
+            totalItems={products.totalItems}
+          />
         </div>
       )}
       <FloatingButton href="/products/upload">+</FloatingButton>
