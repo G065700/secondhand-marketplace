@@ -7,6 +7,8 @@ export async function middleware(req: NextRequest) {
   const session = await getToken({ req });
   const pathname = req.nextUrl.pathname;
 
+  console.log('session', session);
+
   // 로그인된 사용자만 User/Admin 관련 페이지 접근 가능
   if (
     (pathname.startsWith('/user') || pathname.startsWith('/admin')) &&
@@ -16,7 +18,7 @@ export async function middleware(req: NextRequest) {
   }
 
   // Admin 사용자만 Admin 관련 페이지 접근 가능
-  if (pathname.startsWith('/admin') && session?.role !== 'Admin') {
+  if (pathname.startsWith('/admin') && session?.userType !== 'Admin') {
     return NextResponse.redirect(new URL('/', req.url));
   }
 

@@ -39,7 +39,7 @@ const ChatClient = ({ currentUser }: ChatClientProps) => {
   if (error) return <p>Error</p>;
 
   return (
-    <main>
+    <main className="pt-[56px]">
       <div className="grid grid-cols-[1fr] md:grid-cols-[300px_1fr]">
         <section className={`md:flex ${showChat && 'hidden'}`}>
           <Contacts

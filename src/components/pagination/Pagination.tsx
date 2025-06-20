@@ -1,19 +1,19 @@
 'use client';
 
 import usePagination from '@lucasmogari/react-pagination';
-import { PRODUCTS_PER_PAGE } from '@/constants';
 import PaginationLink from '@/components/pagination/PaginationLink';
 
 interface PaginationProps {
   page: number;
+  itemsPerPage: number;
   totalItems: number;
 }
 
-const Pagination = ({ page, totalItems }: PaginationProps) => {
+const Pagination = ({ page, itemsPerPage, totalItems }: PaginationProps) => {
   const { getPageItem, totalPages } = usePagination({
     totalItems,
     page,
-    itemsPerPage: PRODUCTS_PER_PAGE,
+    itemsPerPage,
     maxPageItems: 5,
   });
 
@@ -30,7 +30,12 @@ const Pagination = ({ page, totalItems }: PaginationProps) => {
 
         if (page === 'previous') {
           return (
-            <PaginationLink key={i} page={prevPage} disabled={disabled}>
+            <PaginationLink
+              key={i}
+              page={prevPage}
+              itemsPerPage={itemsPerPage}
+              disabled={disabled}
+            >
               {'<'}
             </PaginationLink>
           );
@@ -38,7 +43,12 @@ const Pagination = ({ page, totalItems }: PaginationProps) => {
 
         if (page === 'next') {
           return (
-            <PaginationLink key={i} page={nextPage} disabled={disabled}>
+            <PaginationLink
+              key={i}
+              page={nextPage}
+              itemsPerPage={itemsPerPage}
+              disabled={disabled}
+            >
               {'>'}
             </PaginationLink>
           );
@@ -49,7 +59,12 @@ const Pagination = ({ page, totalItems }: PaginationProps) => {
         }
 
         return (
-          <PaginationLink key={i} active={current} page={page}>
+          <PaginationLink
+            key={i}
+            active={current}
+            page={page}
+            itemsPerPage={itemsPerPage}
+          >
             {page}
           </PaginationLink>
         );

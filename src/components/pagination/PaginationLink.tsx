@@ -1,25 +1,26 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { PRODUCTS_PER_PAGE } from '@/constants';
 import { PropsWithChildren } from 'react';
 import qs from 'query-string';
 import Link from 'next/link';
 
 type PaginationLinkProps = {
   page?: number | string;
+  itemsPerPage: number;
   active?: boolean;
   disabled?: boolean;
 } & PropsWithChildren;
 
 const PaginationLink = ({
   page,
+  itemsPerPage,
   active,
   disabled,
   children,
 }: PaginationLinkProps) => {
   const params = useSearchParams();
-  const skip = page ? (Number(page) - 1) * PRODUCTS_PER_PAGE : 0;
+  const skip = page ? (Number(page) - 1) * itemsPerPage : 0;
 
   let currentQuery = {};
 
