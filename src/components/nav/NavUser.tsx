@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { Box } from '@mui/joy';
 
 interface NavUserProps {
   image: string | null;
@@ -7,7 +8,17 @@ interface NavUserProps {
 
 const NavUser = ({ image, name }: NavUserProps) => {
   return (
-    <div className="hidden sm:flex justify-end items-center gap-2 sm:min-w-[80px]">
+    <Box
+      sx={{
+        display: {
+          xs: 'none',
+          sm: 'flex',
+        },
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        gap: 1,
+      }}
+    >
       <Image
         src={image || '/default-user-image.png'}
         width={30}
@@ -16,7 +27,7 @@ const NavUser = ({ image, name }: NavUserProps) => {
         className="rounded-full"
       />
       <span>{name}</span>
-    </div>
+    </Box>
   );
 };
 

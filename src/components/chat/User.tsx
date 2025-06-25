@@ -1,38 +1,81 @@
 import { TUserWidthChat } from '@/types';
 import Avatar from '@/components/Avatar';
 import { fromNow } from '@/helpers/dayjs';
+import { Box, Typography } from '@mui/joy';
 
 interface UserProps {
   user: TUserWidthChat;
   currentUserId: string;
+  isLastUser: boolean;
 }
 
-const User = ({ user, currentUserId }: UserProps) => {
+const User = ({ user, currentUserId, isLastUser }: UserProps) => {
   const messagesWithCurrentUser = user.conversations.find((conversation) =>
     conversation.users.find((user) => user.id === currentUserId),
   );
   const latestMessage = messagesWithCurrentUser?.messages.slice(-1)[0];
 
   return (
-    <div className="grid grid-cols-[40px_1fr_50px] grid-rows-[40px] gap-3 py-3 px-4 border-b-[1px] cursor-pointer hover:bg-teal-500">
-      <div className="">
-        <Avatar src={user.image} />
-      </div>
-      <div>
-        <h3>{user.name}</h3>
-        {latestMessage && (
-          <p className="overflow-hidden text-xs font-medium text-gray-600 break-words whitespace-pre-wrap">
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        p: 2,
+        borderBottom: `${!isLastUser && '1px solid'}`,
+        borderColor: 'divider',
+        cursor: 'pointer',
+        '&:hover': {
+          bgcolor: 'divider',
+        },
+      }}
+    >
+      <Avatar src={user.image} />
+
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          flexGrow: 1,
+          minWidth: 0,
+          marginLeft: 2,
+        }}
+      >
+        <Typography level="body-sm" fontWeight="md">
+          {user.name}
+        </Typography>
+
+        {latestMessage?.text && (
+          <Typography
+            level="body-xs"
+            sx={{
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+              textOverflow: 'ellipsis',
+              maxWidth: 'calc(100dvw - 204px)',
+            }}
+          >
             {latestMessage.text}
-          </p>
+          </Typography>
         )}
-        {latestMessage && latestMessage.image && (
-          <p className="text-xs font-medium text-gray-600">[이미지]</p>
+
+        {latestMessage?.image && (
+          <Typography level="body-xs" sx={{ fontWeight: 500 }}>
+            [이미지]
+          </Typography>
         )}
-      </div>
-      <div className="flex justify-end text-xs text-gray-500">
-        {latestMessage && <p>{fromNow(latestMessage.createdAt)}</p>}
-      </div>
-    </div>
+      </Box>
+
+      <Box>
+        {latestMessage && (
+          <Typography
+            level="body-xs"
+            sx={{ display: 'flex', justifyContent: 'flex-end', width: '60px' }}
+          >
+            {fromNow(latestMessage.createdAt)}
+          </Typography>
+        )}
+      </Box>
+    </Box>
   );
 };
 

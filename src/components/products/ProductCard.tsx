@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import HeartButton from '@/components/HeartButton';
 import { fromNow } from '@/helpers/dayjs';
+import { Box, Card, Typography } from '@mui/joy';
 
 interface ProductCardProps {
   product: Product;
@@ -15,12 +16,52 @@ interface ProductCardProps {
 const ProductCard = ({ product, category, currentUser }: ProductCardProps) => {
   const router = useRouter();
   return (
-    <div
+    <Card
+      variant="outlined"
+      sx={{ p: 1.5, cursor: 'pointer' }}
       onClick={() => router.push(`/products/${product.id}`)}
-      className="col-span-1 cursor-pointer group"
     >
-      <div className="flex flex-col gap-2 w-full">
-        <div className="relative w-full overflow-hidden aspect-square rounded-xl">
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 2,
+          position: 'relative',
+        }}
+      >
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Typography
+            level="title-md"
+            sx={{
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+              textOverflow: 'ellipsis',
+            }}
+          >
+            {product.title}
+          </Typography>
+          <Typography level="body-sm">{category?.name}</Typography>
+        </Box>
+
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '-22px',
+            right: '-20px',
+          }}
+        >
+          <HeartButton productId={product.id} currentUser={currentUser} />
+        </Box>
+
+        <Box
+          sx={{
+            position: 'relative',
+            width: '100%',
+            overflow: 'hidden',
+            aspectRatio: '1 / 1',
+            borderRadius: 'xl',
+          }}
+        >
           <Image
             src={product.imageSrc}
             alt={product.title}
@@ -28,21 +69,20 @@ const ProductCard = ({ product, category, currentUser }: ProductCardProps) => {
             sizes="auto"
             className="object-cover w-full h-full transition group-hover:scale-110"
           />
-          <div className="absolute top-3 right-3">
-            <HeartButton productId={product.id} currentUser={currentUser} />
-          </div>
-        </div>
-        <div className="text-lg font-semibold">{product.title}</div>
-        <div className="font-light text-neutral-500">{category?.name}</div>
-        <div className="flex justify-between items-center gap-1">
+        </Box>
+        <Box sx={{ mt: 'auto' }}>
           <div>
-            {product.price.toLocaleString()}&nbsp;
-            <span className="font-light">원</span>
+            <Typography level="body-xs">
+              {fromNow(product.createdAt)}
+            </Typography>
+            <Typography level="body-sm">
+              {product.price.toLocaleString()}&nbsp;
+              <span className="font-light">원</span>
+            </Typography>
           </div>
-          <div>{fromNow(product.createdAt)}</div>
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Card>
   );
 };
 

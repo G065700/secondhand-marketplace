@@ -1,6 +1,7 @@
 import { UsersParams } from '@/app/actions/getUsers';
 import { USERS_PER_PAGE } from '@/constants';
 import { useRouter } from 'next/navigation';
+import { Select, Option, Typography } from '@mui/joy';
 
 interface UserListSummaryProps {
   searchParams: UsersParams;
@@ -13,14 +14,14 @@ const UserListSummary = ({
 }: UserListSummaryProps) => {
   const router = useRouter();
 
-  const handleUsersPerPage = (usersPerPage: string) => {
+  const handleUsersPerPage = (usersPerPage: number) => {
     const queryStrArr: string[] = [];
 
     const sp: UsersParams & { [key: string]: any } = {
       ...searchParams,
       page: 1,
       skip: 0,
-      take: Number(usersPerPage),
+      take: usersPerPage,
     };
 
     Object.keys(sp).forEach((key) => {
@@ -31,21 +32,25 @@ const UserListSummary = ({
   };
 
   return (
-    <div className="flex justify-between mt-5">
-      <select
+    <div className="flex justify-between items-center">
+      <Select
+        variant="soft"
+        size="sm"
         value={searchParams.take || USERS_PER_PAGE[0]}
-        onChange={(e) => {
-          handleUsersPerPage(e.target.value);
+        onChange={(_, value) => {
+          if (value) {
+            handleUsersPerPage(value);
+          }
         }}
-        className="border border-neutral-400"
       >
         {USERS_PER_PAGE.map((size) => (
-          <option key={size} label={`${size}개씩 보기`} value={size} />
+          <Option key={size} value={size}>{`${size}개씩 보기`}</Option>
         ))}
-      </select>
-      <span>
+      </Select>
+
+      <Typography level="body-sm">
         총 <strong>{totalItems}</strong> 건
-      </span>
+      </Typography>
     </div>
   );
 };
