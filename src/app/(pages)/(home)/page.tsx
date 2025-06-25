@@ -9,6 +9,7 @@ import Pagination from '@/components/pagination/Pagination';
 import getCategories from '@/app/actions/getCategories';
 import Heading from '@/components/Heading';
 import { PRODUCTS_PER_PAGE } from '@/constants';
+import { Box, Grid } from '@mui/joy';
 
 interface HomeProps {
   searchParams: ProductsParams;
@@ -33,15 +34,25 @@ export default async function Home({ searchParams }: HomeProps) {
       {products.data.length === 0 ? (
         <EmptyState showReset />
       ) : (
-        <div className="mt-10">
+        <Box sx={{ mt: 5 }}>
           <Heading
             title={
-              categoryId
-                ? `${getCategory(categoryId)?.name}`
-                : '최근에 등록됐어요!'
+              categoryId ? `${getCategory(categoryId)?.name}` : '전체 상품'
             }
           />
-          <div className="grid grid-cols-1 gap-8 pt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+          <Grid
+            sx={{
+              mt: 2,
+              display: 'grid',
+              gridTemplateColumns: {
+                xs: 'repeat(1, 1fr)',
+                sm: 'repeat(2, 1fr)',
+                md: 'repeat(3, 1fr)',
+                lg: 'repeat(6, 1fr)',
+              },
+              gap: 2,
+            }}
+          >
             {products.data.map((product) => (
               <ProductCard
                 key={product.id}
@@ -50,14 +61,14 @@ export default async function Home({ searchParams }: HomeProps) {
                 category={getCategory(product.categoryId)}
               />
             ))}
-          </div>
+          </Grid>
 
           <Pagination
             page={pageNum}
             itemsPerPage={PRODUCTS_PER_PAGE}
             totalItems={products.totalItems}
           />
-        </div>
+        </Box>
       )}
       <FloatingButton href="/products/upload">+</FloatingButton>
     </Container>

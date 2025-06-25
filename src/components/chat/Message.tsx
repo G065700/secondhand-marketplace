@@ -48,6 +48,7 @@ const Message = ({
               break-all 
               text-white
               rounded-lg 
+              text-left
               ${isSender ? 'bg-teal-500 rounded-tr-none' : 'bg-gray-400 rounded-tl-none'}
             `}
           >

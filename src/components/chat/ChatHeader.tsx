@@ -1,6 +1,7 @@
 import { IoChevronBackCircleSharp } from 'react-icons/io5';
 import Avatar from '@/components/Avatar';
 import { formatTime } from '@/helpers/dayjs';
+import { Box, IconButton, Typography } from '@mui/joy';
 
 interface ChatHeaderProps {
   setShowChat: (showChat: boolean) => void;
@@ -16,27 +17,42 @@ const ChatHeader = ({
   lastMessageTime,
 }: ChatHeaderProps) => {
   return (
-    <div className="pl-4 border-b-[1px]">
-      <div className="flex items-center h-16 gap-4">
-        <div className="flex justify-center items-center text-3xl text-gray-400 hover:text-gray-600">
-          <button onClick={() => setShowChat(false)} className="md:hidden">
-            <IoChevronBackCircleSharp />
-          </button>
-        </div>
+    <Box sx={{ pl: 4, borderBottom: '1px solid', borderColor: 'divider' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', height: 62, gap: 4 }}>
+        <Box
+          sx={{
+            display: { xs: 'block', md: 'none' },
+            fontSize: '3rem',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <IconButton
+            onClick={() => setShowChat(false)}
+            variant="plain"
+            sx={{ padding: 0 }}
+          >
+            <IoChevronBackCircleSharp size={30} />
+          </IconButton>
+        </Box>
 
-        <div className="flex items-center gap-[0.6rem]">
-          <div>
-            <Avatar src={receiverImage} />
-          </div>
-          <h2 className="text-lg font-semibold">
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+          <Avatar src={receiverImage} />
+
+          <Typography
+            level="title-md"
+            sx={{ display: 'flex', flexDirection: 'column' }}
+          >
             {receiverName}
             {lastMessageTime && (
-              <p className="text-gray-600">{formatTime(lastMessageTime)}</p>
+              <Typography level="body-xs" sx={{ color: 'text.secondary' }}>
+                {formatTime(lastMessageTime)}
+              </Typography>
             )}
-          </h2>
-        </div>
-      </div>
-    </div>
+          </Typography>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

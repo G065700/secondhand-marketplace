@@ -1,32 +1,30 @@
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
+import { ListDivider, Menu, MenuItem } from '@mui/joy';
 
 const My = () => {
   return (
-    <ul
-      className="
-                  absolute left-5 top-9
-                  flex flex-col
-                  w-full
-                  bg-white text-black
-                  rounded-lg
-                  border border-black
-                  text-xs
-                "
-    >
-      <li className="w-full p-2 border-b border-black hover:font-semibold">
-        <Link href="/chat">DM</Link>
-      </li>
-      <li className="w-full p-2 border-b border-black hover:font-semibold">
-        <Link href="/my">내 계정</Link>
-      </li>
-      <li className="w-full p-2 border-b border-black hover:font-semibold">
-        <Link href="/my">내역</Link>
-      </li>
-      <li onClick={() => signOut()} className="p-2 hover:font-semibold">
+    <Menu size="sm" sx={{ minWidth: 100 }}>
+      <MenuItem>
+        <Link href="/chat" className="w-full">
+          DM
+        </Link>
+      </MenuItem>
+      <MenuItem>
+        <Link href="/my" className="w-full">
+          내 계정
+        </Link>
+      </MenuItem>
+      <MenuItem>
+        <Link href="/my" className="w-full">
+          내역
+        </Link>
+      </MenuItem>
+      <ListDivider />
+      <MenuItem onClick={() => signOut()} className="w-full">
         로그아웃
-      </li>
-    </ul>
+      </MenuItem>
+    </Menu>
   );
 };
 

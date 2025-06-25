@@ -1,12 +1,25 @@
 'use client';
 
 import { User } from '@/prisma/client';
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import {
+  Controller,
+  FieldValues,
+  SubmitHandler,
+  useForm,
+} from 'react-hook-form';
 import { formatTime } from '@/helpers/dayjs';
 import Image from 'next/image';
 import axios from 'axios';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import {
+  Button,
+  FormControl,
+  Radio,
+  RadioGroup,
+  Sheet,
+  Typography,
+} from '@mui/joy';
 
 interface UserClientProps {
   user: User;
@@ -16,7 +29,7 @@ const UserClient = ({ user }: UserClientProps) => {
   const [isUserTypeSubmitting, setIsUserTypeSubmitting] = useState(false);
   const [isActiveSubmitting, setIsActiveSubmitting] = useState(false);
 
-  const { register: userTypeRegister, handleSubmit: userTypeHandleSubmit } =
+  const { control: userTypeControl, handleSubmit: userTypeHandleSubmit } =
     useForm<FieldValues>({
       defaultValues: {
         userType: user.userType,
@@ -27,7 +40,7 @@ const UserClient = ({ user }: UserClientProps) => {
     setIsUserTypeSubmitting(true);
     try {
       await axios.patch('/api/admin/users/type', { ...body, id: user.id });
-      toast.success('수정되었습니다.');
+      toast.success('자징되었습니다.');
     } catch (error) {
       console.log(error);
     } finally {
@@ -35,7 +48,7 @@ const UserClient = ({ user }: UserClientProps) => {
     }
   };
 
-  const { register: activeRegister, handleSubmit: activeHandleSubmit } =
+  const { control: activeControl, handleSubmit: activeHandleSubmit } =
     useForm<FieldValues>({
       defaultValues: {
         active: String(user.active),
@@ -49,7 +62,7 @@ const UserClient = ({ user }: UserClientProps) => {
         id: user.id,
         active: body.active === 'true',
       });
-      toast.success('수정되었습니다.');
+      toast.success('저장되었습니다.');
     } catch (error) {
       console.log(error);
     } finally {
@@ -58,83 +71,118 @@ const UserClient = ({ user }: UserClientProps) => {
   };
 
   return (
-    <div className="max-w-screen-lg mx-auto">
-      <div className="flex flex-col gap-6">
-        <div className="flex flex-col gap-2 px-3">
-          <Image
-            src={user.image || '/default-user-image.png'}
-            alt=""
-            height={100}
-            width={100}
-            className="w-40 h-40 rounded-full"
-          />
-        </div>
+    <Sheet
+      variant="soft"
+      color="neutral"
+      sx={{
+        p: 4,
+        borderRadius: 20,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 3,
+      }}
+    >
+      <Image
+        src={user.image || '/default-user-image.png'}
+        alt=""
+        height={100}
+        width={100}
+        className="w-40 h-40 rounded-full"
+      />
 
-        <div className="flex flex-col gap-2 px-3">
-          <label className="font-semibold">이름</label>
-          <span>{user.name}</span>
-        </div>
-
-        <div className="flex flex-col gap-2 px-3">
-          <label className="font-semibold">이메일</label>
-          <span>{user.email}</span>
-        </div>
-
-        <div className="flex flex-col gap-2 px-3">
-          <label className="font-semibold">사용자 구분</label>
-          <fieldset className="flex gap-4">
-            <label className="flex gap-2">
-              <input
-                type="radio"
-                value="Admin"
-                {...userTypeRegister('userType')}
-              />
-              관리자
-            </label>
-            <label className="flex gap-2">
-              <input
-                type="radio"
-                value="User"
-                {...userTypeRegister('userType')}
-              />
-              일반
-            </label>
-            <button
-              disabled={isUserTypeSubmitting}
-              onClick={userTypeHandleSubmit(onUserTypeSubmit)}
-              className="w-fit text-white text-sm bg-cyan-500 hover:bg-cyan-600 px-2 py-1 rounded-lg cursor-pointer"
-            >
-              저장
-            </button>
-          </fieldset>
-        </div>
-
-        <div className="flex flex-col gap-2 px-3">
-          <label className="font-semibold">활성화 여부</label>
-          <fieldset className="flex gap-4">
-            <label className="flex gap-2">
-              <input type="radio" value="true" {...activeRegister('active')} />Y
-            </label>
-            <label className="flex gap-2">
-              <input type="radio" value="false" {...activeRegister('active')} />
-              N
-            </label>
-            <button
-              disabled={isActiveSubmitting}
-              onClick={activeHandleSubmit(onActiveSubmit)}
-              className="w-fit text-white text-sm bg-cyan-500 hover:bg-cyan-600 px-2 py-1 rounded-lg cursor-pointer"
-            >
-              저장
-            </button>
-          </fieldset>
-        </div>
-
-        <div className="flex flex-col gap-2 px-3">
-          <label className="font-semibold">최근 수정 일시</label>
-          <span>{formatTime(user.updatedAt)}</span>
-        </div>
+      <div>
+        <Typography level="title-md">이름</Typography>
+        <Typography level="body-md">{user.name}</Typography>
       </div>
-    </div>
+
+      <div>
+        <Typography level="title-md">이메일</Typography>
+        <Typography level="body-md">{user.email}</Typography>
+      </div>
+
+      <FormControl>
+        <Typography level="title-md">
+          구분
+          <Button
+            size="sm"
+            sx={{ ml: 1 }}
+            disabled={isUserTypeSubmitting}
+            onClick={userTypeHandleSubmit(onUserTypeSubmit)}
+          >
+            저장
+          </Button>
+        </Typography>
+
+        <Controller
+          name="userType"
+          control={userTypeControl}
+          render={({ field }) => (
+            <RadioGroup
+              value={field.value}
+              onChange={(e) => field.onChange(e.target.value)}
+              orientation="horizontal"
+            >
+              <Radio
+                value="Admin"
+                label="관리자"
+                variant="outlined"
+                color="primary"
+              />
+              <Radio
+                value="User"
+                label="일반"
+                variant="outlined"
+                color="primary"
+              />
+            </RadioGroup>
+          )}
+        />
+      </FormControl>
+
+      <FormControl>
+        <Typography level="title-md">
+          활성화 여부
+          <Button
+            size="sm"
+            sx={{ ml: 1 }}
+            disabled={isActiveSubmitting}
+            onClick={activeHandleSubmit(onActiveSubmit)}
+          >
+            저장
+          </Button>
+        </Typography>
+
+        <Controller
+          name="active"
+          control={activeControl}
+          render={({ field }) => (
+            <RadioGroup
+              value={field.value}
+              onChange={(e) => field.onChange(e.target.value)}
+              orientation="horizontal"
+            >
+              <Radio
+                value="true"
+                label="Y"
+                variant="outlined"
+                color="primary"
+              />
+              <Radio
+                value="false"
+                label="N"
+                variant="outlined"
+                color="primary"
+              />
+            </RadioGroup>
+          )}
+        />
+      </FormControl>
+
+      <div>
+        <Typography level="title-md">최근 수정 일시</Typography>
+        <Typography level="body-md">{formatTime(user.updatedAt)}</Typography>
+      </div>
+    </Sheet>
   );
 };
 

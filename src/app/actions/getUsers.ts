@@ -6,9 +6,10 @@ export interface UsersParams {
   name?: string;
   email?: string;
   userType?: UserType;
-  page?: number;
-  skip?: number;
-  take?: number;
+  active?: boolean;
+  page: number;
+  skip: number;
+  take: number;
 }
 
 export default async function getUsers(params: UsersParams) {
@@ -17,6 +18,7 @@ export default async function getUsers(params: UsersParams) {
       name,
       email,
       userType,
+      active,
       skip = 0,
       take = USERS_PER_PAGE[0],
     } = params;
@@ -37,6 +39,10 @@ export default async function getUsers(params: UsersParams) {
 
     if (userType) {
       query.userType = userType;
+    }
+
+    if (active !== undefined) {
+      query.active = active;
     }
 
     const totalItems = await prisma.user.count({

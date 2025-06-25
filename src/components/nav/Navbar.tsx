@@ -7,6 +7,7 @@ import { signIn } from 'next-auth/react';
 import Logo from '@/components/nav/Logo';
 import NavUser from '@/components/nav/NavUser';
 import My from '@/components/nav/My';
+import { Box, Button, Dropdown, MenuButton } from '@mui/joy';
 
 interface NavbarProps {
   currentUser?: User | null;
@@ -14,57 +15,73 @@ interface NavbarProps {
 
 const Navbar = ({ currentUser }: NavbarProps) => {
   const [mobileMenu, setMobileMenu] = useState(false);
-  const [userMenu, setUserMenu] = useState(false);
 
   const handleMobileMenu = () => {
     setMobileMenu(!mobileMenu);
   };
 
-  const handleUserMenu = () => {
-    setUserMenu(!userMenu);
-  };
-
   return (
-    <nav className="fixed w-full z-10 bg-black text-white">
-      <div className="flex justify-between items-center mx-5 sm:mx-10 lg:mx-20">
-        <div className="flex items-center gap-10 h-14">
+    <nav className="fixed w-full z-10 bg-black text-white max-w-[2520px]">
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          mx: {
+            xs: 2.5,
+            sm: 5,
+            md: 10,
+          },
+        }}
+      >
+        <Box sx={{ height: 56, display: 'flex', alignItems: 'center', gap: 3 }}>
           <Logo />
 
-          <div className="hidden sm:block">
+          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             <NavItem currentUser={currentUser} />
-          </div>
-        </div>
+          </Box>
+        </Box>
 
-        <div className="sm:hidden">
-          <button
-            onClick={handleMobileMenu}
-            className="w-7 cursor-pointer text-2xl font-bold"
-          >
-            {!mobileMenu ? '+' : '-'}
-          </button>
-        </div>
+        <Button
+          onClick={handleMobileMenu}
+          sx={{ display: { xs: 'block', sm: 'none' } }}
+        >
+          {!mobileMenu ? '+' : '-'}
+        </Button>
 
         {currentUser ? (
-          <div
-            onClick={handleUserMenu}
-            className="hidden sm:block relative cursor-pointer text-sm"
-          >
-            <NavUser image={currentUser.image} name={currentUser.name} />
-
-            {userMenu && <My />}
-          </div>
+          <Dropdown>
+            <MenuButton
+              size="sm"
+              sx={{
+                display: {
+                  xs: 'none',
+                  sm: 'block',
+                },
+                color: 'white',
+                border: 'none',
+                '&:hover': {
+                  bgcolor: 'transparent',
+                },
+              }}
+            >
+              <NavUser image={currentUser.image} name={currentUser.name} />
+            </MenuButton>
+            <My />
+          </Dropdown>
         ) : (
-          <div className="hidden sm:block">
-            <button className="cursor-pointer text-sm" onClick={() => signIn()}>
-              로그인
-            </button>
-          </div>
+          <Button
+            onClick={() => signIn()}
+            sx={{ display: { xs: 'none', sm: 'block' } }}
+          >
+            로그인
+          </Button>
         )}
-      </div>
+      </Box>
 
-      <div className="block sm:hidden">
+      <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
         {!mobileMenu ? null : <NavItem mobile currentUser={currentUser} />}
-      </div>
+      </Box>
     </nav>
   );
 };

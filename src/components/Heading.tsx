@@ -1,17 +1,17 @@
 import { ReactNode } from 'react';
+import { Typography } from '@mui/joy';
 
 interface HeadingProps {
   title: ReactNode;
   subtitle?: string;
-  center?: boolean;
 }
 
-const Heading = ({ title, subtitle, center }: HeadingProps) => {
+const Heading = ({ title, subtitle }: HeadingProps) => {
   return (
-    <div className={center ? 'text-center' : 'text-start'}>
-      <div className="text-2xl font-bold">{title}</div>
-      <div className="mt-2 font-light text-neutral-500">{subtitle}</div>
-    </div>
+    <>
+      <Typography level="h4">{title}</Typography>
+      <Typography level="body-md">{subtitle}</Typography>
+    </>
   );
 };
 
