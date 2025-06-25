@@ -1,8 +1,8 @@
 'use client';
 
 import Heading from '@/components/Heading';
-import Button from '@/components/Button';
 import { useRouter } from 'next/navigation';
+import { Box, Button } from '@mui/joy';
 
 interface EmptyStateProps {
   title?: string;
@@ -17,18 +17,23 @@ const EmptyState = ({
 }: EmptyStateProps) => {
   const router = useRouter();
   return (
-    <div className="h-[60vh] flex flex-col gap-2 justify-center items-center">
-      <Heading center title={title} subtitle={subtitle} />
-      <div className="w-48 mt-4">
-        {showReset && (
-          <Button
-            label="모든 필터 제거"
-            outline
-            onClick={() => router.push('/')}
-          />
-        )}
-      </div>
-    </div>
+    <Box
+      sx={{
+        height: '60vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 1,
+      }}
+    >
+      <Heading title={title} subtitle={subtitle} />
+      {showReset && (
+        <Button size="lg" sx={{ mt: 2 }} onClick={() => router.push('/')}>
+          모든 필터 제거
+        </Button>
+      )}
+    </Box>
   );
 };
 

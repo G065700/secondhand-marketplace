@@ -3,6 +3,7 @@ import Input from '@/components/chat/Input';
 import ChatHeader from '@/components/chat/ChatHeader';
 import Message from '@/components/chat/Message';
 import { useEffect, useRef } from 'react';
+import { Box } from '@mui/joy';
 
 interface ChatProps {
   currentUser: TUserWidthChat;
@@ -30,11 +31,12 @@ const Chat = ({ currentUser, receiver, setShowChat }: ChatProps) => {
   });
 
   if (!receiver.receiverName || !currentUser)
-    return <div className="w-full h-full"></div>;
+    return <div className="w-full h-full" />;
 
   return (
-    <div className="w-full">
-      <div>
+    <Box sx={{ width: '100%' }}>
+      {/* Header */}
+      <Box>
         <ChatHeader
           setShowChat={setShowChat}
           receiverName={receiver.receiverName}
@@ -45,8 +47,19 @@ const Chat = ({ currentUser, receiver, setShowChat }: ChatProps) => {
               .slice(-1)[0]?.createdAt
           }
         />
-      </div>
-      <div className="flex flex-col gap-8 p-4 overflow-auto h-[calc(100vh_-_60px_-_70px_-_80px)]">
+      </Box>
+
+      {/* Messages */}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 8,
+          p: 4,
+          overflow: 'auto',
+          height: 'calc(100vh - 267px)',
+        }}
+      >
         {conversation &&
           conversation.messages.map((message) => (
             <Message
@@ -60,15 +73,23 @@ const Chat = ({ currentUser, receiver, setShowChat }: ChatProps) => {
               time={message.createdAt}
             />
           ))}
-        <div ref={messagesEndRef} />
-      </div>
-      <div className="flex items-center p-3">
+        <Box ref={messagesEndRef} />
+      </Box>
+
+      {/* Input */}
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          p: 3,
+        }}
+      >
         <Input
           receiverId={receiver.receiverId}
           currentUserId={currentUser.id}
         />
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

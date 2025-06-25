@@ -12,15 +12,19 @@ const NavItem = ({ mobile, currentUser }: NavItemProps) => {
     <ul
       className={`w-full text-sm flex justify-center items-center gap-4 ${mobile && 'flex-col h-full py-4'}`}
     >
-      <li className="py-2 text-center">
-        <Link href="/admin/categories">카테고리</Link>
-      </li>
-      <li className="py-2 text-center">
-        <Link href="/products">상품</Link>
-      </li>
-      <li className="py-2 text-center">
-        <Link href="/admin/users">사용자</Link>
-      </li>
+      {currentUser && currentUser.userType === 'Admin' && (
+        <>
+          <li className="py-2 text-center">
+            <Link href="/admin/categories">카테고리</Link>
+          </li>
+          <li className="py-2 text-center">
+            <Link href="/products">상품</Link>
+          </li>
+          <li className="py-2 text-center">
+            <Link href="/admin/users">사용자</Link>
+          </li>
+        </>
+      )}
 
       {mobile &&
         (currentUser ? (

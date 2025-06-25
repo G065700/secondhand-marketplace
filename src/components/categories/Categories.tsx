@@ -3,6 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 import CategoryBox from '@/components/categories/CategoryBox';
 import { Category } from '@/prisma/client';
+import { Grid, Sheet } from '@mui/joy';
 
 interface CategoriesProps {
   categories: Category[];
@@ -13,26 +14,25 @@ const Categories = ({ categories }: CategoriesProps) => {
   const categoryIdParam = params?.get('categoryId');
 
   return (
-    <div
-      className="
-        grid
-        grid-cols-3 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7
-        border border-neutral-300
-        rounded-lg overflow-hidden
-        text-sm
-      "
-    >
-      {categories.map((category) => (
-        <CategoryBox
-          key={category.id}
-          label={category.name}
-          order={category.order}
-          len={categories.length}
-          id={category.id}
-          selected={categoryIdParam === category.id}
-        />
-      ))}
-    </div>
+    <Sheet variant="soft" sx={{ p: 3, borderRadius: 'lg' }}>
+      <Grid
+        container
+        spacing={{ xs: 2, md: 3 }}
+        columns={{ xs: 4, sm: 8, md: 12 }}
+        sx={{
+          flexGrow: 1,
+        }}
+      >
+        {categories.map((category) => (
+          <CategoryBox
+            key={category.id}
+            label={category.name}
+            id={category.id}
+            selected={categoryIdParam === category.id}
+          />
+        ))}
+      </Grid>
+    </Sheet>
   );
 };
 

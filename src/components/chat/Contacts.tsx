@@ -1,5 +1,6 @@
 import { TUserWidthChat } from '@/types';
 import User from '@/components/chat/User';
+import { Box, Divider, Typography } from '@mui/joy';
 
 interface ContactsProps {
   users: TUserWidthChat[];
@@ -30,28 +31,39 @@ const Contacts = ({
     });
   };
 
-  return (
-    <div className="w-full overflow-auto h-[calc(100vh_-_56px)] border-[1px]">
-      <h1 className="m-4 text-2xl font-semibold">Chat</h1>
-      <hr />
+  const contactUsers = users.filter((user) => user.id !== currentUser.id);
 
-      <div className="flex flex-col">
+  return (
+    <Box
+      sx={{
+        height: 'calc(100vh - 106px)',
+        overflow: 'auto',
+      }}
+    >
+      <Typography level="h4" sx={{ m: 2, fontWeight: 'lg' }}>
+        DM
+      </Typography>
+      <Divider />
+
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         {users.length > 0 &&
-          users
-            .filter((user) => user.id !== currentUser.id)
-            .map((user) => (
-              <div
-                key={user.id}
-                onClick={() => {
-                  filterMessages(user.id, user.name, user.image);
-                  setShowChat(true);
-                }}
-              >
-                <User user={user} currentUserId={currentUser.id} />
-              </div>
-            ))}
-      </div>
-    </div>
+          contactUsers.map((user, userIdx) => (
+            <Box
+              key={user.id}
+              onClick={() => {
+                filterMessages(user.id, user.name, user.image);
+                setShowChat(true);
+              }}
+            >
+              <User
+                user={user}
+                currentUserId={currentUser.id}
+                isLastUser={contactUsers.length === userIdx + 1}
+              />
+            </Box>
+          ))}
+      </Box>
+    </Box>
   );
 };
 

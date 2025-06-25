@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { Box } from '@mui/joy';
 
 interface ContainerProps {
   children: ReactNode;
@@ -6,19 +7,20 @@ interface ContainerProps {
 
 const Container = ({ children }: ContainerProps) => {
   return (
-    <div
-      className="
-        max-w-[2520px]
-        mx-auto
-        lg:px-20
-        sm:px-10
-        px-5
-        pt-[80px]
-        pb-6
-      "
+    <Box
+      sx={{
+        maxWidth: '2520px',
+        pt: 10,
+        pb: 3,
+        px: {
+          xs: 2.5,
+          sm: 5,
+          md: 10,
+        },
+      }}
     >
       {children}
-    </div>
+    </Box>
   );
 };
 
