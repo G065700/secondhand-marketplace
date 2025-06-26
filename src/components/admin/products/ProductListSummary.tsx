@@ -1,27 +1,27 @@
-import { UsersParams } from '@/app/actions/getUsers';
-import { COUNT_PER_PAGE } from '@/constants';
+import { ProductsParams } from '@/app/actions/getProducts';
 import { useRouter } from 'next/navigation';
+import { COUNT_PER_PAGE } from '@/constants';
 import { Select, Option, Typography } from '@mui/joy';
 
-interface UserListSummaryProps {
-  searchParams: UsersParams;
+interface ProductListSummaryProps {
+  searchParams: ProductsParams;
   totalItems: number;
 }
 
-const UserListSummary = ({
+const ProductListSummary = ({
   searchParams,
   totalItems,
-}: UserListSummaryProps) => {
+}: ProductListSummaryProps) => {
   const router = useRouter();
 
-  const handleUsersPerPage = (usersPerPage: number) => {
+  const handleProductsPerPage = (productsPerPage: number) => {
     const queryStrArr: string[] = [];
 
-    const sp: UsersParams & { [key: string]: any } = {
+    const sp: ProductsParams & { [key: string]: any } = {
       ...searchParams,
       page: 1,
-      skip: 0,
-      take: usersPerPage,
+      sip: 0,
+      take: productsPerPage,
     };
 
     Object.keys(sp).forEach((key) => {
@@ -36,10 +36,13 @@ const UserListSummary = ({
       <Select
         variant="soft"
         size="sm"
-        value={searchParams.take || COUNT_PER_PAGE[0]}
+        value={
+          (searchParams.skip || 0) / (searchParams.page || 1) ||
+          COUNT_PER_PAGE[0]
+        }
         onChange={(_, value) => {
           if (value) {
-            handleUsersPerPage(value);
+            handleProductsPerPage(value);
           }
         }}
       >
@@ -55,4 +58,4 @@ const UserListSummary = ({
   );
 };
 
-export default UserListSummary;
+export default ProductListSummary;

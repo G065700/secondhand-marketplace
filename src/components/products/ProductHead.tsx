@@ -26,9 +26,11 @@ const ProductHead = ({
           fill
           className="object-cover w-full"
         />
-        <div className="absolute top-5 right-5">
-          <HeartButton productId={id} currentUser={currentUser} />
-        </div>
+        {currentUser?.userType !== 'Admin' && (
+          <div className="absolute top-5 right-5">
+            <HeartButton productId={id} currentUser={currentUser} />
+          </div>
+        )}
       </div>
     </>
   );

@@ -16,13 +16,15 @@ interface HomeProps {
 }
 
 export default async function Home({ searchParams }: HomeProps) {
-  const page = (await searchParams).page;
-  const categoryId = (await searchParams).categoryId;
+  const sp = await searchParams;
+
+  const { page, categoryId } = sp;
+
   const pageNum = page ? Number(page) : 1;
 
   const currentUser = await getCurrentUser();
   const categories = await getCategories();
-  const products = await getProducts(await searchParams);
+  const products = await getProducts({ ...sp, take: PRODUCTS_PER_PAGE });
 
   const getCategory = (categoryId: string) => {
     return categories.find((category) => category.id === categoryId);
