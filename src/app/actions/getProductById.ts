@@ -14,6 +14,7 @@ export default async function getProductById(params: Params) {
       },
       include: {
         user: true,
+        category: true,
       },
     });
 

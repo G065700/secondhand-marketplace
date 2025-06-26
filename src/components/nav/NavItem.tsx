@@ -18,7 +18,7 @@ const NavItem = ({ mobile, currentUser }: NavItemProps) => {
             <Link href="/admin/categories">카테고리</Link>
           </li>
           <li className="py-2 text-center">
-            <Link href="/products">상품</Link>
+            <Link href="/admin/products">상품</Link>
           </li>
           <li className="py-2 text-center">
             <Link href="/admin/users">사용자</Link>

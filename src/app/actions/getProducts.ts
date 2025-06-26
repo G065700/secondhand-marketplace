@@ -1,36 +1,63 @@
 import prisma from '@/helpers/prismadb';
-import { PRODUCTS_PER_PAGE } from '@/constants';
+import { COUNT_PER_PAGE } from '@/constants';
 
 export interface ProductsParams {
-  latitude?: number;
-  longitude?: number;
+  title?: string;
   categoryId?: string;
-  page?: number;
-  skip?: number;
+  // latitude?: number;
+  // longitude?: number;
+  soldOut?: boolean;
+  suspension?: boolean;
+  page: number;
+  skip: number;
+  take: number;
 }
 
 export default async function getProducts(params: ProductsParams) {
   try {
-    const { latitude, longitude, categoryId, skip } = params;
+    const {
+      title,
+      categoryId,
+      // latitude,
+      // longitude,
+      soldOut,
+      suspension,
+      skip,
+      take = COUNT_PER_PAGE[0],
+    } = params;
 
     let query: any = {};
+
+    if (title) {
+      query.title = {
+        contains: title,
+      };
+    }
 
     if (categoryId) {
       query.categoryId = categoryId;
     }
 
-    if (latitude) {
-      query.latitude = {
-        gte: Number(latitude) - 0.01,
-        lte: Number(latitude) + 0.01,
-      };
+    // if (latitude) {
+    //   query.latitude = {
+    //     gte: Number(latitude) - 0.01,
+    //     lte: Number(latitude) + 0.01,
+    //   };
+    // }
+    //
+    // if (longitude) {
+    //   query.longitude = {
+    //     gte: Number(longitude) - 0.01,
+    //     lte: Number(longitude) + 0.01,
+    //   };
+    // }
+
+    if (soldOut !== undefined) {
+      query.soldOut = soldOut;
     }
 
-    if (longitude) {
-      query.longitude = {
-        gte: Number(longitude) - 0.01,
-        lte: Number(longitude) + 0.01,
-      };
+    if (suspension !== undefined) {
+      query.suspension = suspension;
     }
 
     const totalItems = await prisma.product.count({
@@ -39,11 +66,14 @@ export default async function getProducts(params: ProductsParams) {
 
     const products = await prisma.product.findMany({
       where: query,
+      include: {
+        category: true,
+      },
       orderBy: {
         createdAt: 'desc',
       },
       skip: skip ? Number(skip) : 0,
-      take: PRODUCTS_PER_PAGE,
+      take: Number(take),
     });
 
     return {

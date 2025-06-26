@@ -15,6 +15,9 @@ interface ProductCardProps {
 
 const ProductCard = ({ product, category, currentUser }: ProductCardProps) => {
   const router = useRouter();
+
+  console.log(currentUser);
+
   return (
     <Card
       variant="outlined"
@@ -43,15 +46,17 @@ const ProductCard = ({ product, category, currentUser }: ProductCardProps) => {
           <Typography level="body-sm">{category?.name}</Typography>
         </Box>
 
-        <Box
-          sx={{
-            position: 'absolute',
-            top: '-22px',
-            right: '-20px',
-          }}
-        >
-          <HeartButton productId={product.id} currentUser={currentUser} />
-        </Box>
+        {currentUser?.userType !== 'Admin' && (
+          <Box
+            sx={{
+              position: 'absolute',
+              top: '-22px',
+              right: '-20px',
+            }}
+          >
+            <HeartButton productId={product.id} currentUser={currentUser} />
+          </Box>
+        )}
 
         <Box
           sx={{

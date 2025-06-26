@@ -1,6 +1,6 @@
 import prisma from '@/helpers/prismadb';
 import { UserType } from '@/prisma/client';
-import { USERS_PER_PAGE } from '@/constants';
+import { COUNT_PER_PAGE } from '@/constants';
 
 export interface UsersParams {
   name?: string;
@@ -20,7 +20,7 @@ export default async function getUsers(params: UsersParams) {
       userType,
       active,
       skip = 0,
-      take = USERS_PER_PAGE[0],
+      take = COUNT_PER_PAGE[0],
     } = params;
 
     let query: any = {};
@@ -55,7 +55,7 @@ export default async function getUsers(params: UsersParams) {
         createdAt: 'desc',
       },
       skip: skip ? Number(skip) : 0,
-      take: take ? Number(take) : USERS_PER_PAGE[0],
+      take: take ? Number(take) : COUNT_PER_PAGE[0],
     });
 
     return {
