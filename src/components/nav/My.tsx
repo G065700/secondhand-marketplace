@@ -15,11 +15,6 @@ const My = () => {
           내 계정
         </Link>
       </MenuItem>
-      <MenuItem>
-        <Link href="/my" className="w-full">
-          내역
-        </Link>
-      </MenuItem>
       <ListDivider />
       <MenuItem onClick={() => signOut()} className="w-full">
         로그아웃

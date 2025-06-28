@@ -24,7 +24,7 @@ const NavUser = ({ image, name }: NavUserProps) => {
         width={30}
         height={30}
         alt={name || ''}
-        className="rounded-full"
+        className="w-[30px] h-[30px] rounded-full"
       />
       <span>{name}</span>
     </Box>
