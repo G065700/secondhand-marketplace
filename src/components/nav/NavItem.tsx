@@ -31,7 +31,6 @@ const NavItem = ({ mobile, currentUser }: NavItemProps) => {
           <>
             <li className="py-2 text-center cursor-pointer">DM</li>
             <li className="py-2 text-center cursor-pointer">내 계정</li>
-            <li className="py-2 text-center cursor-pointer">내역</li>
             <li
               onClick={() => signOut()}
               className="py-2 text-center cursor-pointer"

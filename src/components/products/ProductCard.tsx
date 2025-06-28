@@ -16,8 +16,6 @@ interface ProductCardProps {
 const ProductCard = ({ product, category, currentUser }: ProductCardProps) => {
   const router = useRouter();
 
-  console.log(currentUser);
-
   return (
     <Card
       variant="outlined"

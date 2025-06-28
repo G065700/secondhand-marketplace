@@ -7,9 +7,9 @@ const ProductUploadPage = async () => {
 
   return (
     <Container>
-      <div className="max-w-screen-lg mx-auto">
-        <ProductUploadClient categories={categories} />
-      </div>
+      {/*<div className="max-w-screen-lg mx-auto">*/}
+      <ProductUploadClient categories={categories} />
+      {/*</div>*/}
     </Container>
   );
 };
