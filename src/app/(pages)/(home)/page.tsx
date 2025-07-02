@@ -24,7 +24,12 @@ export default async function Home({ searchParams }: HomeProps) {
 
   const currentUser = await getCurrentUser();
   const categories = await getCategories();
-  const products = await getProducts({ ...sp, take: PRODUCTS_PER_PAGE });
+  const products = await getProducts({
+    ...sp,
+    take: PRODUCTS_PER_PAGE,
+    soldOut: false,
+    suspension: false,
+  });
 
   const getCategory = (categoryId: string) => {
     return categories.find((category) => category.id === categoryId);
