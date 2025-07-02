@@ -42,3 +42,35 @@ export async function POST(request: Request) {
 
   return NextResponse.json(product);
 }
+
+export async function PATCH(request: Request) {
+  const body = await request.json();
+
+  const {
+    id,
+    title,
+    description,
+    price,
+    categoryId,
+    latitude,
+    longitude,
+    soldOut,
+  } = body;
+
+  const product = await prisma.product.update({
+    where: {
+      id,
+    },
+    data: {
+      title,
+      description,
+      price,
+      categoryId,
+      latitude,
+      longitude,
+      soldOut,
+    },
+  });
+
+  return NextResponse.json(product);
+}

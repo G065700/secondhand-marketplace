@@ -1,15 +1,16 @@
 import Container from '@/components/Container';
+import HistoriesClient from '@/app/(pages)/histories/HistoriesClient';
 import getProducts, { ProductsParams } from '@/app/actions/getProducts';
 import { COUNT_PER_PAGE } from '@/constants';
-import ProductsClient from '@/app/(pages)/admin/products/ProductsClient';
+import getCurrentUser from '@/app/actions/getCurrentUser';
 import getCategories from '@/app/actions/getCategories';
 import Pagination from '@/components/pagination/Pagination';
 
-interface ProductsPageProps {
-  searchParams: ProductsPageSearchParams;
+interface HistoriesPageProps {
+  searchParams: HistoriesPageSearchParams;
 }
 
-export type ProductsPageSearchParams = Omit<
+export type HistoriesPageSearchParams = Omit<
   ProductsParams,
   'soldOut' | 'suspension'
 > & {
@@ -17,7 +18,13 @@ export type ProductsPageSearchParams = Omit<
   suspension?: string;
 };
 
-const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
+const HistoriesPage = async ({ searchParams }: HistoriesPageProps) => {
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) {
+    return null;
+  }
+
   const sp = await searchParams;
 
   const soldOut = sp.soldOut ? sp.soldOut === 'true' : undefined;
@@ -33,6 +40,7 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
     page: pageNum,
     skip: skipNum,
     take: takeNum,
+    userId: currentUser.id,
   };
 
   const products = await getProducts(spProps);
@@ -40,10 +48,10 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
 
   return (
     <Container>
-      <ProductsClient
+      <HistoriesClient
+        searchParams={spProps}
         products={products}
         categories={categories}
-        searchParams={spProps}
       />
       <Pagination
         page={pageNum}
@@ -54,4 +62,4 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
   );
 };
 
-export default ProductsPage;
+export default HistoriesPage;

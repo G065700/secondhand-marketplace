@@ -11,6 +11,11 @@ const My = () => {
         </Link>
       </MenuItem>
       <MenuItem>
+        <Link href="/histories" className="w-full">
+          판매 이력
+        </Link>
+      </MenuItem>
+      <MenuItem>
         <Link href="/my" className="w-full">
           내 계정
         </Link>

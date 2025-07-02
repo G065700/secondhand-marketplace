@@ -8,6 +8,7 @@ export interface ProductsParams {
   // longitude?: number;
   soldOut?: boolean;
   suspension?: boolean;
+  userId?: string;
   page: number;
   skip: number;
   take: number;
@@ -22,6 +23,7 @@ export default async function getProducts(params: ProductsParams) {
       // longitude,
       soldOut,
       suspension,
+      userId,
       skip,
       take = COUNT_PER_PAGE[0],
     } = params;
@@ -58,6 +60,10 @@ export default async function getProducts(params: ProductsParams) {
 
     if (suspension !== undefined) {
       query.suspension = suspension;
+    }
+
+    if (userId) {
+      query.userId = userId;
     }
 
     const totalItems = await prisma.product.count({

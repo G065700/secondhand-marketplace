@@ -1,43 +1,50 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+import { useEffect, useMemo, useState } from 'react';
+import {
+  Controller,
+  FieldValues,
+  SubmitHandler,
+  useForm,
+} from 'react-hook-form';
+import { Category, Product, User } from '@/prisma/client';
+import dynamic from 'next/dynamic';
 import Heading from '@/components/Heading';
 import ImageUpload from '@/components/ImageUpload';
 import Input from '@/components/Input';
+import Textarea from '@/components/Textarea';
 import CategoryInput from '@/components/categories/CategoryInput';
 import Button from '@/components/Button';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import dynamic from 'next/dynamic';
+import { Checkbox, FormControl, Typography } from '@mui/joy';
 import axios from 'axios';
-import { Category } from '@/prisma/client';
-import Textarea from '@/components/Textarea';
+import { toast } from 'react-toastify';
 
-interface ProductUploadClientProps {
+interface ProductUpdateClientProps {
+  product: Product & { category: Category; user: User };
   categories: Category[];
 }
 
-const ProductUploadClient = ({ categories }: ProductUploadClientProps) => {
+const ProductUpdateClient = ({
+  product,
+  categories,
+}: ProductUpdateClientProps) => {
   const router = useRouter();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const defaultValues = useMemo(() => product, [product]);
+
   const {
     register,
+    control,
     handleSubmit,
     setValue,
     watch,
+    reset,
     formState: { errors },
   } = useForm<FieldValues>({
-    defaultValues: {
-      title: '',
-      description: '',
-      categoryId: '',
-      latitude: 33.5563,
-      longitude: 126.79581,
-      imageSrc: '',
-      price: 1,
-    },
+    defaultValues,
   });
 
   const imageSrc = watch('imageSrc');
@@ -45,36 +52,37 @@ const ProductUploadClient = ({ categories }: ProductUploadClientProps) => {
   const latitude = watch('latitude');
   const longitude = watch('longitude');
 
-  const KakaoMap = dynamic(() => import('@/components/KakaoMap'), {
-    ssr: false,
-  });
+  useEffect(() => {
+    reset(defaultValues);
+  }, [reset, defaultValues]);
+
+  const onSubmit: SubmitHandler<FieldValues> = async (body) => {
+    setIsSubmitting(true);
+    try {
+      await axios.patch('/api/products', {
+        ...body,
+        price: Number(body.price),
+      });
+      router.push('/histories');
+      toast.success('저징되었습니다.');
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value);
   };
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    setIsSubmitting(true);
-
-    axios
-      .post('/api/products', data)
-      .then((response) => {
-        router.push(`/products/${response.data.id}`);
-      })
-      .catch((error) => {
-        console.error(error);
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
-  };
+  const KakaoMap = dynamic(() => import('@/components/KakaoMap'), {
+    ssr: false,
+  });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">
-      <Heading
-        title="상품 등록"
-        subtitle="판매하고 싶은 상품을 등록해보세요!"
-      />
+      <Heading title="상품 수정" />
 
       <ImageUpload
         value={imageSrc}
@@ -108,7 +116,6 @@ const ProductUploadClient = ({ categories }: ProductUploadClientProps) => {
         errors={errors}
       />
       <hr />
-
       <div
         className="
           grid
@@ -130,16 +137,30 @@ const ProductUploadClient = ({ categories }: ProductUploadClientProps) => {
         ))}
       </div>
       <hr />
-
       <KakaoMap
         setCustomValue={setCustomValue}
         latitude={latitude}
         longitude={longitude}
       />
+      <FormControl>
+        <Typography level="title-md">구분</Typography>
 
-      <Button label="상품 생성하기" />
+        <Controller
+          name="soldOut"
+          control={control}
+          render={({ field }) => (
+            <Checkbox
+              {...field}
+              checked={field.value}
+              onChange={(e) => field.onChange(e.target.checked)}
+              label="판매 완료"
+            />
+          )}
+        />
+      </FormControl>
+      <Button label="상품 수정하기" />
     </form>
   );
 };
 
-export default ProductUploadClient;
+export default ProductUpdateClient;
