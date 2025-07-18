@@ -1,4 +1,4 @@
-import Container from '@/components/Container';
+import Container from '@/components/shared/layout/Container';
 import ProductUploadClient from '@/app/(pages)/products/upload/ProductUploadClient';
 import getCategories from '@/app/actions/getCategories';
 

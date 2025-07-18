@@ -1,10 +1,10 @@
 'use client';
 
 import { User } from '@/prisma/client';
-import UserListFilter from '@/components/admin/users/UserListFilter';
-import UserList from '@/components/admin/users/UserList';
+import UserListFilter from '@/components/page/admin/users/UserListFilter';
+import UserListTable from '@/components/page/admin/users/UserListTable';
 import { UsersParams } from '@/app/actions/getUsers';
-import UserListSummary from '@/components/admin/users/UserListSummary';
+import UserListSummary from '@/components/page/admin/users/UserListSummary';
 import { Box, Divider } from '@mui/joy';
 
 interface UsersClientProps {
@@ -17,13 +17,7 @@ interface UsersClientProps {
 
 const UsersClient = ({ users, searchParams }: UsersClientProps) => {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 2.5,
-      }}
-    >
+    <Box display="flex" flexDirection="column" gap={2.5}>
       <Divider />
       <UserListFilter searchParams={searchParams} />
       <Divider />
@@ -31,7 +25,7 @@ const UsersClient = ({ users, searchParams }: UsersClientProps) => {
         searchParams={searchParams}
         totalItems={users.totalItems}
       />
-      <UserList
+      <UserListTable
         data={users.data}
         totalItems={users.totalItems}
         skip={searchParams.skip}

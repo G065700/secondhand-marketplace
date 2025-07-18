@@ -1,4 +1,4 @@
-import Container from '@/components/Container';
+import Container from '@/components/shared/layout/Container';
 import getProductById from '@/app/actions/getProductById';
 import ProductClient from '@/app/(pages)/admin/products/[productId]/ProductClient';
 import getCurrentUser from '@/app/actions/getCurrentUser';

@@ -1,4 +1,4 @@
-import Container from '@/components/Container';
+import Container from '@/components/shared/layout/Container';
 import MyClient from '@/app/(pages)/my/MyClient';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 

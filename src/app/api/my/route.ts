@@ -2,6 +2,7 @@ import prisma from '@/helpers/prismadb';
 import { NextResponse } from 'next/server';
 import { ERRORS } from '@/constants';
 import getCurrentUser from '@/app/actions/getCurrentUser';
+import bcrypt from 'bcryptjs';
 
 export async function PATCH(request: Request) {
   const currentUser = await getCurrentUser();
@@ -39,7 +40,7 @@ export async function PATCH(request: Request) {
     name: string;
     email: string;
     image?: string;
-    password?: string;
+    hashedPassword?: string;
   } = {
     name,
     email,
@@ -50,7 +51,7 @@ export async function PATCH(request: Request) {
   }
 
   if (password) {
-    data.password = password;
+    data.hashedPassword = await bcrypt.hash(password, 12);
   }
 
   const user = await prisma.user.update({

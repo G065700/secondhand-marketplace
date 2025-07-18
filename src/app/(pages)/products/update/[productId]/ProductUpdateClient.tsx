@@ -10,15 +10,15 @@ import {
 } from 'react-hook-form';
 import { Category, Product, User } from '@/prisma/client';
 import dynamic from 'next/dynamic';
-import Heading from '@/components/Heading';
-import ImageUpload from '@/components/ImageUpload';
-import Input from '@/components/Input';
-import Textarea from '@/components/Textarea';
-import CategoryInput from '@/components/categories/CategoryInput';
-import Button from '@/components/Button';
-import { Checkbox, FormControl, Typography } from '@mui/joy';
+import Heading from '@/components/shared/Heading';
+import ImageUpload from '@/components/shared/ImageUpload';
+import LargeTextarea from '@/components/shared/textarea/LargeTextarea';
+import CategoryInput from '@/components/page/client/categories/CategoryInput';
+import { Box, Checkbox, FormControl, FormLabel } from '@mui/joy';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import LargeInput from '@/components/shared/input/LargeInput';
+import LargeButton from '@/components/shared/button/LargeButton';
 
 interface ProductUpdateClientProps {
   product: Product & { category: Category; user: User };
@@ -35,17 +35,10 @@ const ProductUpdateClient = ({
 
   const defaultValues = useMemo(() => product, [product]);
 
-  const {
-    register,
-    control,
-    handleSubmit,
-    setValue,
-    watch,
-    reset,
-    formState: { errors },
-  } = useForm<FieldValues>({
-    defaultValues,
-  });
+  const { control, handleSubmit, setValue, watch, reset } =
+    useForm<FieldValues>({
+      defaultValues,
+    });
 
   const imageSrc = watch('imageSrc');
   const categoryId = watch('categoryId');
@@ -76,7 +69,7 @@ const ProductUpdateClient = ({
     setValue(id, value);
   };
 
-  const KakaoMap = dynamic(() => import('@/components/KakaoMap'), {
+  const KakaoMap = dynamic(() => import('@/components/shared/KakaoMap'), {
     ssr: false,
   });
 
@@ -84,66 +77,86 @@ const ProductUpdateClient = ({
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">
       <Heading title="상품 수정" />
 
-      <ImageUpload
-        value={imageSrc}
-        onChange={(value) => setCustomValue('imageSrc', value)}
-      />
-      <Input
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+        <FormLabel>
+          상품 이미지<span className="text-red-500">*</span>
+        </FormLabel>
+        <ImageUpload
+          value={imageSrc}
+          onChange={(value) => setCustomValue('imageSrc', value)}
+        />
+      </Box>
+
+      <LargeInput
         id="title"
         label="상품명"
         required
+        asterisk
         disabled={isSubmitting}
-        register={register}
-        errors={errors}
+        control={control}
       />
-      <hr />
-      <Textarea
+
+      <LargeTextarea
         id="description"
         label="설명"
         required
+        asterisk
         disabled={isSubmitting}
-        register={register}
-        errors={errors}
+        control={control}
       />
-      <hr />
-      <Input
+
+      <LargeInput
         id="price"
         label="가격"
-        formatPrice
+        type="number"
         required
+        asterisk
         disabled={isSubmitting}
-        register={register}
-        errors={errors}
+        control={control}
       />
-      <hr />
-      <div
-        className="
-          grid
-          grid-cols-1 md:grid-cols-2
-          gap-3
-          max-h-[50vh]
-          overflow-y-auto
-        "
-      >
-        {categories.map((item) => (
-          <div key={item.id} className="col-span-1">
-            <CategoryInput
-              onClick={(value) => setCustomValue('categoryId', value)}
-              selected={categoryId === item.id}
-              label={item.name}
-              id={item.id}
-            />
-          </div>
-        ))}
-      </div>
-      <hr />
-      <KakaoMap
-        setCustomValue={setCustomValue}
-        latitude={latitude}
-        longitude={longitude}
-      />
+
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+        <FormLabel>
+          카테고리<span className="text-red-500">*</span>
+        </FormLabel>
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: {
+              xs: '1fr',
+              md: '1fr 1fr',
+            },
+            gap: 1.5,
+            maxHeight: '50vh',
+            overflowY: 'auto',
+          }}
+        >
+          {categories.map((item) => (
+            <Box key={item.id} sx={{ gridColumn: 'span 1' }}>
+              <CategoryInput
+                onClick={(value) => setCustomValue('categoryId', value)}
+                selected={categoryId === item.id}
+                label={item.name}
+                id={item.id}
+              />
+            </Box>
+          ))}
+        </Box>
+      </Box>
+
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+        <FormLabel>
+          위치<span className="text-red-500">*</span>
+        </FormLabel>
+        <KakaoMap
+          setCustomValue={setCustomValue}
+          latitude={latitude}
+          longitude={longitude}
+        />
+      </Box>
+
       <FormControl>
-        <Typography level="title-md">구분</Typography>
+        <FormLabel>판매 완료 여부</FormLabel>
 
         <Controller
           name="soldOut"
@@ -158,7 +171,7 @@ const ProductUpdateClient = ({
           )}
         />
       </FormControl>
-      <Button label="상품 수정하기" />
+      <LargeButton>상품 수정하기</LargeButton>
     </form>
   );
 };

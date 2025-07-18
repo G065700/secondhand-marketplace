@@ -33,7 +33,11 @@ export const authOptions: NextAuthOptions = {
         });
 
         if (!user || !user?.hashedPassword) {
-          throw new Error('Invalid credentials');
+          throw new Error('이메일 또는 비밀번호가 일치하지 않습니다.');
+        }
+
+        if (user && !user.active) {
+          throw new Error('비활성화된 계정입니다. 관리자에게 문의하세요.');
         }
 
         const isCorrectPassword = await bcrypt.compare(
@@ -42,7 +46,7 @@ export const authOptions: NextAuthOptions = {
         );
 
         if (!isCorrectPassword) {
-          return null;
+          throw new Error('이메일 또는 비밀번호가 일치하지 않습니다.');
         }
 
         return user;
@@ -53,9 +57,9 @@ export const authOptions: NextAuthOptions = {
     strategy: 'jwt',
   },
   secret: process.env.NEXTAUTH_SECRET,
-  jwt: {
-    maxAge: 30 * 24 * 60 * 60, // 30 days
-  },
+  // jwt: {
+  //   maxAge: 30 * 24 * 60 * 60, // 30 days
+  // },
   callbacks: {
     async jwt({ token, user }) {
       return { ...token, ...user };

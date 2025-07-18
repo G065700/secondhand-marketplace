@@ -3,20 +3,16 @@
 import { User } from '@/prisma/client';
 import { useRef, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import Heading from '@/components/Heading';
-import {
-  Box,
-  Button,
-  FormControl,
-  FormHelperText,
-  FormLabel,
-  Input,
-} from '@mui/joy';
+import Heading from '@/components/shared/Heading';
+import { Box } from '@mui/joy';
 import Image from 'next/image';
 import previewImage from '@/helpers/previewImage';
 import uploadImage from '@/helpers/uploadImage';
 import axios from 'axios';
 import { signOut } from 'next-auth/react';
+import SmallButton from '@/components/shared/button/SmallButton';
+import LargeInput from '@/components/shared/input/LargeInput';
+import LargeButton from '@/components/shared/button/LargeButton';
 
 interface MyClientProps {
   currentUser: User;
@@ -34,12 +30,7 @@ const MyClient = ({ currentUser }: MyClientProps) => {
 
   const { id, name, email, image } = currentUser;
 
-  const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { errors },
-  } = useForm<FieldValues>({
+  const { control, handleSubmit, setError } = useForm<FieldValues>({
     defaultValues: {
       name,
       email,
@@ -123,100 +114,61 @@ const MyClient = ({ currentUser }: MyClientProps) => {
             />
 
             <Box display="flex" gap={1}>
-              <Button size="sm" onClick={chooseImage} disabled={isSubmitting}>
+              <SmallButton
+                variant="outlined"
+                onClick={chooseImage}
+                disabled={isSubmitting}
+              >
                 이미지 선택
-              </Button>
+              </SmallButton>
               {profileImagePreview && (
-                <Button
-                  size="sm"
+                <SmallButton
+                  variant="outlined"
                   color="danger"
-                  disabled={isSubmitting}
                   onClick={removeImage}
+                  disabled={isSubmitting}
                 >
                   이미지 삭제
-                </Button>
+                </SmallButton>
               )}
             </Box>
           </Box>
-          <FormControl>
-            <FormLabel>
-              이름 <span className="text-red-500">*</span>
-            </FormLabel>
-            <Input
-              variant="soft"
-              size="lg"
-              disabled={isSubmitting}
-              {...register('name', {
-                required: '이름은 필수 입력 항목입니다.',
-              })}
-            />
-            <FormHelperText sx={{ color: 'red' }}>
-              {errors.name?.message as string}
-            </FormHelperText>
-          </FormControl>
-          <FormControl>
-            <FormLabel>
-              이메일 <span className="text-red-500">*</span>
-            </FormLabel>
-            <Input
-              variant="soft"
-              size="lg"
-              disabled={isSubmitting}
-              {...register('email', {
-                required: '이메일은 필수 입력 항목입니다.',
-                pattern: {
-                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                  message: '이메일 형식으로 입력해 주세요.',
-                },
-              })}
-            />
-            <FormHelperText sx={{ color: 'red' }}>
-              {errors.email?.message as string}
-            </FormHelperText>
-          </FormControl>
-          <FormControl>
-            <FormLabel>비밀번호</FormLabel>
-            <Input
-              type="password"
-              disabled={isSubmitting}
-              variant="soft"
-              size="lg"
-              {...register('password', {
-                pattern: {
-                  value:
-                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/,
-                  message:
-                    '비밀번호는 영문 대/소문자, 숫자, 특수문자를 포함해 8자 이상이어야 합니다.',
-                },
-              })}
-            />
-            <FormHelperText sx={{ color: 'red', maxWidth: 350 }}>
-              {errors.password?.message as string}
-            </FormHelperText>
-          </FormControl>
-          <FormControl>
-            <FormLabel>비밀번호 확인</FormLabel>
-            <Input
-              type="password"
-              disabled={isSubmitting}
-              variant="soft"
-              size="lg"
-              {...register('passwordConfirm', {
-                validate: (value, formValues) => {
-                  if (formValues.password !== value) {
-                    return '비밀번호와 비밀번호 확인이 일치하지 않습니다.';
-                  }
-                },
-              })}
-            />
-            <FormHelperText sx={{ color: 'red', maxWidth: 350 }}>
-              {errors.passwordConfirm?.message as string}
-            </FormHelperText>
-          </FormControl>
+
+          <LargeInput
+            id="name"
+            label="이름"
+            required
+            asterisk
+            disabled={isSubmitting}
+            control={control}
+          />
+
+          <LargeInput
+            id="email"
+            label="이메일"
+            required
+            asterisk
+            disabled={isSubmitting}
+            control={control}
+          />
+
+          <LargeInput
+            id="password"
+            label="비밀번호"
+            type="password"
+            disabled={isSubmitting}
+            control={control}
+          />
+
+          <LargeInput
+            id="passwordConfirm"
+            label="비밀번호 확인"
+            type="password"
+            disabled={isSubmitting}
+            control={control}
+          />
         </Box>
-        <Button type="submit" disabled={isSubmitting} size="lg">
-          저장
-        </Button>
+        <LargeButton disabled={isSubmitting}>저장</LargeButton>
       </form>
     </Box>
   );

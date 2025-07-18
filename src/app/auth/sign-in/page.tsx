@@ -1,34 +1,23 @@
 'use client';
 
-// import Input from '@/components/Input';
 import { useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-// import Button from '@/components/Button';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
-import {
-  Box,
-  Button,
-  FormControl,
-  FormHelperText,
-  FormLabel,
-  Input,
-  Typography,
-} from '@mui/joy';
+import { Box, Typography } from '@mui/joy';
 import { useRouter } from 'next/navigation';
+import Logo from '@/components/shared/Logo';
+import LargeInput from '@/components/shared/input/LargeInput';
+import FormErrorText from '@/components/shared/FormErrorText';
+import LargeButton from '@/components/shared/button/LargeButton';
 
 const SignInPage = () => {
   const router = useRouter();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isInvalidAccount, setIsInvalidAccount] = useState(false);
+  const [errorText, setErrorText] = useState('');
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<FieldValues>({
+  const { control, handleSubmit, watch } = useForm<FieldValues>({
     defaultValues: {
       email: '',
       password: '',
@@ -39,22 +28,23 @@ const SignInPage = () => {
   const passwordVal = watch('password');
 
   useEffect(() => {
-    setIsInvalidAccount(false);
+    setErrorText('');
   }, [emailVal, passwordVal]);
 
   const onSubmit: SubmitHandler<FieldValues> = async (body) => {
     setIsSubmitting(true);
     try {
       const result = await signIn('credentials', {
-        ...body,
+        email: body.email,
+        password: body.password,
         redirect: false,
       });
 
       if (result) {
         if (result.ok) {
-          router.push('/auth/sign-in');
+          router.push('/');
         } else {
-          setIsInvalidAccount(true);
+          result.error && setErrorText(result.error);
         }
       }
     } catch (error) {
@@ -66,7 +56,6 @@ const SignInPage = () => {
 
   return (
     <Box
-      component="section"
       sx={{
         display: 'grid',
         height: '100dvh',
@@ -77,64 +66,40 @@ const SignInPage = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col justify-center gap-4 min-w-[350px]"
       >
-        <h1 className="text-2xl text-center">
-          <span className="font-semibold">2nd</span>
-          <span className="text-cyan-500 font-bold">HAND</span>
+        <h1 className="text-center">
+          <Logo />
         </h1>
 
-        <FormControl>
-          <FormLabel>이메일</FormLabel>
-          <Input
-            variant="soft"
-            size="lg"
-            sx={{ fontSize: 'md' }}
-            disabled={isSubmitting}
-            {...register('email', {
-              required: '이메일은 필수 입력 항목입니다.',
-              pattern: {
-                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: '이메일 형식으로 입력해 주세요.',
-              },
-            })}
-          />
-          <FormHelperText sx={{ color: 'red' }}>
-            {errors.email?.message as string}
-          </FormHelperText>
-        </FormControl>
+        <LargeInput
+          id="email"
+          label="이메일"
+          required
+          disabled={isSubmitting}
+          control={control}
+        />
 
-        <FormControl>
-          <FormLabel>비밀번호</FormLabel>
-          <Input
-            variant="soft"
-            size="lg"
-            sx={{ fontSize: 'md' }}
-            type="password"
-            disabled={isSubmitting}
-            {...register('password', {
-              required: '비밀번호는 필수 입력 항목입니다.',
-            })}
-          />
-          <FormHelperText sx={{ color: 'red', maxWidth: 350 }}>
-            {errors.password?.message as string}
-          </FormHelperText>
-        </FormControl>
+        <LargeInput
+          id="password"
+          label="비밀번호"
+          type="password"
+          required
+          disabled={isSubmitting}
+          control={control}
+        />
 
-        {isInvalidAccount && (
-          <FormHelperText
-            sx={{ color: 'red', width: 350, justifyContent: 'center' }}
-          >
-            이메일 또는 비밀번호가 일치하지 않습니다.
-          </FormHelperText>
+        {errorText && (
+          <FormErrorText sx={{ justifyContent: 'center' }}>
+            {errorText}
+          </FormErrorText>
         )}
 
-        <Button
-          type="submit"
-          size="lg"
-          sx={{ mt: isInvalidAccount ? 1 : 2 }}
+        <LargeButton
+          sx={{ mt: errorText ? 1 : 2 }}
           disabled={isSubmitting}
+          type="submit"
         >
           로그인
-        </Button>
+        </LargeButton>
 
         <Box textAlign="center">
           <Typography level="body-sm">

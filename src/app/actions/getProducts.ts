@@ -2,14 +2,13 @@ import prisma from '@/helpers/prismadb';
 import { COUNT_PER_PAGE } from '@/constants';
 
 export interface ProductsParams {
-  title?: string;
-  categoryId?: string;
+  title?: string; // 상품명
+  categoryId?: string; // 카테고리 Id
   // latitude?: number;
   // longitude?: number;
-  soldOut?: boolean;
-  suspension?: boolean;
-  userId?: string;
-  page: number;
+  soldOut?: boolean; // 판매완료 여부
+  suspension?: boolean; // 판매중지 여부
+  userId?: string; // 해당 상품 등록한 User
   skip: number;
   take: number;
 }

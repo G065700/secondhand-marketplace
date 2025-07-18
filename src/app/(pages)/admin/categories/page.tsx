@@ -1,21 +1,16 @@
-import Container from '@/components/Container';
-import getCategories from '@/app/actions/getCategories';
-import { FaArrowAltCircleRight } from 'react-icons/fa';
-import CategoriesOrigin from '@/components/admin/categories/CategoriesOrigin';
-import CategoriesManaging from '@/components/admin/categories/CategoriesManaging';
 import { Box } from '@mui/joy';
+import getCategories from '@/app/actions/getCategories';
+import Container from '@/components/shared/layout/Container';
+import CategoriesOrigin from '@/components/page/admin/categories/origin/CategoriesOrigin';
+import CategoriesManaging from '@/components/page/admin/categories/managing/CategoriesManaging';
+import { FaArrowAltCircleRight } from 'react-icons/fa';
 
 const CategoriesPage = async () => {
   const categories = await getCategories();
 
   return (
     <Container>
-      <Box
-        sx={{
-          display: 'flex',
-          gap: 2.5,
-        }}
-      >
+      <Box display="flex" gap={2.5}>
         <CategoriesOrigin categories={categories} />
 
         <Box>

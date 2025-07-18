@@ -1,11 +1,11 @@
 'use client';
 
 import { Category, Product } from '@/prisma/client';
-import HistoryListFilter from '@/components/histories/HistoryListFilter';
+import HistoryListFilter from '@/components/page/client/histories/HistoryListFilter';
 import { ProductsParams } from '@/app/actions/getProducts';
 import { Box, Divider } from '@mui/joy';
-import HistoryListSummary from '@/components/histories/HistoryListSummary';
-import HistoryList from '@/components/histories/HistoryList';
+import HistoryListSummary from '@/components/page/client/histories/HistoryListSummary';
+import HistoryList from '@/components/page/client/histories/HistoryList';
 
 interface HistoriesClientProps {
   searchParams: ProductsParams;
