@@ -1,6 +1,6 @@
 import getProductById from '@/app/actions/getProductById';
 import getCurrentUser from '@/app/actions/getCurrentUser';
-import EmptyState from '@/components/EmptyState';
+import EmptyState from '@/components/shared/EmptyState';
 import ProductClient from '@/app/(pages)/products/[productId]/ProductClient';
 import getCategories from '@/app/actions/getCategories';
 

@@ -1,13 +1,13 @@
 import getProducts, { ProductsParams } from '@/app/actions/getProducts';
-import Container from '@/components/Container';
-import EmptyState from '@/components/EmptyState';
-import ProductCard from '@/components/products/ProductCard';
+import Container from '@/components/shared/layout/Container';
+import EmptyState from '@/components/shared/EmptyState';
+import ProductCard from '@/components/page/client/products/ProductCard';
 import getCurrentUser from '@/app/actions/getCurrentUser';
-import FloatingButton from '@/components/FloatingButton';
-import Categories from '@/components/categories/Categories';
-import Pagination from '@/components/pagination/Pagination';
+import FloatingButton from '@/components/shared/button/FloatingButton';
+import Categories from '@/components/page/client/categories/Categories';
+import Pagination from '@/components/shared/pagination/Pagination';
 import getCategories from '@/app/actions/getCategories';
-import Heading from '@/components/Heading';
+import Heading from '@/components/shared/Heading';
 import { PRODUCTS_PER_PAGE } from '@/constants';
 import { Box, Grid } from '@mui/joy';
 
@@ -18,34 +18,37 @@ interface HomeProps {
 export default async function Home({ searchParams }: HomeProps) {
   const sp = await searchParams;
 
-  const { page, categoryId } = sp;
+  const { categoryId, skip } = sp;
 
-  const pageNum = page ? Number(page) : 1;
+  const skipNum = skip ? Number(skip) : 0;
 
   const currentUser = await getCurrentUser();
   const categories = await getCategories();
-  const products = await getProducts({
+
+  const spProps: ProductsParams = {
     ...sp,
-    take: PRODUCTS_PER_PAGE,
     soldOut: false,
     suspension: false,
-  });
-
-  const getCategory = (categoryId: string) => {
-    return categories.find((category) => category.id === categoryId);
+    take: PRODUCTS_PER_PAGE,
+    skip: skipNum,
   };
+
+  const products = await getProducts(spProps);
+
+  const selectedCategory = categories.find(
+    (category) => category.id === categoryId,
+  );
 
   return (
     <Container>
       <Categories categories={categories} />
+
       {products.data.length === 0 ? (
         <EmptyState showReset />
       ) : (
         <Box sx={{ mt: 5 }}>
           <Heading
-            title={
-              categoryId ? `${getCategory(categoryId)?.name}` : '전체 상품'
-            }
+            title={selectedCategory ? selectedCategory.name : '전체 상품'}
           />
           <Grid
             sx={{
@@ -65,19 +68,21 @@ export default async function Home({ searchParams }: HomeProps) {
                 key={product.id}
                 currentUser={currentUser}
                 product={product}
-                category={getCategory(product.categoryId)}
               />
             ))}
           </Grid>
 
           <Pagination
-            page={pageNum}
+            skip={skipNum}
             itemsPerPage={PRODUCTS_PER_PAGE}
             totalItems={products.totalItems}
           />
         </Box>
       )}
-      <FloatingButton href="/products/upload">+</FloatingButton>
+
+      {currentUser && currentUser.userType === 'User' && (
+        <FloatingButton href="/products/upload">+</FloatingButton>
+      )}
     </Container>
   );
 }

@@ -1,9 +1,9 @@
 import getCurrentUser from '@/app/actions/getCurrentUser';
 import getCategories from '@/app/actions/getCategories';
 import getProductById from '@/app/actions/getProductById';
-import EmptyState from '@/components/EmptyState';
+import EmptyState from '@/components/shared/EmptyState';
 import ProductUpdateClient from '@/app/(pages)/products/update/[productId]/ProductUpdateClient';
-import Container from '@/components/Container';
+import Container from '@/components/shared/layout/Container';
 
 interface Params {
   productId?: string;

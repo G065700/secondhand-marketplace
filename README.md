@@ -1,36 +1,123 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Secondhand Marketplace
+
+This is a full-stack Next.js application designed to be a secondhand marketplace. Users can buy and sell used items, manage their profiles, and interact with other users.
+
+## Features
+
+- User authentication (sign up, sign in, sign out) with NextAuth.js (Google and Credentials providers)
+- Product listing and management (upload, update, view products)
+- User profile management
+- Image uploads (Cloudinary integration)
+- Location-based services (Kakao Maps integration)
+- Admin functionalities (user and product management - inferred)
+- Responsive UI with Tailwind CSS and Material UI (Joy UI)
+
+## Technologies Used
+
+**Frontend:**
+- Next.js 14 (React 19)
+- TypeScript
+- React Hook Form
+- NextAuth.js
+- Tailwind CSS
+- Emotion (for @mui/joy)
+- @mui/joy (Material UI Joy)
+- React Icons
+- React Kakao Maps SDK
+- React Toastify
+- SWR (for data fetching)
+
+**Backend:**
+- Next.js API Routes
+- Prisma (ORM)
+- PostgreSQL (Database)
+- bcryptjs (password hashing)
+- Axios (HTTP client)
+
+**Development Tools:**
+- ESLint
+- Prettier
+- Yarn (package manager)
+- Docker Compose (for PostgreSQL)
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js (v18 or later)
+- Yarn (v4 or later)
+- Docker (for PostgreSQL)
+
+### Installation
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/your-username/secondhand-marketplace.git
+    cd secondhand-marketplace
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    yarn install
+    ```
+
+3.  **Set up environment variables:**
+    Create a `.env` file in the root directory and add the following:
+    ```env
+    DATABASE_URL="postgresql://postgres:password@localhost:5432/secondhand_marketplace?schema=public"
+    NEXTAUTH_SECRET="YOUR_NEXTAUTH_SECRET"
+    GOOGLE_CLIENT_ID="YOUR_GOOGLE_CLIENT_ID"
+    GOOGLE_CLIENT_SECRET="YOUR_GOOGLE_CLIENT_SECRET"
+    NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME="YOUR_CLOUDINARY_CLOUD_NAME"
+    NEXT_PUBLIC_KAKAO_MAP_APP_KEY="YOUR_KAKAO_MAP_APP_KEY"
+    ```
+    *Replace placeholders with your actual values.*
+
+4.  **Start PostgreSQL with Docker Compose:**
+    ```bash
+    docker-compose up -d
+    ```
+
+5.  **Generate Prisma client and push database schema:**
+    ```bash
+    yarn prisma:generate
+    yarn prisma:db
+    ```
+
+### Running the Application
+
+To run the development server:
 
 ```bash
-npm run dev
-# or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Building for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+yarn build
+yarn start
+```
 
-## Learn More
+## Project Structure (Key Directories)
 
-To learn more about Next.js, take a look at the following resources:
+- `src/app`: Next.js App Router pages and API routes.
+- `src/components`: Reusable React components.
+- `src/helpers`: Utility functions (e.g., `prismadb.ts`, `uploadImage.ts`).
+- `prisma`: Prisma schema and migrations.
+- `public`: Static assets.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Linting and Formatting
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Lint:** `yarn lint`
+- **Format:** `yarn prettier --write .`
 
-## Deploy on Vercel
+## Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Feel free to contribute to this project. Please follow the existing code style and submit pull requests.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+[Specify your license here, e.g., MIT License]

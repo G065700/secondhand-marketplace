@@ -1,24 +1,35 @@
 'use client';
 
 import { User } from '@/prisma/client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import useSWR from 'swr';
 import { TUserWidthChat } from '@/types';
-import Contacts from '@/components/chat/Contacts';
-import Chat from '@/components/chat/Chat';
+import Contacts from '@/components/page/client/chat/Contacts';
+import Chat from '@/components/page/client/chat/Chat';
 import { Box, Sheet } from '@mui/joy';
+import Loader from '@/components/shared/Loader';
+import Container from '@/components/shared/layout/Container';
 
 interface ChatClientProps {
   currentUser?: User | null;
+  receiverUser?: User | null;
 }
 
-const ChatClient = ({ currentUser }: ChatClientProps) => {
+const ChatClient = ({ currentUser, receiverUser }: ChatClientProps) => {
   const [receiver, setReceiver] = useState({
     receiverId: '',
     receiverName: '',
     receiverImage: '',
   });
+
+  useEffect(() => {
+    setReceiver({
+      receiverId: receiverUser?.id || '',
+      receiverName: receiverUser?.name || '',
+      receiverImage: receiverUser?.image || '',
+    });
+  }, [receiverUser]);
 
   const [showChat, setShowChat] = useState(false);
 
@@ -36,59 +47,61 @@ const ChatClient = ({ currentUser }: ChatClientProps) => {
     (user: TUserWidthChat) => user.email === currentUser?.email,
   );
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loader />;
   if (error) return <p>Error</p>;
 
   return (
-    <Sheet
-      sx={{
-        mx: 'auto',
-        display: 'grid',
-        gridTemplateColumns: {
-          xs: '1fr',
-          md: '300px 1fr',
-        },
-        border: '1px solid',
-        borderColor: 'divider',
-        borderRadius: 'md',
-      }}
-    >
-      <Box
+    <Container>
+      <Sheet
         sx={{
-          display: {
-            xs: showChat ? 'none' : 'flex',
-            md: 'flex',
+          mx: 'auto',
+          display: 'grid',
+          gridTemplateColumns: {
+            xs: '1fr',
+            md: '300px 1fr',
           },
+          border: '1px solid',
+          borderColor: 'divider',
+          borderRadius: 'md',
         }}
       >
-        <Contacts
-          users={users}
-          currentUser={currentUserWithChat}
-          setShowChat={setShowChat}
-          setReceiver={setReceiver}
-        />
-      </Box>
-      <Box
-        sx={{
-          display: {
-            xs: showChat ? 'flex' : 'none',
-            md: 'flex',
-          },
-          borderLeft: {
-            md: '1px solid',
-          },
-          borderColor: {
-            md: 'divider',
-          },
-        }}
-      >
-        <Chat
-          currentUser={currentUserWithChat}
-          receiver={receiver}
-          setShowChat={setShowChat}
-        />
-      </Box>
-    </Sheet>
+        <Box
+          sx={{
+            display: {
+              xs: showChat ? 'none' : 'flex',
+              md: 'flex',
+            },
+          }}
+        >
+          <Contacts
+            users={users}
+            currentUser={currentUserWithChat}
+            setShowChat={setShowChat}
+            setReceiver={setReceiver}
+          />
+        </Box>
+        <Box
+          sx={{
+            display: {
+              xs: showChat ? 'flex' : 'none',
+              md: 'flex',
+            },
+            borderLeft: {
+              md: '1px solid',
+            },
+            borderColor: {
+              md: 'divider',
+            },
+          }}
+        >
+          <Chat
+            currentUser={currentUserWithChat}
+            receiver={receiver}
+            setShowChat={setShowChat}
+          />
+        </Box>
+      </Sheet>
+    </Container>
   );
 };
 

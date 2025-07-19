@@ -7,7 +7,6 @@ export interface UsersParams {
   email?: string;
   userType?: UserType;
   active?: boolean;
-  page: number;
   skip: number;
   take: number;
 }

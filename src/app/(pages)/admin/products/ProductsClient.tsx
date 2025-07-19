@@ -2,10 +2,10 @@
 
 import { Box, Divider } from '@mui/joy';
 import { Category, Product } from '@/prisma/client';
-import ProductListFilter from '@/components/admin/products/ProductListFilter';
 import { ProductsParams } from '@/app/actions/getProducts';
-import ProductListSummary from '@/components/admin/products/ProductListSummary';
-import ProductList from '@/components/admin/products/ProductList';
+import ProductListFilter from '@/components/page/admin/products/ProductListFilter';
+import ProductListSummary from '@/components/page/admin/products/ProductListSummary';
+import ProductListTable from '@/components/page/admin/products/ProductListTable';
 
 interface ProductsClientProps {
   products: {
@@ -22,13 +22,7 @@ const ProductsClient = ({
   searchParams,
 }: ProductsClientProps) => {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 2.5,
-      }}
-    >
+    <Box display="flex" flexDirection="column" gap={2.5}>
       <Divider />
       <ProductListFilter categories={categories} searchParams={searchParams} />
       <Divider />
@@ -36,7 +30,7 @@ const ProductsClient = ({
         searchParams={searchParams}
         totalItems={products.totalItems}
       />
-      <ProductList
+      <ProductListTable
         data={products.data}
         totalItems={products.totalItems}
         skip={searchParams.skip}

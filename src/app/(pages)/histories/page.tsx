@@ -1,10 +1,10 @@
-import Container from '@/components/Container';
+import Container from '@/components/shared/layout/Container';
 import HistoriesClient from '@/app/(pages)/histories/HistoriesClient';
 import getProducts, { ProductsParams } from '@/app/actions/getProducts';
 import { COUNT_PER_PAGE } from '@/constants';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 import getCategories from '@/app/actions/getCategories';
-import Pagination from '@/components/pagination/Pagination';
+import Pagination from '@/components/shared/pagination/Pagination';
 
 interface HistoriesPageProps {
   searchParams: HistoriesPageSearchParams;
@@ -29,7 +29,6 @@ const HistoriesPage = async ({ searchParams }: HistoriesPageProps) => {
 
   const soldOut = sp.soldOut ? sp.soldOut === 'true' : undefined;
   const suspension = sp.suspension ? sp.suspension === 'true' : undefined;
-  const pageNum = sp.page ? Number(sp.page) : 1;
   const skipNum = sp.skip ? Number(sp.skip) : 0;
   const takeNum = sp.take ? Number(sp.take) : COUNT_PER_PAGE[0];
 
@@ -37,7 +36,6 @@ const HistoriesPage = async ({ searchParams }: HistoriesPageProps) => {
     ...sp,
     soldOut,
     suspension,
-    page: pageNum,
     skip: skipNum,
     take: takeNum,
     userId: currentUser.id,
@@ -54,7 +52,7 @@ const HistoriesPage = async ({ searchParams }: HistoriesPageProps) => {
         categories={categories}
       />
       <Pagination
-        page={pageNum}
+        skip={skipNum}
         itemsPerPage={takeNum}
         totalItems={products.totalItems}
       />

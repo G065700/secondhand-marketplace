@@ -1,9 +1,9 @@
-import Container from '@/components/Container';
 import getProducts, { ProductsParams } from '@/app/actions/getProducts';
+import Container from '@/components/shared/layout/Container';
 import { COUNT_PER_PAGE } from '@/constants';
 import ProductsClient from '@/app/(pages)/admin/products/ProductsClient';
 import getCategories from '@/app/actions/getCategories';
-import Pagination from '@/components/pagination/Pagination';
+import Pagination from '@/components/shared/pagination/Pagination';
 
 interface ProductsPageProps {
   searchParams: ProductsPageSearchParams;
@@ -22,7 +22,6 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
 
   const soldOut = sp.soldOut ? sp.soldOut === 'true' : undefined;
   const suspension = sp.suspension ? sp.suspension === 'true' : undefined;
-  const pageNum = sp.page ? Number(sp.page) : 1;
   const skipNum = sp.skip ? Number(sp.skip) : 0;
   const takeNum = sp.take ? Number(sp.take) : COUNT_PER_PAGE[0];
 
@@ -30,7 +29,6 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
     ...sp,
     soldOut,
     suspension,
-    page: pageNum,
     skip: skipNum,
     take: takeNum,
   };
@@ -46,7 +44,7 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
         searchParams={spProps}
       />
       <Pagination
-        page={pageNum}
+        skip={skipNum}
         itemsPerPage={takeNum}
         totalItems={products.totalItems}
       />
