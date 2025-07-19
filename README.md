@@ -64,25 +64,21 @@ This is a full-stack Next.js application designed to be a secondhand marketplace
 3.  **Set up environment variables:**
     Create a `.env` file in the root directory and add the following:
     ```env
-    DATABASE_URL="postgresql://postgres:password@localhost:5432/secondhand_marketplace?schema=public"
+    DATABASE_URL="postgresql://postgres:[YOUR-PASSWORD]@db.avhvbfixtqlmvsjccaul.supabase.co:5432/postgres"
     NEXTAUTH_SECRET="YOUR_NEXTAUTH_SECRET"
     GOOGLE_CLIENT_ID="YOUR_GOOGLE_CLIENT_ID"
     GOOGLE_CLIENT_SECRET="YOUR_GOOGLE_CLIENT_SECRET"
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME="YOUR_CLOUDINARY_CLOUD_NAME"
     NEXT_PUBLIC_KAKAO_MAP_APP_KEY="YOUR_KAKAO_MAP_APP_KEY"
     ```
-    *Replace placeholders with your actual values.*
+    *Replace `[YOUR-PASSWORD]` with your Supabase database password and other placeholders with your actual values.*
 
-4.  **Start PostgreSQL with Docker Compose:**
-    ```bash
-    docker-compose up -d
-    ```
-
-5.  **Generate Prisma client and push database schema:**
+4.  **Generate Prisma client and push database schema:**
     ```bash
     yarn prisma:generate
     yarn prisma:db
     ```
+    *Ensure your Supabase database is running and accessible before running this command.*
 
 ### Running the Application
 
