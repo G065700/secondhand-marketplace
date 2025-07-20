@@ -2,17 +2,22 @@ import Container from '@/components/shared/layout/Container';
 import getProductById from '@/app/actions/getProductById';
 import ProductClient from '@/app/(pages)/admin/products/[productId]/ProductClient';
 import getCurrentUser from '@/app/actions/getCurrentUser';
+import { notFound } from 'next/navigation';
 
-interface Params {
-  productId?: string;
+interface ProductPageProps {
+  params: Promise<{
+    productId: string;
+  }>;
 }
 
-const ProductPage = async ({ params }: { params: Params }) => {
-  const product = await getProductById(params);
+const ProductPage = async ({ params }: ProductPageProps) => {
+  const { productId } = await params;
+
+  const product = await getProductById(productId);
   const currentUser = await getCurrentUser();
 
   if (!product) {
-    return null;
+    notFound();
   }
 
   return (

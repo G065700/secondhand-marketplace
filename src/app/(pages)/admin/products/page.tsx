@@ -6,7 +6,7 @@ import getCategories from '@/app/actions/getCategories';
 import Pagination from '@/components/shared/pagination/Pagination';
 
 interface ProductsPageProps {
-  searchParams: ProductsPageSearchParams;
+  searchParams: Promise<ProductsPageSearchParams>;
 }
 
 export type ProductsPageSearchParams = Omit<

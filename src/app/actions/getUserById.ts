@@ -1,13 +1,7 @@
 import prisma from '@/helpers/prismadb';
 
-interface Params {
-  userId?: string;
-}
-
-export default async function getUserById(params: Params) {
+export default async function getUserById(userId: string) {
   try {
-    const { userId } = await params;
-
     const user = await prisma.user.findUnique({
       where: {
         id: userId,

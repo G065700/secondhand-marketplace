@@ -3,18 +3,23 @@ import getCurrentUser from '@/app/actions/getCurrentUser';
 import EmptyState from '@/components/shared/EmptyState';
 import ProductClient from '@/app/(pages)/products/[productId]/ProductClient';
 import getCategories from '@/app/actions/getCategories';
+import { notFound } from 'next/navigation';
 
-interface Params {
-  productId?: string;
+interface ProductPageProps {
+  params: Promise<{
+    productId: string;
+  }>;
 }
 
-const ProductPage = async ({ params }: { params: Params }) => {
+const ProductPage = async ({ params }: ProductPageProps) => {
+  const { productId } = await params;
+
   const currentUser = await getCurrentUser();
   const categories = await getCategories();
-  const product = await getProductById(params);
+  const product = await getProductById(productId);
 
   if (!product) {
-    return <EmptyState />;
+    notFound();
   }
 
   const category = categories.find(

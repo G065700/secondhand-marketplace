@@ -1,0 +1,8 @@
+.next/
+dist/
+build/
+node_modules/
+**/*.generated.*
+src/prisma/client/
+prisma/migrations/
+out/

@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "yarn pnpify prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
+    "format": "prettier --write .",
     "prisma:generate": "yarn pnpify prisma generate",
     "prisma:db": "yarn pnpify prisma db push"
   },

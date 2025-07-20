@@ -12,7 +12,7 @@ import { PRODUCTS_PER_PAGE } from '@/constants';
 import { Box, Grid } from '@mui/joy';
 
 interface HomeProps {
-  searchParams: ProductsParams;
+  searchParams: Promise<ProductsParams>;
 }
 
 export default async function Home({ searchParams }: HomeProps) {
