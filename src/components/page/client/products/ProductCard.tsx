@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import HeartButton from '@/components/shared/button/HeartButton';
 import { fromNow } from '@/helpers/dayjs';
 import { Box, Card, Typography } from '@mui/joy';
+import { useEffect, useState } from 'react';
 
 interface ProductCardProps {
   product: Product & { category: Category };
@@ -14,6 +15,11 @@ interface ProductCardProps {
 
 const ProductCard = ({ product, currentUser }: ProductCardProps) => {
   const router = useRouter();
+  const [timeAgo, setTimeAgo] = useState('');
+
+  useEffect(() => {
+    setTimeAgo(fromNow(product.createdAt));
+  }, [product.createdAt]);
 
   return (
     <Card
@@ -78,9 +84,7 @@ const ProductCard = ({ product, currentUser }: ProductCardProps) => {
         </Box>
         <Box sx={{ mt: 'auto' }}>
           <div>
-            <Typography level="body-xs">
-              {fromNow(product.createdAt)}
-            </Typography>
+            <Typography level="body-xs">{timeAgo}</Typography>
             <Typography level="body-sm">
               {product.price.toLocaleString()}&nbsp;
               <span className="font-light">원</span>

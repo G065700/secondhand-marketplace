@@ -1,6 +1,7 @@
 import Avatar from '@/components/shared/Avatar';
 import { fromNow } from '@/helpers/dayjs';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 interface MessageProps {
   isSender: boolean;
@@ -21,6 +22,12 @@ const Message = ({
   senderImage,
   time,
 }: MessageProps) => {
+  const [timeAgo, setTimeAgo] = useState('');
+
+  useEffect(() => {
+    setTimeAgo(fromNow(time));
+  }, [time]);
+
   return (
     <div
       className="grid w-full grid-cols-[40px_1fr] gap-3 mx-auto"
@@ -32,9 +39,7 @@ const Message = ({
       <div className="flex flex-col justify-center items-start">
         <div className="flex items-center gap-2 mb-2 text-sm">
           <span className="font-medium">{isSender ? 'You' : receiverName}</span>
-          <span className="text-xs text-gray-500 opacity-80">
-            {fromNow(time)}
-          </span>
+          <span className="text-xs text-gray-500 opacity-80">{timeAgo}</span>
         </div>
         {messageImage && (
           <div className="overflow-hidden rounded-md mx-[0.6rem] max-w-[80%]">
