@@ -1,8 +1,7 @@
 import { TUserWidthChat } from '@/types';
 import Avatar from '@/components/shared/Avatar';
-import { fromNow } from '@/helpers/dayjs';
 import { Box, Typography } from '@mui/joy';
-import { useEffect, useState } from 'react';
+import ClientTimeDisplay from '@/components/shared/ClientTimeDisplay';
 
 interface UserProps {
   user: TUserWidthChat;
@@ -15,14 +14,6 @@ const User = ({ user, currentUserId, isLastUser }: UserProps) => {
     conversation.users.find((user) => user.id === currentUserId),
   );
   const latestMessage = messagesWithCurrentUser?.messages.slice(-1)[0];
-
-  const [timeAgo, setTimeAgo] = useState('');
-
-  useEffect(() => {
-    if (latestMessage) {
-      setTimeAgo(fromNow(latestMessage.createdAt));
-    }
-  }, [latestMessage]);
 
   return (
     <Box
@@ -80,7 +71,7 @@ const User = ({ user, currentUserId, isLastUser }: UserProps) => {
             level="body-xs"
             sx={{ display: 'flex', justifyContent: 'flex-end', width: '60px' }}
           >
-            {timeAgo}
+            <ClientTimeDisplay time={latestMessage.createdAt} />
           </Typography>
         )}
       </Box>
