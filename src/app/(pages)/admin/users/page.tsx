@@ -5,10 +5,12 @@ import Pagination from '@/components/shared/pagination/Pagination';
 import { COUNT_PER_PAGE } from '@/constants';
 
 interface UsersPageProps {
-  searchParams: Omit<UsersParams, 'active'> & {
-    active?: string;
-  };
+  searchParams: Promise<UsersPageSearchParams>;
 }
+
+type UsersPageSearchParams = Omit<UsersParams, 'active'> & {
+  active?: string;
+};
 
 const UsersPage = async ({ searchParams }: UsersPageProps) => {
   const sp = await searchParams;

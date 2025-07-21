@@ -2,18 +2,14 @@ import getCurrentUser from '@/app/actions/getCurrentUser';
 import { NextResponse } from 'next/server';
 import prisma from '@/helpers/prismadb';
 
-interface Params {
-  productId?: string;
-}
-
-export async function POST(_request: Request, { params }: { params: Params }) {
+export async function POST(request: Request) {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
     return NextResponse.error();
   }
 
-  const { productId } = await params;
+  const productId = request.url.split('/').findLast((element) => element);
 
   if (!productId) {
     throw new Error('Invalid ProductId');
@@ -34,17 +30,14 @@ export async function POST(_request: Request, { params }: { params: Params }) {
   return NextResponse.json(user);
 }
 
-export async function DELETE(
-  _request: Request,
-  { params }: { params: Params },
-) {
+export async function DELETE(request: Request) {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
     return NextResponse.error();
   }
 
-  const { productId } = await params;
+  const productId = request.url.split('/').findLast((element) => element);
 
   if (!productId) {
     throw new Error('Invalid ProductId');

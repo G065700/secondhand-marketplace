@@ -15,6 +15,7 @@ This is a full-stack Next.js application designed to be a secondhand marketplace
 ## Technologies Used
 
 **Frontend:**
+
 - Next.js 14 (React 19)
 - TypeScript
 - React Hook Form
@@ -28,6 +29,7 @@ This is a full-stack Next.js application designed to be a secondhand marketplace
 - SWR (for data fetching)
 
 **Backend:**
+
 - Next.js API Routes
 - Prisma (ORM)
 - PostgreSQL (Database)
@@ -35,6 +37,7 @@ This is a full-stack Next.js application designed to be a secondhand marketplace
 - Axios (HTTP client)
 
 **Development Tools:**
+
 - ESLint
 - Prettier
 - Yarn (package manager)
@@ -51,18 +54,21 @@ This is a full-stack Next.js application designed to be a secondhand marketplace
 ### Installation
 
 1.  **Clone the repository:**
+
     ```bash
     git clone https://github.com/your-username/secondhand-marketplace.git
     cd secondhand-marketplace
     ```
 
 2.  **Install dependencies:**
+
     ```bash
     yarn install
     ```
 
 3.  **Set up environment variables:**
     Create a `.env` file in the root directory and add the following:
+
     ```env
     DATABASE_URL="postgresql://postgres:[YOUR-PASSWORD]@db.avhvbfixtqlmvsjccaul.supabase.co:5432/postgres"
     NEXTAUTH_SECRET="YOUR_NEXTAUTH_SECRET"
@@ -71,14 +77,15 @@ This is a full-stack Next.js application designed to be a secondhand marketplace
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME="YOUR_CLOUDINARY_CLOUD_NAME"
     NEXT_PUBLIC_KAKAO_MAP_APP_KEY="YOUR_KAKAO_MAP_APP_KEY"
     ```
-    *Replace `[YOUR-PASSWORD]` with your Supabase database password and other placeholders with your actual values.*
+
+    _Replace `[YOUR-PASSWORD]` with your Supabase database password and other placeholders with your actual values._
 
 4.  **Generate Prisma client and push database schema:**
     ```bash
     yarn prisma:generate
     yarn prisma:db
     ```
-    *Ensure your Supabase database is running and accessible before running this command.*
+    _Ensure your Supabase database is running and accessible before running this command._
 
 ### Running the Application
 

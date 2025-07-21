@@ -3,19 +3,17 @@ import ChatClient from '@/app/(pages)/chat/ChatClient';
 import getUserById from '@/app/actions/getUserById';
 import EmptyState from '@/components/shared/EmptyState';
 
-interface ChatProps {
-  searchParams: {
+interface ChatPageProps {
+  params: Promise<{
     receiverId?: string;
-  };
+  }>;
 }
 
-const ChatPage = async ({ searchParams }: ChatProps) => {
-  const { receiverId } = await searchParams;
+const ChatPage = async ({ params }: ChatPageProps) => {
+  const { receiverId } = await params;
 
   const currentUser = await getCurrentUser();
-  const receiverUser = receiverId
-    ? await getUserById({ userId: receiverId })
-    : undefined;
+  const receiverUser = receiverId ? await getUserById(receiverId) : undefined;
 
   if (currentUser && receiverId && receiverId === currentUser.id) {
     return <EmptyState title="잘못된 경로입니다." subtitle="" height="full" />;

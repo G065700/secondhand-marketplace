@@ -2,12 +2,16 @@ import Container from '@/components/shared/layout/Container';
 import UserClient from '@/app/(pages)/admin/users/[userId]/UserClient';
 import getUserById from '@/app/actions/getUserById';
 
-interface Params {
-  userId?: string;
+interface UserPageProps {
+  params: Promise<{
+    userId: string;
+  }>;
 }
 
-const UserPage = async ({ params }: { params: Params }) => {
-  const user = await getUserById(params);
+const UserPage = async ({ params }: UserPageProps) => {
+  const { userId } = await params;
+
+  const user = await getUserById(userId);
 
   if (!user) {
     return null;

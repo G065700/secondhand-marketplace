@@ -7,7 +7,7 @@ import getCategories from '@/app/actions/getCategories';
 import Pagination from '@/components/shared/pagination/Pagination';
 
 interface HistoriesPageProps {
-  searchParams: HistoriesPageSearchParams;
+  searchParams: Promise<HistoriesPageSearchParams>;
 }
 
 export type HistoriesPageSearchParams = Omit<
