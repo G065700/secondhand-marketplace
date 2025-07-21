@@ -48,3 +48,7 @@ export async function POST(request: Request) {
     return NextResponse.json(conversation);
   }
 }
+
+export async function OPTIONS() {
+  return NextResponse.json({}, { status: 200 });
+}

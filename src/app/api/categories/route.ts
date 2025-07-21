@@ -60,3 +60,7 @@ export async function POST(request: Request) {
   const categories = await Promise.all([...deleteOperation, ...operations]);
   return NextResponse.json(categories);
 }
+
+export async function OPTIONS() {
+  return NextResponse.json({}, { status: 200 });
+}

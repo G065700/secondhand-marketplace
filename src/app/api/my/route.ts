@@ -63,3 +63,7 @@ export async function PATCH(request: Request) {
 
   return NextResponse.json(user);
 }
+
+export async function OPTIONS() {
+  return NextResponse.json({}, { status: 200 });
+}

@@ -17,3 +17,7 @@ export async function PATCH(request: Request) {
 
   return NextResponse.json(product);
 }
+
+export async function OPTIONS() {
+  return NextResponse.json({}, { status: 200 });
+}
