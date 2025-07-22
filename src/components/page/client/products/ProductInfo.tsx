@@ -37,7 +37,7 @@ const ProductInfo = ({
       {category && <ProductCategory label={category.name} />}
       <Divider />
 
-      <Typography>{description}</Typography>
+      <Typography whiteSpace="pre-line">{description}</Typography>
     </Box>
   );
 };
