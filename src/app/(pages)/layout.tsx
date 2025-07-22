@@ -26,6 +26,9 @@ export const metadata: Metadata = {
   authors: [{ name: 'ebk' }],
   creator: 'ebk',
   publisher: 'ebk',
+  other: {
+    'naver-site-verification': '544aee1af0f916d6e22f7520d3bbf7d5ba1e2ee8',
+  },
 
   openGraph: {
     title: '2ndHAND - 내 물건을 거래하세요!',
