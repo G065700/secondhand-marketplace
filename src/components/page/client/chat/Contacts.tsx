@@ -36,6 +36,7 @@ const Contacts = ({
   return (
     <Box
       sx={{
+        width: 300,
         height: 'calc(100vh - 106px)',
         overflow: 'auto',
       }}

@@ -47,17 +47,19 @@ const ProductCard = ({ product, currentUser }: ProductCardProps) => {
           <Typography level="body-sm">{product.category.name}</Typography>
         </Box>
 
-        {currentUser?.userType !== 'Admin' && (
-          <Box
-            sx={{
-              position: 'absolute',
-              top: '-22px',
-              right: '-20px',
-            }}
-          >
-            <HeartButton productId={product.id} currentUser={currentUser} />
-          </Box>
-        )}
+        {currentUser &&
+          currentUser.userType !== 'Admin' &&
+          currentUser.id !== product.userId && (
+            <Box
+              sx={{
+                position: 'absolute',
+                top: '-22px',
+                right: '-20px',
+              }}
+            >
+              <HeartButton productId={product.id} currentUser={currentUser} />
+            </Box>
+          )}
 
         <Box
           sx={{

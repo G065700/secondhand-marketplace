@@ -52,7 +52,7 @@ const Message = ({
               ${isSender ? 'bg-teal-500 rounded-tr-none' : 'bg-gray-400 rounded-tl-none'}
             `}
           >
-            <p>{messageText}</p>
+            <p style={{ direction: 'ltr' }}>{messageText}</p>
           </div>
         )}
       </div>

@@ -8,6 +8,7 @@ interface ProductHeadProps {
   title: string;
   imageSrc: string;
   id: string;
+  productUserId: string;
   currentUser?: User | null;
 }
 
@@ -15,6 +16,7 @@ const ProductHead = ({
   title,
   imageSrc,
   id,
+  productUserId,
   currentUser,
 }: ProductHeadProps) => {
   return (
@@ -33,11 +35,13 @@ const ProductHead = ({
           fill
           className="object-cover w-full"
         />
-        {currentUser?.userType !== 'Admin' && (
-          <Box position="absolute" top={5} right={5}>
-            <HeartButton productId={id} currentUser={currentUser} />
-          </Box>
-        )}
+        {currentUser &&
+          currentUser.userType !== 'Admin' &&
+          currentUser.id !== productUserId && (
+            <Box position="absolute" top={5} right={5}>
+              <HeartButton productId={id} currentUser={currentUser} />
+            </Box>
+          )}
       </Box>
     </>
   );

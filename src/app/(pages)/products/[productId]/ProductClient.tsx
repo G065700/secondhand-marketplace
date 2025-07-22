@@ -52,6 +52,7 @@ const ProductClient = ({
           title={product.title}
           imageSrc={product.imageSrc}
           id={product.id}
+          productUserId={product.userId}
           currentUser={currentUser}
         />
         <Box
