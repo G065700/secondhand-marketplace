@@ -20,7 +20,9 @@ const ClientProviders = ({ children, currentUser }: ClientProvidersProps) => {
         <Navbar currentUser={currentUser} />
         <ToastProvider />
         {children}
-        <Script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=8d895cc249f60bcc302467ed13331611&autoload=false&libraries=services,clusterer&autoload=false" />
+        <Script
+          src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&autoload=false&libraries=services,clusterer&autoload=false`}
+        />
       </CssVarsProvider>
     </StyledEngineProvider>
   );
