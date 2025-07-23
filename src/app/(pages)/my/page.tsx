@@ -1,12 +1,13 @@
 import Container from '@/components/shared/layout/Container';
 import MyClient from '@/app/(pages)/my/MyClient';
 import getCurrentUser from '@/app/actions/getCurrentUser';
+import { notFound } from 'next/navigation';
 
 const MyPage = async () => {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
-    return <>해당 유저 정보가 없습니다.</>;
+    return notFound();
   }
 
   return (

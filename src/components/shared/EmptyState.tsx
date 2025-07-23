@@ -18,16 +18,19 @@ const EmptyState = ({
   height = '60vh',
 }: EmptyStateProps) => {
   const router = useRouter();
+
+  const handleInitFilterBtnClick = () => {
+    router.push('/');
+  };
+
   return (
     <Box
-      sx={{
-        height: height === 'full' ? '100vh' : height,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: 1,
-      }}
+      height={height === 'full' ? '100vh' : height}
+      display="flex"
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+      gap={1}
     >
       <Box>
         <Typography level="h4" textAlign="center">
@@ -36,7 +39,7 @@ const EmptyState = ({
         <Typography level="body-md">{subtitle}</Typography>
       </Box>
       {showReset && (
-        <LargeButton sx={{ mt: 2 }} onClick={() => router.push('/')}>
+        <LargeButton sx={{ mt: 2 }} onClick={handleInitFilterBtnClick}>
           모든 필터 제거
         </LargeButton>
       )}

@@ -80,7 +80,11 @@ const CategoriesManaging = ({ categories }: { categories: Category[] }) => {
         handleCategoriesSubmit={handleSubmit(onSubmit)}
         isSubmitting={isSubmitting}
       />
-      <CategoriesManagingTable fieldArray={fieldArray} control={control} />
+      <CategoriesManagingTable
+        fieldArray={fieldArray}
+        control={control}
+        isSubmitting={isSubmitting}
+      />
     </Box>
   );
 };

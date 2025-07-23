@@ -2,6 +2,7 @@
 
 import usePagination from '@lucasmogari/react-pagination';
 import PaginationLink from '@/components/shared/pagination/PaginationLink';
+import { Box } from '@mui/joy';
 
 interface PaginationProps {
   skip: number;
@@ -26,7 +27,13 @@ const Pagination = ({ skip, itemsPerPage, totalItems }: PaginationProps) => {
   const arr = new Array(totalPages + 2);
 
   return (
-    <div className="flex items-center justify-center gap-2 mt-4">
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      gap={1}
+      mt={2}
+    >
       {[...arr].map((_, i) => {
         const { page, disabled, current } = getPageItem(i);
 
@@ -71,7 +78,7 @@ const Pagination = ({ skip, itemsPerPage, totalItems }: PaginationProps) => {
           </PaginationLink>
         );
       })}
-    </div>
+    </Box>
   );
 };
 

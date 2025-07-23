@@ -24,13 +24,16 @@ const CategoriesManagingHeader = ({
     [fields.length],
   );
 
+  const handleAddCategoryBtnClick = () => {
+    prepend(initializedCategory);
+  };
+
   return (
     <Box display="flex" justifyContent="space-between">
       <SmallButton
         variant="outlined"
-        onClick={() => {
-          prepend(initializedCategory);
-        }}
+        disabled={isSubmitting}
+        onClick={handleAddCategoryBtnClick}
       >
         카테고리 추가
       </SmallButton>

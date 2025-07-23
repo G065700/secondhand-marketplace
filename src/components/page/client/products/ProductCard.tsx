@@ -15,6 +15,11 @@ interface ProductCardProps {
 const ProductCard = ({ product, currentUser }: ProductCardProps) => {
   const router = useRouter();
 
+  const hasUserRole = currentUser && currentUser.userType === 'User';
+  const isNotMyProduct = currentUser && currentUser.id !== product.userId;
+
+  const handleProductCardClick = () => router.push(`/products/${product.id}`);
+
   return (
     <Card
       variant="soft"
@@ -23,51 +28,34 @@ const ProductCard = ({ product, currentUser }: ProductCardProps) => {
         p: 1.5,
         cursor: 'pointer',
       }}
-      onClick={() => router.push(`/products/${product.id}`)}
+      onClick={handleProductCardClick}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 2,
-          position: 'relative',
-        }}
-      >
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <Box display="flex" flexDirection="column" gap={2} position="relative">
+        <Box display="flex" flexDirection="column">
           <Typography
             level="title-md"
-            sx={{
-              overflow: 'hidden',
-              whiteSpace: 'nowrap',
-              textOverflow: 'ellipsis',
-            }}
+            overflow="hidden"
+            whiteSpace="nowrap"
+            textOverflow="ellipsis"
           >
             {product.title}
           </Typography>
           <Typography level="body-sm">{product.category.name}</Typography>
         </Box>
 
-        {currentUser &&
-          currentUser.userType !== 'Admin' &&
-          currentUser.id !== product.userId && (
-            <Box
-              sx={{
-                position: 'absolute',
-                top: '-22px',
-                right: '-20px',
-              }}
-            >
-              <HeartButton productId={product.id} currentUser={currentUser} />
-            </Box>
-          )}
+        {hasUserRole && isNotMyProduct && (
+          <Box position="absolute" top={-22} right={-20}>
+            <HeartButton productId={product.id} currentUser={currentUser} />
+          </Box>
+        )}
 
         <Box
+          width="100%"
+          position="relative"
+          overflow="hidden"
+          borderRadius="xl"
           sx={{
-            position: 'relative',
-            width: '100%',
-            overflow: 'hidden',
             aspectRatio: '1 / 1',
-            borderRadius: 'xl',
           }}
         >
           <Image
@@ -78,16 +66,16 @@ const ProductCard = ({ product, currentUser }: ProductCardProps) => {
             className="object-cover w-full h-full"
           />
         </Box>
-        <Box sx={{ mt: 'auto' }}>
-          <div>
+        <Box mt="auto">
+          <Box>
             <Typography level="body-xs">
               {fromNow(product.createdAt)}
             </Typography>
             <Typography level="body-sm">
               {product.price.toLocaleString()}&nbsp;
-              <span className="font-light">원</span>
+              <Typography fontWeight="sm">원</Typography>
             </Typography>
-          </div>
+          </Box>
         </Box>
       </Box>
     </Card>

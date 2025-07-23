@@ -51,6 +51,11 @@ const ProductListTableBody = (
 ) => {
   const router = useRouter();
   const { data, totalItems, skip } = props;
+
+  const handleProductUpdateBtnClick = (productId: string) => {
+    router.push(`/admin/products/${productId}`);
+  };
+
   return (
     <tbody>
       {data.length === 0 && (
@@ -72,7 +77,7 @@ const ProductListTableBody = (
               <Box sx={{ display: 'flex', gap: 1 }}>
                 <SmallButton
                   variant="outlined"
-                  onClick={() => router.push(`/admin/products/${row.id}`)}
+                  onClick={() => handleProductUpdateBtnClick(row.id)}
                 >
                   수정
                 </SmallButton>

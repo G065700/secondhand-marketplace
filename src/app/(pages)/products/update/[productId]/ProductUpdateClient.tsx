@@ -115,24 +115,19 @@ const ProductUpdateClient = ({
         control={control}
       />
 
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+      <Box display="flex" flexDirection="column" gap={1}>
         <FormLabel>
           카테고리<span className="text-red-500">*</span>
         </FormLabel>
         <Box
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: {
-              xs: '1fr',
-              md: '1fr 1fr',
-            },
-            gap: 1.5,
-            maxHeight: '50vh',
-            overflowY: 'auto',
-          }}
+          display="grid"
+          gridTemplateColumns={{ xs: '1fr', md: '1fr 1fr' }}
+          gap={1.5}
+          maxHeight="50vh"
+          overflow="auto"
         >
           {categories.map((item) => (
-            <Box key={item.id} sx={{ gridColumn: 'span 1' }}>
+            <Box key={item.id} gridColumn="span 1">
               <CategoryInput
                 onClick={(value) => setCustomValue('categoryId', value)}
                 selected={categoryId === item.id}
@@ -144,7 +139,7 @@ const ProductUpdateClient = ({
         </Box>
       </Box>
 
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+      <Box display="flex" flexDirection="column" gap={1}>
         <FormLabel>
           위치<span className="text-red-500">*</span>
         </FormLabel>

@@ -2,7 +2,8 @@ import { useRouter } from 'next/navigation';
 
 import { ProductsParams } from '@/app/actions/getProducts';
 import { COUNT_PER_PAGE } from '@/constants';
-import { Select, Option, Typography } from '@mui/joy';
+import { Select, Typography, Box } from '@mui/joy';
+import SelectOption from '@/components/shared/select/SelectOption';
 
 interface HistoryListSummaryProps {
   searchParams: ProductsParams;
@@ -32,7 +33,7 @@ const HistoryListSummary = ({
   };
 
   return (
-    <div className="flex justify-between items-center">
+    <Box display="flex" justifyContent="space-between" alignItems="center">
       <Select
         variant="soft"
         size="sm"
@@ -41,11 +42,6 @@ const HistoryListSummary = ({
           listbox: {
             sx: {
               boxShadow: 'none',
-              '& > *': {
-                border: 'none',
-                borderBottom: 'none',
-                boxShadow: 'none',
-              },
             },
           },
         }}
@@ -57,14 +53,16 @@ const HistoryListSummary = ({
         }}
       >
         {COUNT_PER_PAGE.map((size) => (
-          <Option key={size} value={size}>{`${size}개씩 보기`}</Option>
+          <SelectOption key={size} value={size}>
+            {`${size}개씩 보기`}
+          </SelectOption>
         ))}
       </Select>
 
       <Typography level="body-sm">
         총 <strong>{totalItems}</strong> 건
       </Typography>
-    </div>
+    </Box>
   );
 };
 

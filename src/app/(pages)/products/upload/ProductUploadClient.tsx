@@ -70,7 +70,7 @@ const ProductUploadClient = ({ categories }: ProductUploadClientProps) => {
         title="상품 등록"
         subtitle="판매하고 싶은 상품을 등록해보세요!"
       />
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+      <Box display="flex" flexDirection="column" gap={1}>
         <FormLabel>
           상품 이미지<span className="text-red-500">*</span>
         </FormLabel>
@@ -113,19 +113,14 @@ const ProductUploadClient = ({ categories }: ProductUploadClientProps) => {
           카테고리<span className="text-red-500">*</span>
         </FormLabel>
         <Box
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: {
-              xs: '1fr',
-              md: '1fr 1fr',
-            },
-            gap: 1.5,
-            maxHeight: '50vh',
-            overflowY: 'auto',
-          }}
+          display="grid"
+          gridTemplateColumns={{ xs: '1fr', md: '1fr 1fr' }}
+          gap={1.5}
+          maxHeight="50vh"
+          overflow="auto"
         >
           {categories.map((item) => (
-            <Box key={item.id} sx={{ gridColumn: 'span 1' }}>
+            <Box key={item.id} gridColumn="span 1">
               <CategoryInput
                 onClick={(value) => setCustomValue('categoryId', value)}
                 selected={categoryId === item.id}
@@ -137,7 +132,7 @@ const ProductUploadClient = ({ categories }: ProductUploadClientProps) => {
         </Box>
       </Box>
 
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+      <Box display="flex" flexDirection="column" gap={1}>
         <FormLabel>
           위치<span className="text-red-500">*</span>
         </FormLabel>

@@ -5,7 +5,7 @@ import HistoryListFilter from '@/components/page/client/histories/HistoryListFil
 import { ProductsParams } from '@/app/actions/getProducts';
 import { Box, Divider } from '@mui/joy';
 import HistoryListSummary from '@/components/page/client/histories/HistoryListSummary';
-import HistoryList from '@/components/page/client/histories/HistoryList';
+import HistoryListTable from '@/components/page/client/histories/HistoryListTable';
 
 interface HistoriesClientProps {
   searchParams: ProductsParams;
@@ -22,13 +22,7 @@ const HistoriesClient = ({
   categories,
 }: HistoriesClientProps) => {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 2.5,
-      }}
-    >
+    <Box display="flex" flexDirection="column" gap={2.5}>
       <Divider />
       <HistoryListFilter categories={categories} searchParams={searchParams} />
       <Divider />
@@ -36,7 +30,7 @@ const HistoriesClient = ({
         searchParams={searchParams}
         totalItems={products.totalItems}
       />
-      <HistoryList
+      <HistoryListTable
         data={products.data}
         totalItems={products.totalItems}
         skip={searchParams.skip}
