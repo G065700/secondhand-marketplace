@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     siteName: '2ndHAND',
     images: [
       {
-        url: 'https://ebk-secondhandmarketplace.vercel.app/favicon.ico',
+        url: '/og-image.png',
         width: 1200,
         height: 630,
         alt: '2ndHAND 중고 마켓플레이스',

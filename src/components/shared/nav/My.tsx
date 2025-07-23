@@ -1,13 +1,10 @@
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
 import { ListDivider, Menu, MenuItem } from '@mui/joy';
-import { UserType } from '@/prisma/client';
 import { menus } from '@/menus';
 
-const My = ({ userType }: { userType: UserType }) => {
-  const myMenus = menus.filter(
-    (menu) => (menu.role && menu.role === userType) || !menu.role,
-  );
+const My = () => {
+  const myMenus = menus.filter((menu) => !menu.role);
 
   return (
     <Menu size="sm" sx={{ minWidth: 100 }}>

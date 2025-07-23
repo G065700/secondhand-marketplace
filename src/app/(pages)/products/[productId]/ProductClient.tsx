@@ -23,11 +23,14 @@ const ProductClient = ({
 }: ProductClientProps) => {
   const router = useRouter();
 
+  const hasUserRole = currentUser && currentUser.userType === 'User';
+  const isNotMyProduct = currentUser && currentUser.id !== product.userId;
+
   const KakaoMap = dynamic(() => import('@/components/shared/KakaoMap'), {
     ssr: false,
   });
 
-  const handleConversationBtn = async () => {
+  const handleConversationBtnClick = async () => {
     const receiverId = product.user.id;
     try {
       await axios.post('/api/conversation', {
@@ -76,15 +79,13 @@ const ProductClient = ({
             longitude={product.longitude}
           />
         </Box>
-        {currentUser &&
-          currentUser.id !== product.userId &&
-          currentUser.userType === 'User' && (
-            <div className="mt-10">
-              <LargeButton fullWidth onClick={handleConversationBtn}>
-                판매자와 대화하기
-              </LargeButton>
-            </div>
-          )}
+        {hasUserRole && isNotMyProduct && (
+          <Box mt={3}>
+            <LargeButton fullWidth onClick={handleConversationBtnClick}>
+              판매자와 대화하기
+            </LargeButton>
+          </Box>
+        )}
       </Box>
     </Container>
   );

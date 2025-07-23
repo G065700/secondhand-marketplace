@@ -23,7 +23,7 @@ const Navbar = ({ currentUser }: NavbarProps) => {
   };
 
   return (
-    <nav className="fixed w-full z-10 bg-black text-white max-w-[2520px]">
+    <nav className="fixed w-full z-50 bg-black text-white max-w-[2520px]">
       <Box
         sx={{
           display: 'flex',
@@ -79,7 +79,7 @@ const Navbar = ({ currentUser }: NavbarProps) => {
             >
               <NavUser image={currentUser.image} name={currentUser.name} />
             </MenuButton>
-            <My userType={currentUser.userType} />
+            <My />
           </Dropdown>
         ) : (
           <SmallButton

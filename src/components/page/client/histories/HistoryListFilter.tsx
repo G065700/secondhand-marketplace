@@ -7,6 +7,7 @@ import SmallInput from '@/components/shared/input/SmallInput';
 import SmallSelect from '@/components/shared/select/SmallSelect';
 import SmallButton from '@/components/shared/button/SmallButton';
 import SelectOption from '@/components/shared/select/SelectOption';
+import { Box } from '@mui/joy';
 
 interface HistoryListFilterProps {
   categories: Category[];
@@ -68,7 +69,7 @@ const HistoryListFilter = ({
       onSubmit={handleSubmit(onSubmit)}
       className="flex justify-between text-sm"
     >
-      <div className="flex gap-4">
+      <Box display="flex" gap={2}>
         <SmallInput id="title" label="상품명" control={control} />
 
         <SmallSelect id="categoryId" label="카테고리" control={control}>
@@ -91,7 +92,7 @@ const HistoryListFilter = ({
           <SelectOption value="true">Y</SelectOption>
           <SelectOption value="false">N</SelectOption>
         </SmallSelect>
-      </div>
+      </Box>
 
       <SmallButton disabled={isSubmitting}>검색</SmallButton>
     </form>

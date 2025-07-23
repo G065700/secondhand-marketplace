@@ -19,12 +19,10 @@ const UserClient = ({ user }: UserClientProps) => {
         <Heading title="계정 관리" />
         <Box display="flex" flexDirection="column" gap={3} width="100%">
           <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: 1,
-            }}
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            gap={1}
           >
             <Image
               src={user.image || '/default-user-image.png'}

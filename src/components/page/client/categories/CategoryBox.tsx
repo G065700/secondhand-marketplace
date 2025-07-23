@@ -8,15 +8,11 @@ interface CategoryBoxProps {
 }
 
 const CategoryBox = ({ label, id, selected }: CategoryBoxProps) => {
+  const href = id ? `?categoryId=${id}` : '/';
+
   return (
-    <Grid
-      sx={{
-        bgcolor: selected ? 'black' : 'transparent',
-        borderRadius: 'md',
-        p: 1,
-      }}
-    >
-      <Link href={`?categoryId=${id}`}>
+    <Grid bgcolor={selected ? 'black' : 'transparent'} borderRadius="md" p={1}>
+      <Link href={href}>
         <Typography
           level="body-sm"
           sx={{ color: selected ? 'white' : 'black' }}

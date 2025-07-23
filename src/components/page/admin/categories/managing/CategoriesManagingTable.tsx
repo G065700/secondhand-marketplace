@@ -7,6 +7,7 @@ import { ComponentProps } from 'react';
 interface CategoriesManagingTableProps {
   fieldArray: UseFieldArrayReturn;
   control: Control;
+  isSubmitting: boolean;
 }
 
 const CategoriesManagingTable = (props: CategoriesManagingTableProps) => {
@@ -54,8 +55,12 @@ const CategoriesManagingTableHeader = () => {
 const CategoriesManagingTableBody = (
   props: ComponentProps<typeof CategoriesManagingTable>,
 ) => {
-  const { fieldArray, control } = props;
+  const { fieldArray, control, isSubmitting } = props;
   const { fields, remove } = fieldArray;
+
+  const handleRemoveCategoryBtnClick = (idx: number) => {
+    remove(idx);
+  };
 
   return (
     <tbody>
@@ -66,17 +71,23 @@ const CategoriesManagingTableBody = (
               id={`categories.${idx}.order`}
               type="number"
               control={control}
+              disabled={isSubmitting}
             />
           </td>
           <td>
-            <SmallInput id={`categories.${idx}.name`} control={control} />
+            <SmallInput
+              id={`categories.${idx}.name`}
+              control={control}
+              disabled={isSubmitting}
+            />
           </td>
           <td>
             <SmallButton
               color="danger"
               variant="outlined"
+              disabled={isSubmitting}
               onClick={() => {
-                remove(idx);
+                handleRemoveCategoryBtnClick(idx);
               }}
             >
               삭제

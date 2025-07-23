@@ -1,15 +1,15 @@
-import { User } from '@/prisma/client';
-import { useRouter } from 'next/navigation';
+import { Category, Product } from '@/prisma/client';
 import { Box, Button, Sheet, Table } from '@mui/joy';
+import { useRouter } from 'next/navigation';
 import { ComponentProps } from 'react';
 
-interface UserListTableProps {
-  data: User[];
+interface HistoryListProps {
+  data: (Product & { category: Category })[];
   totalItems: number;
   skip: number;
 }
 
-const UserListTable = (props: UserListTableProps) => {
+const HistoryListTable = (props: HistoryListProps) => {
   return (
     <Sheet variant="outlined" sx={{ maxHeight: 433, overflow: 'auto' }}>
       <Table
@@ -21,36 +21,39 @@ const UserListTable = (props: UserListTableProps) => {
           '--Table-headerUnderlineThickness': 0,
         })}
       >
-        <UserListTableHeader />
-        <UserListTableBody {...props} />
+        <HistoryListTableHeader />
+        <HistoryListTableBody {...props} />
       </Table>
     </Sheet>
   );
 };
 
-export default UserListTable;
+export default HistoryListTable;
 
-const UserListTableHeader = () => {
+const HistoryListTableHeader = () => {
   return (
     <thead>
       <tr>
         <th style={{ width: 60, verticalAlign: 'middle' }}>No.</th>
-        <th style={{ verticalAlign: 'middle' }}>이름</th>
-        <th style={{ verticalAlign: 'middle' }}>이메일</th>
-        <th style={{ width: '10%', verticalAlign: 'middle' }}>구분</th>
-        <th style={{ width: '10%', verticalAlign: 'middle' }}>활성화 여부</th>
+        <th style={{ verticalAlign: 'middle' }}>상품명</th>
+        <th style={{ verticalAlign: 'middle' }}>카테고리</th>
+        <th style={{ verticalAlign: 'middle' }}>가격</th>
+        <th style={{ width: '10%', verticalAlign: 'middle' }}>판매 완료</th>
+        <th style={{ width: '10%', verticalAlign: 'middle' }}>판매 중지</th>
         <th style={{ width: 70 }} />
       </tr>
     </thead>
   );
 };
 
-const UserListTableBody = (props: ComponentProps<typeof UserListTable>) => {
+const HistoryListTableBody = (
+  props: ComponentProps<typeof HistoryListTable>,
+) => {
   const router = useRouter();
   const { data, totalItems, skip } = props;
 
-  const handleUserUpdateBtnClick = (userId: string) => {
-    router.push(`/admin/users/${userId}`);
+  const handleProductUpdateBtnClick = (productId: string) => {
+    router.push(`/products/update/${productId}`);
   };
 
   return (
@@ -62,21 +65,21 @@ const UserListTableBody = (props: ComponentProps<typeof UserListTable>) => {
           </td>
         </tr>
       )}
-
       {data.length > 0 &&
         data.map((row, rowIdx) => (
-          <tr key={row.name}>
+          <tr key={row.id}>
             <td>{totalItems - skip - rowIdx}</td>
-            <td>{row.name}</td>
-            <td>{row.email}</td>
-            <td>{row.userType === 'Admin' ? '관리자' : '일반'}</td>
-            <td>{row.active ? 'Y' : 'N'}</td>
+            <td>{row.title}</td>
+            <td>{row.category.name}</td>
+            <td>{row.price.toLocaleString()} 원</td>
+            <td>{row.soldOut ? 'Y' : 'N'}</td>
+            <td>{row.suspension ? 'Y' : 'N'}</td>
             <td>
               <Box sx={{ display: 'flex', gap: 1 }}>
                 <Button
                   size="sm"
                   variant="outlined"
-                  onClick={() => handleUserUpdateBtnClick(row.id)}
+                  onClick={() => handleProductUpdateBtnClick(row.id)}
                 >
                   수정
                 </Button>

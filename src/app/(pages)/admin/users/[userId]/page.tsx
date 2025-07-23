@@ -1,6 +1,7 @@
 import Container from '@/components/shared/layout/Container';
 import UserClient from '@/app/(pages)/admin/users/[userId]/UserClient';
 import getUserById from '@/app/actions/getUserById';
+import { notFound } from 'next/navigation';
 
 interface UserPageProps {
   params: Promise<{
@@ -14,7 +15,7 @@ const UserPage = async ({ params }: UserPageProps) => {
   const user = await getUserById(userId);
 
   if (!user) {
-    return null;
+    notFound();
   }
 
   return (

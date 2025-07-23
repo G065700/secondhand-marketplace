@@ -53,24 +53,21 @@ const ChatClient = ({ currentUser, receiverUser }: ChatClientProps) => {
   return (
     <Container>
       <Sheet
+        variant="outlined"
         sx={{
           mx: 'auto',
+          borderRadius: 'md',
           display: 'grid',
           gridTemplateColumns: {
             xs: '1fr',
             md: '300px 1fr',
           },
-          border: '1px solid',
-          borderColor: 'divider',
-          borderRadius: 'md',
         }}
       >
         <Box
-          sx={{
-            display: {
-              xs: showChat ? 'none' : 'flex',
-              md: 'flex',
-            },
+          display={{
+            xs: showChat ? 'none' : 'flex',
+            md: 'flex',
           }}
         >
           <Contacts
@@ -81,17 +78,15 @@ const ChatClient = ({ currentUser, receiverUser }: ChatClientProps) => {
           />
         </Box>
         <Box
-          sx={{
-            display: {
-              xs: showChat ? 'flex' : 'none',
-              md: 'flex',
-            },
-            borderLeft: {
-              md: '1px solid',
-            },
-            borderColor: {
-              md: 'divider',
-            },
+          display={{
+            xs: showChat ? 'flex' : 'none',
+            md: 'flex',
+          }}
+          borderLeft={{
+            md: '1px solid',
+          }}
+          borderColor={{
+            md: 'divider',
           }}
         >
           <Chat

@@ -23,6 +23,8 @@ export default async function Home({ searchParams }: HomeProps) {
   const skipNum = skip ? Number(skip) : 0;
 
   const currentUser = await getCurrentUser();
+  const hasUserRole = currentUser && currentUser.userType === 'User';
+
   const categories = await getCategories();
 
   const spProps: ProductsParams = {
@@ -34,6 +36,7 @@ export default async function Home({ searchParams }: HomeProps) {
   };
 
   const products = await getProducts(spProps);
+  const hasProducts = products.data.length > 0;
 
   const selectedCategory = categories.find(
     (category) => category.id === categoryId,
@@ -43,24 +46,20 @@ export default async function Home({ searchParams }: HomeProps) {
     <Container>
       <Categories categories={categories} />
 
-      {products.data.length === 0 ? (
-        <EmptyState showReset />
-      ) : (
-        <Box sx={{ mt: 5 }}>
+      {hasProducts ? (
+        <Box mt={5}>
           <Heading
             title={selectedCategory ? selectedCategory.name : '전체 상품'}
           />
           <Grid
-            sx={{
-              mt: 2,
-              display: 'grid',
-              gridTemplateColumns: {
-                xs: 'repeat(1, 1fr)',
-                sm: 'repeat(2, 1fr)',
-                md: 'repeat(3, 1fr)',
-                lg: 'repeat(6, 1fr)',
-              },
-              gap: 2,
+            mt={2}
+            display="grid"
+            gap={2}
+            gridTemplateColumns={{
+              xs: 'repeat(1, 1fr)',
+              sm: 'repeat(2, 1fr)',
+              md: 'repeat(3, 1fr)',
+              lg: 'repeat(6, 1fr)',
             }}
           >
             {products.data.map((product) => (
@@ -78,9 +77,11 @@ export default async function Home({ searchParams }: HomeProps) {
             totalItems={products.totalItems}
           />
         </Box>
+      ) : (
+        <EmptyState showReset />
       )}
 
-      {currentUser && currentUser.userType === 'User' && (
+      {hasUserRole && (
         <FloatingButton href="/products/upload">+</FloatingButton>
       )}
     </Container>

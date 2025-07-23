@@ -35,18 +35,18 @@ const Contacts = ({
 
   return (
     <Box
+      width={{ xs: '100%', md: 300 }}
+      height={'calc(100vh - 106px)'}
       sx={{
-        width: 300,
-        height: 'calc(100vh - 106px)',
         overflow: 'auto',
       }}
     >
-      <Typography level="h4" sx={{ m: 2, fontWeight: 'lg' }}>
+      <Typography level="h4" m={2} fontWeight="lg">
         DM
       </Typography>
       <Divider />
 
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <Box display="flex" flexDirection="column">
         {users.length > 0 &&
           contactUsers.map((user, userIdx) => (
             <Box

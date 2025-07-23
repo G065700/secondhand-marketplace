@@ -44,9 +44,9 @@ const SignUpPage = () => {
 
   return (
     <Box
+      display="grid"
+      height="100dvh"
       sx={{
-        display: 'grid',
-        height: '100dvh',
         placeItems: 'center',
       }}
     >
@@ -105,7 +105,9 @@ const SignUpPage = () => {
 
         <Box textAlign="center">
           <Typography level="body-sm">
-            <span className="text-gray-400">계정이 있으신가요?&nbsp;</span>
+            <Typography className="text-gray-400">
+              계정이 있으신가요?&nbsp;
+            </Typography>
             <Link href="/auth/sign-in" className="text-black hover:underline">
               로그인
             </Link>

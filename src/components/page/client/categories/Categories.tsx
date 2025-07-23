@@ -19,10 +19,9 @@ const Categories = ({ categories }: CategoriesProps) => {
         container
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 4, sm: 8, md: 12 }}
-        sx={{
-          flexGrow: 1,
-        }}
+        flexGrow={1}
       >
+        <CategoryBox label="전체" id="" selected={!categoryIdParam} />
         {categories.map((category) => (
           <CategoryBox
             key={category.id}
