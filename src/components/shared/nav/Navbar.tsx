@@ -25,23 +25,21 @@ const Navbar = ({ currentUser }: NavbarProps) => {
   return (
     <nav className="fixed w-full z-50 bg-black text-white max-w-[2520px]">
       <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          mx: {
-            xs: 2.5,
-            sm: 5,
-            md: 10,
-          },
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        mx={{
+          xs: 2.5,
+          sm: 5,
+          md: 10,
         }}
       >
-        <Box sx={{ height: 56, display: 'flex', alignItems: 'center', gap: 3 }}>
+        <Box height={56} display="flex" alignItems="center" gap={3}>
           <Link href="/">
             <SecondHandLogo />
           </Link>
 
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+          <Box display={{ xs: 'none', sm: 'block' }}>
             <NavItem currentUser={currentUser} />
           </Box>
         </Box>
@@ -79,7 +77,7 @@ const Navbar = ({ currentUser }: NavbarProps) => {
             >
               <NavUser image={currentUser.image} name={currentUser.name} />
             </MenuButton>
-            <My />
+            <My currentUserRole={currentUser.userType} />
           </Dropdown>
         ) : (
           <SmallButton
@@ -91,7 +89,7 @@ const Navbar = ({ currentUser }: NavbarProps) => {
         )}
       </Box>
 
-      <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
+      <Box display={{ xs: 'block', sm: 'none' }}>
         {!mobileMenu ? null : <NavItem mobile currentUser={currentUser} />}
       </Box>
     </nav>
