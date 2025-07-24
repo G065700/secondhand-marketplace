@@ -8,6 +8,15 @@
 
 이 프로젝트는 Vercel을 통해 배포되었습니다: [https://ebk-secondhandmarketplace.vercel.app/](https://ebk-secondhandmarketplace.vercel.app/)
 
+## 테스트 계정
+![img.png](img.png)
+- 비밀번호는 다음과 같은 패턴입니다.
+  - admin001 → !Admin001
+  - client001 → !Client001
+
+## 화면정의서
+https://github.com/G065700/secondhand-marketplace/blob/main/화면정의서.md
+
 ## 주요 기능
 
 - NextAuth.js를 이용한 사용자 인증 (회원가입, 로그인, 로그아웃)
