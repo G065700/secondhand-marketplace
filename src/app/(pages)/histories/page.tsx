@@ -1,16 +1,16 @@
 import Container from '@/components/shared/layout/Container';
-import HistoriesClient from '@/app/(pages)/histories/HistoriesClient';
 import getProducts, { ProductsParams } from '@/app/actions/getProducts';
 import { COUNT_PER_PAGE } from '@/constants';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 import getCategories from '@/app/actions/getCategories';
 import Pagination from '@/components/shared/pagination/Pagination';
+import HistoriesLoader from './HistoriesLoader';
 
 interface HistoriesPageProps {
-  searchParams: Promise<HistoriesPageSearchParams>;
+  searchParams: Promise<HistoriesPageProductsParams>;
 }
 
-export type HistoriesPageSearchParams = Omit<
+export type HistoriesPageProductsParams = Omit<
   ProductsParams,
   'soldOut' | 'suspension'
 > & {
@@ -46,7 +46,7 @@ const HistoriesPage = async ({ searchParams }: HistoriesPageProps) => {
 
   return (
     <Container>
-      <HistoriesClient
+      <HistoriesLoader
         searchParams={spProps}
         products={products}
         categories={categories}

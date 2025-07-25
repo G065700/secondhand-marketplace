@@ -1,7 +1,7 @@
 import getCurrentUser from '@/app/actions/getCurrentUser';
-import ChatClient from '@/app/(pages)/chat/ChatClient';
 import getUserById from '@/app/actions/getUserById';
 import EmptyState from '@/components/shared/EmptyState';
+import ChatLoader from './ChatLoader';
 
 interface ChatPageProps {
   params: Promise<{
@@ -19,7 +19,7 @@ const ChatPage = async ({ params }: ChatPageProps) => {
     return <EmptyState title="잘못된 경로입니다." subtitle="" height="full" />;
   }
 
-  return <ChatClient currentUser={currentUser} receiverUser={receiverUser} />;
+  return <ChatLoader currentUser={currentUser} receiverUser={receiverUser} />;
 };
 
 export default ChatPage;

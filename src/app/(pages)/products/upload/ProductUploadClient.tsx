@@ -1,7 +1,9 @@
 'use client';
 
 import Heading from '@/components/shared/Heading';
-import ImageUpload from '@/components/shared/ImageUpload';
+const ImageUpload = dynamic(() => import('@/components/shared/ImageUpload'), {
+  ssr: false,
+});
 import CategoryInput from '@/components/page/client/categories/CategoryInput';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';

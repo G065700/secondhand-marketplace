@@ -93,6 +93,9 @@ model Product {
   categoryId  String
   soldOut     Boolean  @default(false)
   suspension  Boolean  @default(false)
+
+  @@index([userId, categoryId, soldOut, suspension])
+  @@index([title])
 }
 
 model Conversation {
