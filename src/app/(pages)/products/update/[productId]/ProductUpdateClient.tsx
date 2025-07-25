@@ -11,7 +11,9 @@ import {
 import { Category, Product, User } from '@/prisma/client';
 import dynamic from 'next/dynamic';
 import Heading from '@/components/shared/Heading';
-import ImageUpload from '@/components/shared/ImageUpload';
+const ImageUpload = dynamic(() => import('@/components/shared/ImageUpload'), {
+  ssr: false,
+});
 import LargeTextarea from '@/components/shared/textarea/LargeTextarea';
 import CategoryInput from '@/components/page/client/categories/CategoryInput';
 import { Box, Checkbox, FormControl, FormLabel } from '@mui/joy';

@@ -65,21 +65,20 @@ export default async function getProducts(params: ProductsParams) {
       query.userId = userId;
     }
 
-    const totalItems = await prisma.product.count({
-      where: query,
-    });
-
-    const products = await prisma.product.findMany({
-      where: query,
-      include: {
-        category: true,
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
-      skip: skip ? Number(skip) : 0,
-      take: Number(take),
-    });
+    const [totalItems, products] = await prisma.$transaction([
+      prisma.product.count({ where: query }),
+      prisma.product.findMany({
+        where: query,
+        include: {
+          category: true,
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
+        skip: skip ? Number(skip) : 0,
+        take: Number(take),
+      }),
+    ]);
 
     return {
       data: products,
