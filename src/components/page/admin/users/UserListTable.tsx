@@ -1,7 +1,7 @@
 import { User } from '@/prisma/client';
 import { useRouter } from 'next/navigation';
 import { Box, Button, Sheet, Table } from '@mui/joy';
-import { ComponentProps } from 'react';
+import { ComponentProps, useCallback, memo } from 'react';
 
 interface UserListTableProps {
   data: User[];
@@ -30,7 +30,7 @@ const UserListTable = (props: UserListTableProps) => {
 
 export default UserListTable;
 
-const UserListTableHeader = () => {
+const UserListTableHeader = memo(function UserListTableHeader() {
   return (
     <thead>
       <tr>
@@ -43,15 +43,20 @@ const UserListTableHeader = () => {
       </tr>
     </thead>
   );
-};
+});
 
-const UserListTableBody = (props: ComponentProps<typeof UserListTable>) => {
+const UserListTableBody = function UserListTableBody(
+  props: ComponentProps<typeof UserListTable>,
+) {
   const router = useRouter();
   const { data, totalItems, skip } = props;
 
-  const handleUserUpdateBtnClick = (userId: string) => {
-    router.push(`/admin/users/${userId}`);
-  };
+  const handleUserUpdateBtnClick = useCallback(
+    (userId: string) => {
+      router.push(`/admin/users/${userId}`);
+    },
+    [router],
+  );
 
   return (
     <tbody>

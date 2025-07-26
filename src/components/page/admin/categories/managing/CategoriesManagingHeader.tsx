@@ -1,5 +1,5 @@
 import { UseFieldArrayReturn } from 'react-hook-form';
-import { useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { Box } from '@mui/joy';
 import SmallButton from '@/components/shared/button/SmallButton';
 
@@ -24,9 +24,9 @@ const CategoriesManagingHeader = ({
     [fields.length],
   );
 
-  const handleAddCategoryBtnClick = () => {
+  const handleAddCategoryBtnClick = useCallback(() => {
     prepend(initializedCategory);
-  };
+  }, [prepend, initializedCategory]);
 
   return (
     <Box display="flex" justifyContent="space-between">
@@ -44,4 +44,4 @@ const CategoriesManagingHeader = ({
   );
 };
 
-export default CategoriesManagingHeader;
+export default memo(CategoriesManagingHeader);

@@ -1,4 +1,5 @@
 import { Box, Typography } from '@mui/joy';
+import { memo } from 'react';
 
 interface CategoryInputProps {
   label: string;
@@ -39,4 +40,4 @@ const CategoryInput = ({
   );
 };
 
-export default CategoryInput;
+export default memo(CategoryInput);

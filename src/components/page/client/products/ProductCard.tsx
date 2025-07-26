@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import HeartButton from '@/components/shared/button/HeartButton';
 import { fromNow } from '@/helpers/dayjs';
 import { Box, Card, Typography } from '@mui/joy';
+import { memo } from 'react';
 
 interface ProductCardProps {
   product: Product & { category: Category };
@@ -82,4 +83,4 @@ const ProductCard = ({ product, currentUser }: ProductCardProps) => {
   );
 };
 
-export default ProductCard;
+export default memo(ProductCard);

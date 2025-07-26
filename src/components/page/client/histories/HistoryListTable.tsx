@@ -1,7 +1,7 @@
 import { Category, Product } from '@/prisma/client';
 import { Box, Button, Sheet, Table } from '@mui/joy';
 import { useRouter } from 'next/navigation';
-import { ComponentProps } from 'react';
+import { ComponentProps, memo, useCallback } from 'react';
 
 interface HistoryListProps {
   data: (Product & { category: Category })[];
@@ -30,7 +30,7 @@ const HistoryListTable = (props: HistoryListProps) => {
 
 export default HistoryListTable;
 
-const HistoryListTableHeader = () => {
+const HistoryListTableHeader = memo(function HistoryListTableHeader() {
   return (
     <thead>
       <tr>
@@ -44,7 +44,7 @@ const HistoryListTableHeader = () => {
       </tr>
     </thead>
   );
-};
+});
 
 const HistoryListTableBody = (
   props: ComponentProps<typeof HistoryListTable>,
@@ -52,9 +52,12 @@ const HistoryListTableBody = (
   const router = useRouter();
   const { data, totalItems, skip } = props;
 
-  const handleProductUpdateBtnClick = (productId: string) => {
-    router.push(`/products/update/${productId}`);
-  };
+  const handleProductUpdateBtnClick = useCallback(
+    (productId: string) => {
+      router.push(`/products/update/${productId}`);
+    },
+    [router],
+  );
 
   return (
     <tbody>

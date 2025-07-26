@@ -12,8 +12,10 @@ interface ChatPageProps {
 const ChatPage = async ({ params }: ChatPageProps) => {
   const { receiverId } = await params;
 
-  const currentUser = await getCurrentUser();
-  const receiverUser = receiverId ? await getUserById(receiverId) : undefined;
+  const [currentUser, receiverUser] = await Promise.all([
+    getCurrentUser(),
+    receiverId ? getUserById(receiverId) : Promise.resolve(undefined),
+  ]);
 
   if (currentUser && receiverId && receiverId === currentUser.id) {
     return <EmptyState title="잘못된 경로입니다." subtitle="" height="full" />;

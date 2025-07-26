@@ -1,5 +1,5 @@
 import { useRouter } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useCallback } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { Box } from '@mui/joy';
 import { ProductsParams } from '@/app/actions/getProducts';
@@ -44,25 +44,28 @@ const ProductListFilter = ({
     reset(defaultValues);
   }, [reset, defaultValues]);
 
-  const onSubmit: SubmitHandler<FieldValues> = async (body) => {
-    try {
-      setIsSubmitting(true);
+  const onSubmit: SubmitHandler<FieldValues> = useCallback(
+    async (body) => {
+      try {
+        setIsSubmitting(true);
 
-      const queryStrArr: string[] = [];
+        const queryStrArr: string[] = [];
 
-      Object.keys(body).forEach((value) => {
-        if (body[value]) {
-          queryStrArr.push(`${value}=${body[value]}`);
-        }
-      });
+        Object.keys(body).forEach((value) => {
+          if (body[value]) {
+            queryStrArr.push(`${value}=${body[value]}`);
+          }
+        });
 
-      router.push('?' + queryStrArr.join('&'));
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+        router.push('?' + queryStrArr.join('&'));
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsSubmitting(false);
+      }
+    },
+    [router],
+  );
 
   return (
     <form

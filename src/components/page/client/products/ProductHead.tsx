@@ -3,6 +3,7 @@ import Heading from '@/components/shared/Heading';
 import Image from 'next/image';
 import HeartButton from '@/components/shared/button/HeartButton';
 import { Box } from '@mui/joy';
+import { memo } from 'react';
 
 interface ProductHeadProps {
   title: string;
@@ -47,4 +48,4 @@ const ProductHead = ({
   );
 };
 
-export default ProductHead;
+export default memo(ProductHead);

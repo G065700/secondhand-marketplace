@@ -6,7 +6,7 @@ import {
   SubmitHandler,
   useForm,
 } from 'react-hook-form';
-import { useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
@@ -27,20 +27,23 @@ const ProductSuspensionUpdate = ({
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = async (body) => {
-    setIsSubmitting(true);
-    try {
-      await axios.patch('/api/admin/products/suspension', {
-        id: productId,
-        suspension: body.suspension === 'true',
-      });
-      toast.success('저징되었습니다.');
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  const onSubmit: SubmitHandler<FieldValues> = useCallback(
+    async (body) => {
+      setIsSubmitting(true);
+      try {
+        await axios.patch('/api/admin/products/suspension', {
+          id: productId,
+          suspension: body.suspension === 'true',
+        });
+        toast.success('저장되었습니다.');
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsSubmitting(false);
+      }
+    },
+    [productId],
+  );
 
   return (
     <FormControl>
@@ -73,4 +76,4 @@ const ProductSuspensionUpdate = ({
   );
 };
 
-export default ProductSuspensionUpdate;
+export default memo(ProductSuspensionUpdate);

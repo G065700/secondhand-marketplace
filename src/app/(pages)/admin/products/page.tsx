@@ -33,8 +33,10 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
     take: takeNum,
   };
 
-  const products = await getProducts(spProps);
-  const categories = await getCategories();
+  const [products, categories] = await Promise.all([
+    getProducts(spProps),
+    getCategories(),
+  ]);
 
   return (
     <Container>

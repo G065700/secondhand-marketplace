@@ -1,7 +1,7 @@
 'use client';
 
 import { User } from '@/prisma/client';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import useSWR from 'swr';
 import { TUserWidthChat } from '@/types';
@@ -33,7 +33,10 @@ const ChatClient = ({ currentUser, receiverUser }: ChatClientProps) => {
 
   const [showChat, setShowChat] = useState(false);
 
-  const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+  const fetcher = useCallback(
+    (url: string) => axios.get(url).then((res) => res.data),
+    [],
+  );
 
   const {
     data: users,

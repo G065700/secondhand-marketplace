@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Link from 'next/link';
 import axios from 'axios';
@@ -24,23 +24,26 @@ const SignUpPage = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = async (body) => {
-    setIsSubmitting(true);
-    try {
-      await axios.post('/api/sign-up', body);
-      router.push('/auth/sign-in');
-    } catch (error: any) {
-      const { code, message } = error.response.data;
-      if (code === 'ALREADY_EXIST_EMAIL') {
-        setError('email', {
-          type: code,
-          message,
-        });
+  const onSubmit: SubmitHandler<FieldValues> = useCallback(
+    async (body) => {
+      setIsSubmitting(true);
+      try {
+        await axios.post('/api/sign-up', body);
+        router.push('/auth/sign-in');
+      } catch (error: any) {
+        const { code, message } = error.response.data;
+        if (code === 'ALREADY_EXIST_EMAIL') {
+          setError('email', {
+            type: code,
+            message,
+          });
+        }
+      } finally {
+        setIsSubmitting(false);
       }
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+    },
+    [router, setError],
+  );
 
   return (
     <Box
@@ -51,10 +54,7 @@ const SignUpPage = () => {
       }}
     >
       <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSubmit(onSubmit)();
-        }}
+        onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col justify-center gap-4 min-w-[350px]"
       >
         <h1 className="text-center">

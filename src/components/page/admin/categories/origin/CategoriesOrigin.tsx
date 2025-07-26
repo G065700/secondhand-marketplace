@@ -4,6 +4,7 @@ import { Box } from '@mui/joy';
 import { Category } from '@/prisma/client';
 import CategoriesOriginHeader from '@/components/page/admin/categories/origin/CategoriesOriginHeader';
 import CategoriesOriginTable from '@/components/page/admin/categories/origin/CategoriesOriginTable';
+import { memo } from 'react';
 
 interface CategoriesOriginProps {
   categories: Category[];
@@ -18,4 +19,4 @@ const CategoriesOrigin = ({ categories }: CategoriesOriginProps) => {
   );
 };
 
-export default CategoriesOrigin;
+export default memo(CategoriesOrigin);

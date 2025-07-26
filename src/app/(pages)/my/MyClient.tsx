@@ -1,7 +1,7 @@
 'use client';
 
 import { User } from '@/prisma/client';
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Heading from '@/components/shared/Heading';
 import { Box } from '@mui/joy';
@@ -40,43 +40,46 @@ const MyClient = ({ currentUser }: MyClientProps) => {
     },
   });
 
-  const chooseImage = () => {
+  const chooseImage = useCallback(() => {
     imageRef.current?.click();
-  };
+  }, []);
 
-  const removeImage = () => {
+  const removeImage = useCallback(() => {
     setProfileImage(null);
     setProfileImagePreview(null);
-  };
+  }, []);
 
-  const onSubmit: SubmitHandler<FieldValues> = async (body) => {
-    setIsSubmitting(true);
-    try {
-      const profileImageUrl = profileImage
-        ? await uploadImage(profileImage as File)
-        : null;
+  const onSubmit: SubmitHandler<FieldValues> = useCallback(
+    async (body) => {
+      setIsSubmitting(true);
+      try {
+        const profileImageUrl = profileImage
+          ? await uploadImage(profileImage as File)
+          : null;
 
-      const changedUserInfo = await axios.patch('/api/my', {
-        ...body,
-        id,
-        image: profileImageUrl,
-      });
-
-      if (changedUserInfo.data.email !== currentUser.email) {
-        await signOut();
-      }
-    } catch (error: any) {
-      const { code, message } = error.response.data;
-      if (code === 'ALREADY_EXIST_EMAIL') {
-        setError('email', {
-          type: code,
-          message,
+        const changedUserInfo = await axios.patch('/api/my', {
+          ...body,
+          id,
+          image: profileImageUrl,
         });
+
+        if (changedUserInfo.data.email !== currentUser.email) {
+          await signOut();
+        }
+      } catch (error: any) {
+        const { code, message } = error.response.data;
+        if (code === 'ALREADY_EXIST_EMAIL') {
+          setError('email', {
+            type: code,
+            message,
+          });
+        }
+      } finally {
+        setIsSubmitting(false);
       }
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+    },
+    [profileImage, id, currentUser.email, setError],
+  );
 
   return (
     <Box display="flex" justifyContent="center">

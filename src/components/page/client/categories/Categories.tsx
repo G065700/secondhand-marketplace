@@ -4,6 +4,7 @@ import { useSearchParams } from 'next/navigation';
 import CategoryBox from '@/components/page/client/categories/CategoryBox';
 import { Category } from '@/prisma/client';
 import { Grid, Sheet } from '@mui/joy';
+import { memo } from 'react';
 
 interface CategoriesProps {
   categories: Category[];
@@ -35,4 +36,4 @@ const Categories = ({ categories }: CategoriesProps) => {
   );
 };
 
-export default Categories;
+export default memo(Categories);
