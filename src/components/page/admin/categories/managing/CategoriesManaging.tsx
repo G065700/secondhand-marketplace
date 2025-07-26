@@ -1,7 +1,7 @@
 'use client';
 
 import { Category } from '@/prisma/client';
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import {
   FieldValues,
   SubmitHandler,
@@ -13,8 +13,10 @@ import { toast } from 'react-toastify';
 import { Box } from '@mui/joy';
 import CategoriesManagingHeader from '@/components/page/admin/categories/managing/CategoriesManagingHeader';
 import CategoriesManagingTable from '@/components/page/admin/categories/managing/CategoriesManagingTable';
+import { useRouter } from 'next/navigation';
 
 const CategoriesManaging = ({ categories }: { categories: Category[] }) => {
+  const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const { control, handleSubmit } = useForm<FieldValues>({
@@ -66,6 +68,7 @@ const CategoriesManaging = ({ categories }: { categories: Category[] }) => {
 
       await axios.post('/api/categories', categories);
       toast.success('저장되었습니다.');
+      router.refresh();
     } catch (error) {
       console.log(error);
     } finally {
@@ -89,4 +92,4 @@ const CategoriesManaging = ({ categories }: { categories: Category[] }) => {
   );
 };
 
-export default CategoriesManaging;
+export default memo(CategoriesManaging);

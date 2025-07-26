@@ -1,6 +1,7 @@
 import { TUserWidthChat } from '@/types';
 import User from '@/components/page/client/chat/User';
 import { Box, Divider, Typography } from '@mui/joy';
+import { memo, useCallback } from 'react';
 
 interface ContactsProps {
   users: TUserWidthChat[];
@@ -19,17 +20,16 @@ const Contacts = ({
   setShowChat,
   setReceiver,
 }: ContactsProps) => {
-  const filterMessages = (
-    userId: string,
-    userName: string | null,
-    userImage: string | null,
-  ) => {
-    setReceiver({
-      receiverId: userId,
-      receiverName: userName || '',
-      receiverImage: userImage || '',
-    });
-  };
+  const filterMessages = useCallback(
+    (userId: string, userName: string | null, userImage: string | null) => {
+      setReceiver({
+        receiverId: userId,
+        receiverName: userName || '',
+        receiverImage: userImage || '',
+      });
+    },
+    [setReceiver],
+  );
 
   const contactUsers = users.filter((user) => user.id !== currentUser.id);
 
@@ -68,4 +68,4 @@ const Contacts = ({
   );
 };
 
-export default Contacts;
+export default memo(Contacts);

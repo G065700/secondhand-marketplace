@@ -2,7 +2,7 @@ import { Category, Product } from '@/prisma/client';
 import { useRouter } from 'next/navigation';
 import { Box, Sheet, Table } from '@mui/joy';
 import SmallButton from '@/components/shared/button/SmallButton';
-import { ComponentProps } from 'react';
+import { ComponentProps, useCallback, memo } from 'react';
 
 interface ProductListTableProps {
   data: (Product & { category: Category })[];
@@ -31,7 +31,7 @@ const ProductListTable = (props: ProductListTableProps) => {
 
 export default ProductListTable;
 
-const ProductListTableHeader = () => {
+const ProductListTableHeader = memo(function ProductListTableHeader() {
   return (
     <thead>
       <tr>
@@ -44,7 +44,7 @@ const ProductListTableHeader = () => {
       </tr>
     </thead>
   );
-};
+});
 
 const ProductListTableBody = (
   props: ComponentProps<typeof ProductListTable>,
@@ -52,9 +52,12 @@ const ProductListTableBody = (
   const router = useRouter();
   const { data, totalItems, skip } = props;
 
-  const handleProductUpdateBtnClick = (productId: string) => {
-    router.push(`/admin/products/${productId}`);
-  };
+  const handleProductUpdateBtnClick = useCallback(
+    (productId: string) => {
+      router.push(`/admin/products/${productId}`);
+    },
+    [router],
+  );
 
   return (
     <tbody>

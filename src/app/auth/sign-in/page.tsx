@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
@@ -31,28 +31,31 @@ const SignInPage = () => {
     setErrorText('');
   }, [emailVal, passwordVal]);
 
-  const onSubmit: SubmitHandler<FieldValues> = async (body) => {
-    setIsSubmitting(true);
-    try {
-      const result = await signIn('credentials', {
-        email: body.email,
-        password: body.password,
-        redirect: false,
-      });
+  const onSubmit: SubmitHandler<FieldValues> = useCallback(
+    async (body) => {
+      setIsSubmitting(true);
+      try {
+        const result = await signIn('credentials', {
+          email: body.email,
+          password: body.password,
+          redirect: false,
+        });
 
-      if (result) {
-        if (result.ok) {
-          router.push('/');
-        } else {
-          result.error && setErrorText(result.error);
+        if (result) {
+          if (result.ok) {
+            router.push('/');
+          } else {
+            result.error && setErrorText(result.error);
+          }
         }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsSubmitting(false);
       }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+    },
+    [router],
+  );
 
   return (
     <Box

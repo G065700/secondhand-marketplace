@@ -1,15 +1,12 @@
 import getProducts, { ProductsParams } from '@/app/actions/getProducts';
 import Container from '@/components/shared/layout/Container';
 import EmptyState from '@/components/shared/EmptyState';
-import ProductCard from '@/components/page/client/products/ProductCard';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 import FloatingButton from '@/components/shared/button/FloatingButton';
 import Categories from '@/components/page/client/categories/Categories';
-import Pagination from '@/components/shared/pagination/Pagination';
 import getCategories from '@/app/actions/getCategories';
-import Heading from '@/components/shared/Heading';
 import { PRODUCTS_PER_PAGE } from '@/constants';
-import { Box, Grid } from '@mui/joy';
+import ProductDisplay from '@/components/page/client/home/ProductDisplay';
 
 interface HomeProps {
   searchParams: Promise<ProductsParams>;
@@ -22,10 +19,12 @@ export default async function Home({ searchParams }: HomeProps) {
 
   const skipNum = skip ? Number(skip) : 0;
 
-  const currentUser = await getCurrentUser();
-  const hasUserRole = currentUser && currentUser.userType === 'User';
+  const [currentUser, categories] = await Promise.all([
+    getCurrentUser(),
+    getCategories(),
+  ]);
 
-  const categories = await getCategories();
+  const hasUserRole = currentUser && currentUser.userType === 'User';
 
   const spProps: ProductsParams = {
     ...sp,
@@ -47,36 +46,12 @@ export default async function Home({ searchParams }: HomeProps) {
       <Categories categories={categories} />
 
       {hasProducts ? (
-        <Box mt={5}>
-          <Heading
-            title={selectedCategory ? selectedCategory.name : '전체 상품'}
-          />
-          <Grid
-            mt={2}
-            display="grid"
-            gap={2}
-            gridTemplateColumns={{
-              xs: 'repeat(1, 1fr)',
-              sm: 'repeat(2, 1fr)',
-              md: 'repeat(3, 1fr)',
-              lg: 'repeat(6, 1fr)',
-            }}
-          >
-            {products.data.map((product) => (
-              <ProductCard
-                key={product.id}
-                currentUser={currentUser}
-                product={product}
-              />
-            ))}
-          </Grid>
-
-          <Pagination
-            skip={skipNum}
-            itemsPerPage={PRODUCTS_PER_PAGE}
-            totalItems={products.totalItems}
-          />
-        </Box>
+        <ProductDisplay
+          products={products}
+          currentUser={currentUser}
+          selectedCategory={selectedCategory}
+          skipNum={skipNum}
+        />
       ) : (
         <EmptyState showReset />
       )}

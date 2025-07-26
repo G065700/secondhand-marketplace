@@ -6,7 +6,7 @@ const ImageUpload = dynamic(() => import('@/components/shared/ImageUpload'), {
 });
 import CategoryInput from '@/components/page/client/categories/CategoryInput';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
@@ -46,25 +46,31 @@ const ProductUploadClient = ({ categories }: ProductUploadClientProps) => {
     ssr: false,
   });
 
-  const setCustomValue = (id: string, value: any) => {
-    setValue(id, value);
-  };
+  const setCustomValue = useCallback(
+    (id: string, value: any) => {
+      setValue(id, value);
+    },
+    [setValue],
+  );
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    setIsSubmitting(true);
+  const onSubmit: SubmitHandler<FieldValues> = useCallback(
+    (data) => {
+      setIsSubmitting(true);
 
-    axios
-      .post('/api/products', data)
-      .then((response) => {
-        router.push(`/products/${response.data.id}`);
-      })
-      .catch((error) => {
-        console.error(error);
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
-  };
+      axios
+        .post('/api/products', data)
+        .then((response) => {
+          router.push(`/products/${response.data.id}`);
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+        .finally(() => {
+          setIsSubmitting(false);
+        });
+    },
+    [router],
+  );
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">

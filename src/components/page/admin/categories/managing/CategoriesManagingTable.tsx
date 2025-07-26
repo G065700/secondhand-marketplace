@@ -2,7 +2,7 @@ import { Sheet, Table } from '@mui/joy';
 import { Control, UseFieldArrayReturn } from 'react-hook-form';
 import SmallInput from '@/components/shared/input/SmallInput';
 import SmallButton from '@/components/shared/button/SmallButton';
-import { ComponentProps } from 'react';
+import { ComponentProps, memo, useCallback } from 'react';
 
 interface CategoriesManagingTableProps {
   fieldArray: UseFieldArrayReturn;
@@ -36,31 +36,38 @@ const CategoriesManagingTable = (props: CategoriesManagingTableProps) => {
   );
 };
 
-export default CategoriesManagingTable;
+export default memo(CategoriesManagingTable);
 
-const CategoriesManagingTableHeader = () => {
-  return (
-    <thead>
-      <tr>
-        <th style={{ width: 100, verticalAlign: 'middle', paddingLeft: 16 }}>
-          순서
-        </th>
-        <th style={{ verticalAlign: 'middle', paddingLeft: 16 }}>카테고리명</th>
-        <th style={{ width: 70, verticalAlign: 'middle' }} />
-      </tr>
-    </thead>
-  );
-};
+const CategoriesManagingTableHeader = memo(
+  function CategoriesManagingTableHeader() {
+    return (
+      <thead>
+        <tr>
+          <th style={{ width: 100, verticalAlign: 'middle', paddingLeft: 16 }}>
+            순서
+          </th>
+          <th style={{ verticalAlign: 'middle', paddingLeft: 16 }}>
+            카테고리명
+          </th>
+          <th style={{ width: 70, verticalAlign: 'middle' }} />
+        </tr>
+      </thead>
+    );
+  },
+);
 
-const CategoriesManagingTableBody = (
+const CategoriesManagingTableBody = memo(function CategoriesManagingTableBody(
   props: ComponentProps<typeof CategoriesManagingTable>,
-) => {
+) {
   const { fieldArray, control, isSubmitting } = props;
   const { fields, remove } = fieldArray;
 
-  const handleRemoveCategoryBtnClick = (idx: number) => {
-    remove(idx);
-  };
+  const handleRemoveCategoryBtnClick = useCallback(
+    (idx: number) => {
+      remove(idx);
+    },
+    [remove],
+  );
 
   return (
     <tbody>
@@ -97,4 +104,4 @@ const CategoriesManagingTableBody = (
       ))}
     </tbody>
   );
-};
+});

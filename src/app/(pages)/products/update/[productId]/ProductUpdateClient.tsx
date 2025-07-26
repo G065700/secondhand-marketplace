@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Controller,
   FieldValues,
@@ -51,25 +51,31 @@ const ProductUpdateClient = ({
     reset(defaultValues);
   }, [reset, defaultValues]);
 
-  const onSubmit: SubmitHandler<FieldValues> = async (body) => {
-    setIsSubmitting(true);
-    try {
-      await axios.patch('/api/products', {
-        ...body,
-        price: Number(body.price),
-      });
-      router.push('/histories');
-      toast.success('저징되었습니다.');
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  const onSubmit: SubmitHandler<FieldValues> = useCallback(
+    async (body) => {
+      setIsSubmitting(true);
+      try {
+        await axios.patch('/api/products', {
+          ...body,
+          price: Number(body.price),
+        });
+        router.push('/histories');
+        toast.success('저장되었습니다.');
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsSubmitting(false);
+      }
+    },
+    [router],
+  );
 
-  const setCustomValue = (id: string, value: any) => {
-    setValue(id, value);
-  };
+  const setCustomValue = useCallback(
+    (id: string, value: any) => {
+      setValue(id, value);
+    },
+    [setValue],
+  );
 
   const KakaoMap = dynamic(() => import('@/components/shared/KakaoMap'), {
     ssr: false,

@@ -3,6 +3,7 @@ import ProductInfo from '@/components/page/client/products/ProductInfo';
 import { Box } from '@mui/joy';
 import dynamic from 'next/dynamic';
 import { Category, Product, User } from '@/prisma/client';
+import { memo } from 'react';
 
 interface ProductDetailProps {
   product: Product & { category: Category; user: User };
@@ -48,4 +49,4 @@ const ProductDetail = ({ product, currentUser }: ProductDetailProps) => {
   );
 };
 
-export default ProductDetail;
+export default memo(ProductDetail);

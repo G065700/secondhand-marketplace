@@ -2,7 +2,7 @@ import { TUserWidthChat } from '@/types';
 import Input from '@/components/page/client/chat/Input';
 import ChatHeader from '@/components/page/client/chat/ChatHeader';
 import Message from '@/components/page/client/chat/Message';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, memo } from 'react';
 import { Box } from '@mui/joy';
 
 interface ChatProps {
@@ -93,4 +93,4 @@ const Chat = ({ currentUser, receiver, setShowChat }: ChatProps) => {
   );
 };
 
-export default Chat;
+export default memo(Chat);

@@ -13,8 +13,10 @@ interface ProductPageProps {
 const ProductPage = async ({ params }: ProductPageProps) => {
   const { productId } = await params;
 
-  const product = await getProductById(productId);
-  const currentUser = await getCurrentUser();
+  const [product, currentUser] = await Promise.all([
+    getProductById(productId),
+    getCurrentUser(),
+  ]);
 
   if (!product) {
     notFound();

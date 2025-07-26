@@ -1,6 +1,6 @@
 import { Category } from '@/prisma/client';
 import { Sheet, Table } from '@mui/joy';
-import { ComponentProps } from 'react';
+import { ComponentProps, memo } from 'react';
 
 interface CategoriesOriginTableProps {
   categories: Category[];
@@ -31,22 +31,24 @@ const CategoriesOriginTable = (props: CategoriesOriginTableProps) => {
   );
 };
 
-export default CategoriesOriginTable;
+export default memo(CategoriesOriginTable);
 
-const CategoriesOriginTableHeader = () => {
-  return (
-    <thead>
-      <tr>
-        <th style={{ width: 60, verticalAlign: 'middle' }}>순서</th>
-        <th style={{ verticalAlign: 'middle' }}>카테고리명</th>
-      </tr>
-    </thead>
-  );
-};
+const CategoriesOriginTableHeader = memo(
+  function CategoriesOriginTableHeader() {
+    return (
+      <thead>
+        <tr>
+          <th style={{ width: 60, verticalAlign: 'middle' }}>순서</th>
+          <th style={{ verticalAlign: 'middle' }}>카테고리명</th>
+        </tr>
+      </thead>
+    );
+  },
+);
 
-const CategoriesOriginTableBody = (
+const CategoriesOriginTableBody = memo(function CategoriesOriginTableBody(
   props: ComponentProps<typeof CategoriesOriginTable>,
-) => {
+) {
   const { categories } = props;
 
   return (
@@ -59,4 +61,4 @@ const CategoriesOriginTableBody = (
       ))}
     </tbody>
   );
-};
+});

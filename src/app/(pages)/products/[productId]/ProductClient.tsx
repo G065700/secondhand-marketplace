@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import LargeButton from '@/components/shared/button/LargeButton';
 import axios from 'axios';
 import { Box } from '@mui/joy';
+import { useCallback } from 'react';
 
 interface ProductClientProps {
   product: Product & { user: User };
@@ -30,7 +31,7 @@ const ProductClient = ({
     ssr: false,
   });
 
-  const handleConversationBtnClick = async () => {
+  const handleConversationBtnClick = useCallback(async () => {
     const receiverId = product.user.id;
     try {
       await axios.post('/api/conversation', {
@@ -40,7 +41,7 @@ const ProductClient = ({
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [product.user.id, router]);
 
   return (
     <Container>

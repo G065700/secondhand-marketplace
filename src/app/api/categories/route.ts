@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import prisma from '@/helpers/prismadb';
 import getCategories from '@/app/actions/getCategories';
 import { Category } from '@/prisma/client';
+import { revalidatePath } from 'next/cache';
 
 export async function GET() {
   const categories = await prisma.category.findMany();
@@ -58,5 +59,6 @@ export async function POST(request: Request) {
   });
 
   const categories = await Promise.all([...deleteOperation, ...operations]);
+  revalidatePath('/admin/categories');
   return NextResponse.json(categories);
 }

@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { COUNT_PER_PAGE } from '@/constants';
 import { Select, Typography, Box } from '@mui/joy';
 import SelectOption from '@/components/shared/select/SelectOption';
+import { useCallback } from 'react';
 
 interface ProductListSummaryProps {
   searchParams: ProductsParams;
@@ -15,21 +16,24 @@ const ProductListSummary = ({
 }: ProductListSummaryProps) => {
   const router = useRouter();
 
-  const handleProductsPerPage = (productsPerPage: number) => {
-    const queryStrArr: string[] = [];
+  const handleProductsPerPage = useCallback(
+    (productsPerPage: number) => {
+      const queryStrArr: string[] = [];
 
-    const sp: ProductsParams & { [key: string]: any } = {
-      ...searchParams,
-      skip: 0,
-      take: productsPerPage,
-    };
+      const sp: ProductsParams & { [key: string]: any } = {
+        ...searchParams,
+        skip: 0,
+        take: productsPerPage,
+      };
 
-    Object.keys(sp).forEach((key) => {
-      queryStrArr.push(`${key}=${sp[key]}`);
-    });
+      Object.keys(sp).forEach((key) => {
+        queryStrArr.push(`${key}=${sp[key]}`);
+      });
 
-    router.push(`?${queryStrArr.join('&')}`);
-  };
+      router.push(`?${queryStrArr.join('&')}`);
+    },
+    [router, searchParams],
+  );
 
   return (
     <Box display="flex" justifyContent="space-between" alignItems="center">

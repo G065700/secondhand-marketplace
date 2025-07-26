@@ -3,6 +3,7 @@ import Avatar from '@/components/shared/Avatar';
 import ProductCategory from '@/components/page/client/products/ProductCategory';
 import { formatTime } from '@/helpers/dayjs';
 import { Box, Divider, Typography } from '@mui/joy';
+import { memo } from 'react';
 
 interface ProductInfoProps {
   user: User;
@@ -42,4 +43,4 @@ const ProductInfo = ({
   );
 };
 
-export default ProductInfo;
+export default memo(ProductInfo);

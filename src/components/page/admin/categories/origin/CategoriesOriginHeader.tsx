@@ -1,5 +1,6 @@
 import { formatTime } from '@/helpers/dayjs';
 import { Typography } from '@mui/joy';
+import { memo } from 'react';
 
 interface CategoriesOriginHeaderProps {
   updatedAt: Date;
@@ -14,4 +15,4 @@ const CategoriesOriginHeader = ({ updatedAt }: CategoriesOriginHeaderProps) => {
   );
 };
 
-export default CategoriesOriginHeader;
+export default memo(CategoriesOriginHeader);

@@ -3,6 +3,7 @@ import { COUNT_PER_PAGE } from '@/constants';
 import { useRouter } from 'next/navigation';
 import { Select, Typography, Box } from '@mui/joy';
 import SelectOption from '@/components/shared/select/SelectOption';
+import { useCallback } from 'react';
 
 interface UserListSummaryProps {
   searchParams: UsersParams;
@@ -15,22 +16,25 @@ const UserListSummary = ({
 }: UserListSummaryProps) => {
   const router = useRouter();
 
-  const handleUsersPerPage = (usersPerPage: number) => {
-    const queryStrArr: string[] = [];
+  const handleUsersPerPage = useCallback(
+    (usersPerPage: number) => {
+      const queryStrArr: string[] = [];
 
-    const sp: UsersParams & { [key: string]: any } = {
-      ...searchParams,
-      page: 1,
-      skip: 0,
-      take: usersPerPage,
-    };
+      const sp: UsersParams & { [key: string]: any } = {
+        ...searchParams,
+        page: 1,
+        skip: 0,
+        take: usersPerPage,
+      };
 
-    Object.keys(sp).forEach((key) => {
-      queryStrArr.push(`${key}=${sp[key]}`);
-    });
+      Object.keys(sp).forEach((key) => {
+        queryStrArr.push(`${key}=${sp[key]}`);
+      });
 
-    router.push(`?${queryStrArr.join('&')}`);
-  };
+      router.push(`?${queryStrArr.join('&')}`);
+    },
+    [router, searchParams],
+  );
 
   return (
     <Box display="flex" justifyContent="space-between" alignItems="center">

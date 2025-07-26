@@ -19,7 +19,10 @@ export type HistoriesPageProductsParams = Omit<
 };
 
 const HistoriesPage = async ({ searchParams }: HistoriesPageProps) => {
-  const currentUser = await getCurrentUser();
+  const [currentUser, categories] = await Promise.all([
+    getCurrentUser(),
+    getCategories(),
+  ]);
 
   if (!currentUser) {
     return null;
@@ -42,7 +45,6 @@ const HistoriesPage = async ({ searchParams }: HistoriesPageProps) => {
   };
 
   const products = await getProducts(spProps);
-  const categories = await getCategories();
 
   return (
     <Container>
