@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
 interface KakaoMapProps {
@@ -8,17 +8,29 @@ interface KakaoMapProps {
   isDetailPage?: boolean;
 }
 
-const KakaoMap: FC<KakaoMapProps> = ({
+const KakaoMap = ({
   latitude,
   longitude,
   setCustomValue,
   isDetailPage = false,
-}) => {
+}: KakaoMapProps) => {
+  const [isMapLoaded, setIsMapLoaded] = useState(false);
+
+  useEffect(() => {
+    if (window.kakao?.maps?.load) {
+      window.kakao.maps.load(() => {
+        setIsMapLoaded(true);
+      });
+    }
+  }, []);
+
   const handleClick = (mouseEvent: kakao.maps.event.MouseEvent) => {
-    if (isDetailPage) return;
-    setCustomValue!('latitude', mouseEvent.latLng.getLat());
-    setCustomValue!('longitude', mouseEvent.latLng.getLng());
+    if (!setCustomValue || isDetailPage) return;
+    setCustomValue('latitude', mouseEvent.latLng.getLat());
+    setCustomValue('longitude', mouseEvent.latLng.getLng());
   };
+
+  if (!isMapLoaded) return null;
 
   return (
     <Map
