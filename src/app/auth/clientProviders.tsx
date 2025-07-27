@@ -15,7 +15,8 @@ const ClientProviders = ({ children }: ClientProvidersProps) => {
       <CssVarsProvider theme={theme}>
         {children}
         <Script
-          src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&autoload=false&libraries=services,clusterer&autoload=false`}
+          src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&libraries=services,clusterer&autoload=false`}
+          strategy="beforeInteractive"
         />
       </CssVarsProvider>
     </StyledEngineProvider>
