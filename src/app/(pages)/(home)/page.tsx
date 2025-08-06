@@ -1,12 +1,32 @@
 import getCurrentUser from '@/app/actions/getCurrentUser';
 import getCategories from '@/app/actions/getCategories';
 import HomeClient from './HomeClient';
+import { getProductsByCategoryAndPage } from '@/app/actions/getProducts';
 
-export default async function Home() {
-  const [currentUser, categories] = await Promise.all([
+interface HomePageProps {
+  searchParams: Promise<{
+    categoryId?: string;
+    skip?: string;
+  }>;
+}
+
+export default async function Home({ searchParams }: HomePageProps) {
+  const { categoryId, skip } = await searchParams;
+
+  const [currentUser, categories, products] = await Promise.all([
     getCurrentUser(),
     getCategories(),
+    getProductsByCategoryAndPage({
+      categoryId,
+      skip,
+    }),
   ]);
 
-  return <HomeClient currentUser={currentUser} categories={categories} />;
+  return (
+    <HomeClient
+      currentUser={currentUser}
+      categories={categories}
+      products={products}
+    />
+  );
 }

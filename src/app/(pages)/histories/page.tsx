@@ -1,5 +1,8 @@
 import Container from '@/components/shared/layout/Container';
-import getProducts, { ProductsParams } from '@/app/actions/getProducts';
+import {
+  getProductsByFilters,
+  ProductsByFiltersParams,
+} from '@/app/actions/getProducts';
 import { COUNT_PER_PAGE } from '@/constants';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 import getCategories from '@/app/actions/getCategories';
@@ -11,7 +14,7 @@ interface HistoriesPageProps {
 }
 
 export type HistoriesPageProductsParams = Omit<
-  ProductsParams,
+  ProductsByFiltersParams,
   'soldOut' | 'suspension'
 > & {
   soldOut?: string;
@@ -44,7 +47,7 @@ const HistoriesPage = async ({ searchParams }: HistoriesPageProps) => {
     userId: currentUser.id,
   };
 
-  const products = await getProducts(spProps);
+  const products = await getProductsByFilters(spProps);
 
   return (
     <Container>

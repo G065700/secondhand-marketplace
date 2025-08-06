@@ -2,13 +2,13 @@
 
 import { Category, Product } from '@/prisma/client';
 import HistoryListFilter from '@/components/page/client/histories/HistoryListFilter';
-import { ProductsParams } from '@/app/actions/getProducts';
+import { ProductsByFiltersParams } from '@/app/actions/getProducts';
 import { Box, Divider } from '@mui/joy';
 import HistoryListSummary from '@/components/page/client/histories/HistoryListSummary';
 import HistoryListTable from '@/components/page/client/histories/HistoryListTable';
 
 interface HistoriesClientProps {
-  searchParams: ProductsParams;
+  searchParams: ProductsByFiltersParams;
   products: {
     data: (Product & { category: Category })[];
     totalItems: number;

@@ -2,10 +2,10 @@
 
 import { Category, Product } from '@/prisma/client';
 import dynamic from 'next/dynamic';
-import { ProductsParams } from '@/app/actions/getProducts';
+import { ProductsByFiltersParams } from '@/app/actions/getProducts';
 
 interface HistoriesLoaderProps {
-  searchParams: ProductsParams;
+  searchParams: ProductsByFiltersParams;
   products: {
     data: (Product & { category: Category })[];
     totalItems: number;

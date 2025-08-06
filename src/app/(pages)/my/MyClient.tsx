@@ -1,7 +1,7 @@
 'use client';
 
 import { User } from '@/prisma/client';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Heading from '@/components/shared/Heading';
 import { Box } from '@mui/joy';
@@ -13,12 +13,15 @@ import { signOut } from 'next-auth/react';
 import SmallButton from '@/components/shared/button/SmallButton';
 import LargeInput from '@/components/shared/input/LargeInput';
 import LargeButton from '@/components/shared/button/LargeButton';
+import { useRouter } from 'next/navigation';
 
 interface MyClientProps {
   currentUser: User;
 }
 
 const MyClient = ({ currentUser }: MyClientProps) => {
+  const router = useRouter();
+
   const imageRef = useRef<HTMLInputElement>(null);
 
   const [profileImagePreview, setProfileImagePreview] = useState<string | null>(
@@ -30,15 +33,18 @@ const MyClient = ({ currentUser }: MyClientProps) => {
 
   const { id, name, email, image } = currentUser;
 
-  const { control, handleSubmit, setError } = useForm<FieldValues>({
-    defaultValues: {
-      name,
-      email,
-      image,
-      password: '',
-      passwordConfirm: '',
-    },
-  });
+  const { control, watch, handleSubmit, setError, clearErrors } =
+    useForm<FieldValues>({
+      defaultValues: {
+        name,
+        email,
+        image,
+        password: '',
+        passwordConfirm: '',
+      },
+    });
+
+  const passwordWatch = watch('password');
 
   const chooseImage = useCallback(() => {
     imageRef.current?.click();
@@ -48,6 +54,10 @@ const MyClient = ({ currentUser }: MyClientProps) => {
     setProfileImage(null);
     setProfileImagePreview(null);
   }, []);
+
+  useEffect(() => {
+    clearErrors('passwordConfirm');
+  }, [clearErrors, passwordWatch]);
 
   const onSubmit: SubmitHandler<FieldValues> = useCallback(
     async (body) => {
@@ -63,8 +73,13 @@ const MyClient = ({ currentUser }: MyClientProps) => {
           image: profileImageUrl,
         });
 
-        if (changedUserInfo.data.email !== currentUser.email) {
+        if (
+          changedUserInfo.data.email !== currentUser.email ||
+          passwordWatch !== ''
+        ) {
           await signOut();
+        } else {
+          router.refresh();
         }
       } catch (error: any) {
         const { code, message } = error.response.data;
@@ -78,7 +93,7 @@ const MyClient = ({ currentUser }: MyClientProps) => {
         setIsSubmitting(false);
       }
     },
-    [profileImage, id, currentUser.email, setError],
+    [profileImage, id, currentUser.email, setError, router],
   );
 
   return (
@@ -92,7 +107,7 @@ const MyClient = ({ currentUser }: MyClientProps) => {
           <Box
             display="flex"
             flexDirection="column"
-            alignItems="column"
+            alignItems="center"
             gap={1}
           >
             <Image

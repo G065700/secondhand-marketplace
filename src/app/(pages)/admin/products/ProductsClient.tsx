@@ -2,7 +2,7 @@
 
 import { Box, Divider } from '@mui/joy';
 import { Category, Product } from '@/prisma/client';
-import { ProductsParams } from '@/app/actions/getProducts';
+import { ProductsByFiltersParams } from '@/app/actions/getProducts';
 import ProductListFilter from '@/components/page/admin/products/ProductListFilter';
 import ProductListSummary from '@/components/page/admin/products/ProductListSummary';
 import ProductListTable from '@/components/page/admin/products/ProductListTable';
@@ -13,7 +13,7 @@ interface ProductsClientProps {
     totalItems: number;
   };
   categories: Category[];
-  searchParams: ProductsParams;
+  searchParams: ProductsByFiltersParams;
 }
 
 const ProductsClient = ({

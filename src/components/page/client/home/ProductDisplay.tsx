@@ -10,7 +10,7 @@ import { PRODUCTS_PER_PAGE } from '@/constants';
 interface ProductDisplayProps {
   products: {
     data: (Product & { category: Category })[];
-    totalItems: number;
+    totalItemsCount: number;
   };
   currentUser?: User | null;
   selectedCategory?: Category | undefined;
@@ -23,7 +23,7 @@ const ProductDisplay = ({
   selectedCategory,
   skipNum,
 }: ProductDisplayProps) => {
-  const { data, totalItems } = products;
+  const { data, totalItemsCount } = products;
 
   return (
     <Box mt={5}>
@@ -51,7 +51,7 @@ const ProductDisplay = ({
       <Pagination
         skip={skipNum}
         itemsPerPage={PRODUCTS_PER_PAGE}
-        totalItems={totalItems}
+        totalItems={totalItemsCount}
       />
     </Box>
   );

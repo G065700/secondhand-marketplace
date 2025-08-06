@@ -1,6 +1,6 @@
 import { Category, User } from '@/prisma/client';
 import Avatar from '@/components/shared/Avatar';
-import ProductCategory from '@/components/page/client/products/ProductCategory';
+import ProductCategoryAndPriceInfo from '@/components/page/client/products/ProductCategoryAndPriceInfo';
 import { formatTime } from '@/helpers/dayjs';
 import { Box, Divider, Typography } from '@mui/joy';
 import { memo } from 'react';
@@ -8,6 +8,7 @@ import { memo } from 'react';
 interface ProductInfoProps {
   user: User;
   category: Category;
+  price: number;
   description: string;
   createdAt: Date;
 }
@@ -15,6 +16,7 @@ interface ProductInfoProps {
 const ProductInfo = ({
   user,
   category,
+  price,
   description,
   createdAt,
 }: ProductInfoProps) => {
@@ -35,10 +37,12 @@ const ProductInfo = ({
       </Box>
       <Divider />
 
-      {category && <ProductCategory label={category.name} />}
+      <ProductCategoryAndPriceInfo category={category.name} price={price} />
       <Divider />
 
-      <Typography whiteSpace="pre-line">{description}</Typography>
+      <Typography whiteSpace="pre-line" maxHeight={170} overflow="auto">
+        {description}
+      </Typography>
     </Box>
   );
 };

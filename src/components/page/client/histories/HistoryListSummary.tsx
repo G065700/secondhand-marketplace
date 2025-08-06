@@ -1,13 +1,13 @@
 import { useRouter } from 'next/navigation';
 
-import { ProductsParams } from '@/app/actions/getProducts';
+import { ProductsByFiltersParams } from '@/app/actions/getProducts';
 import { COUNT_PER_PAGE } from '@/constants';
 import { Select, Typography, Box } from '@mui/joy';
 import SelectOption from '@/components/shared/select/SelectOption';
 import { useCallback } from 'react';
 
 interface HistoryListSummaryProps {
-  searchParams: ProductsParams;
+  searchParams: ProductsByFiltersParams;
   totalItems: number;
 }
 
@@ -21,7 +21,7 @@ const HistoryListSummary = ({
     (productsPerPage: number) => {
       const queryStrArr: string[] = [];
 
-      const sp: ProductsParams & { [key: string]: any } = {
+      const sp: ProductsByFiltersParams & { [key: string]: any } = {
         ...searchParams,
         skip: 0,
         take: productsPerPage,

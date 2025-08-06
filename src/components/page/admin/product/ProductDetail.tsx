@@ -36,6 +36,7 @@ const ProductDetail = ({ product, currentUser }: ProductDetailProps) => {
         <ProductInfo
           user={product.user}
           category={product.category}
+          price={product.price}
           description={product.description}
           createdAt={product.createdAt}
         />
