@@ -2,7 +2,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState, useCallback } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { Box } from '@mui/joy';
-import { ProductsParams } from '@/app/actions/getProducts';
+import { ProductsByFiltersParams } from '@/app/actions/getProducts';
 import { Category } from '@/prisma/client';
 import SmallInput from '@/components/shared/input/SmallInput';
 import SmallSelect from '@/components/shared/select/SmallSelect';
@@ -11,7 +11,7 @@ import SelectOption from '@/components/shared/select/SelectOption';
 
 interface ProductListFilterProps {
   categories: Category[];
-  searchParams: ProductsParams;
+  searchParams: ProductsByFiltersParams;
 }
 
 const ProductListFilter = ({

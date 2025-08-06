@@ -28,7 +28,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
   );
 
   if (!category) {
-    return null;
+    notFound();
   }
 
   return (

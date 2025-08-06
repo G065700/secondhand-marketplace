@@ -1,5 +1,5 @@
 import { Category } from '@/prisma/client';
-import { ProductsParams } from '@/app/actions/getProducts';
+import { ProductsByFiltersParams } from '@/app/actions/getProducts';
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState, useCallback } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
@@ -11,7 +11,7 @@ import { Box } from '@mui/joy';
 
 interface HistoryListFilterProps {
   categories: Category[];
-  searchParams: ProductsParams;
+  searchParams: ProductsByFiltersParams;
 }
 
 const HistoryListFilter = ({

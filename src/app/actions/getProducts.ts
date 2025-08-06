@@ -1,7 +1,7 @@
 import prisma from '@/helpers/prismadb';
-import { COUNT_PER_PAGE } from '@/constants';
+import { COUNT_PER_PAGE, PRODUCTS_PER_PAGE } from '@/constants';
 
-export interface ProductsParams {
+export interface ProductsByFiltersParams {
   title?: string; // 상품명
   categoryId?: string; // 카테고리 Id
   // latitude?: number;
@@ -13,7 +13,7 @@ export interface ProductsParams {
   take: number;
 }
 
-export default async function getProducts(params: ProductsParams) {
+export async function getProductsByFilters(params: ProductsByFiltersParams) {
   try {
     const {
       title,
@@ -83,6 +83,52 @@ export default async function getProducts(params: ProductsParams) {
     return {
       data: products,
       totalItems,
+    };
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
+
+export interface ProductsByCategoryAndPage {
+  categoryId?: string; // 카테고리 Id
+  skip?: string;
+}
+
+export async function getProductsByCategoryAndPage(
+  params: ProductsByCategoryAndPage,
+) {
+  try {
+    const { categoryId, skip } = params;
+
+    let query: any = {
+      soldOut: false,
+      suspension: false,
+    };
+
+    if (categoryId) {
+      query.categoryId = categoryId;
+    }
+
+    const skipNum = skip ? Number(skip) : 0;
+
+    const [totalItemsCount, products] = await prisma.$transaction([
+      prisma.product.count({ where: query }),
+      prisma.product.findMany({
+        where: query,
+        include: {
+          category: true,
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
+        skip: skipNum,
+        take: PRODUCTS_PER_PAGE,
+      }),
+    ]);
+
+    return {
+      data: products,
+      totalItemsCount,
     };
   } catch (error: any) {
     throw new Error(error);

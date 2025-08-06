@@ -71,6 +71,7 @@ const ProductClient = ({
           <ProductInfo
             user={product.user}
             category={category}
+            price={product.price}
             description={product.description}
             createdAt={product.createdAt}
           />

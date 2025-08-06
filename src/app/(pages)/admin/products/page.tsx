@@ -1,4 +1,7 @@
-import getProducts, { ProductsParams } from '@/app/actions/getProducts';
+import {
+  getProductsByFilters,
+  ProductsByFiltersParams,
+} from '@/app/actions/getProducts';
 import Container from '@/components/shared/layout/Container';
 import { COUNT_PER_PAGE } from '@/constants';
 import ProductsClient from '@/app/(pages)/admin/products/ProductsClient';
@@ -10,7 +13,7 @@ interface ProductsPageProps {
 }
 
 export type ProductsPageSearchParams = Omit<
-  ProductsParams,
+  ProductsByFiltersParams,
   'soldOut' | 'suspension'
 > & {
   soldOut?: string;
@@ -34,7 +37,7 @@ const ProductsPage = async ({ searchParams }: ProductsPageProps) => {
   };
 
   const [products, categories] = await Promise.all([
-    getProducts(spProps),
+    getProductsByFilters(spProps),
     getCategories(),
   ]);
 
